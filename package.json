@@ -1,0 +1,27 @@
+{
+  "name": "@liquity/lqty-circulating-supply",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "build": "tsc --project tsconfig.json"
+  },
+  "dependencies": {
+    "@liquity/lib-base": "3.0.0",
+    "@liquity/lib-ethers": "3.2.2",
+    "@liquity/providers": "https://gitpkg.now.sh/liquity/dev/packages/providers?e3fb2d8d55ae0c918afbccc1e11f32ef851e28c8&scripts.postinstall=npm%20install%20--ignore-scripts%20%26%26%20tsc%20index.ts%20src%2F*.ts%20--target%20es6%20--module%20CommonJS%20--moduleResolution%20Node%20--outDir%20dist",
+    "ethers": "5.1.4",
+    "express": "4.17.1",
+    "ws": "7.4.5"
+  },
+  "devDependencies": {
+    "@types/express": "4.17.11",
+    "@types/node": "15.0.2",
+    "@types/ws": "^7.4.2",
+    "@typescript-eslint/eslint-plugin": "4.22.1",
+    "@typescript-eslint/parser": "4.22.1",
+    "eslint": "7.26.0",
+    "ts-node": "9.1.1",
+    "typescript": "4.2.4"
+  }
+}
