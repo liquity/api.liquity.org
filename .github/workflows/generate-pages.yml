@@ -52,6 +52,5 @@ jobs:
         with:
           message: "chore: update LQTY circulating supply"
           add: docs
-          branch: pages
           pull_strategy: NO-PULL
-          push: --force origin pages
+          push: --force origin HEAD:pages
