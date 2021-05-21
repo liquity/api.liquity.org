@@ -9,11 +9,16 @@ const alchemyApiKey = process.env.ALCHEMY_API_KEY || undefined; // filter out em
 const outputFile = DEFAULT_OUTPUT_FILE;
 const outputDir = path.dirname(outputFile);
 
-connectToLiquity(DEFAULT_NETWORK, { alchemyApiKey }).then(async liquity => {
-  const latestCirculatingSupply = await fetchLQTYCirculatingSupply(liquity, EXCLUDED_LQTY_HOLDERS);
+connectToLiquity(DEFAULT_NETWORK, { alchemyApiKey })
+  .then(async liquity => {
+    const latestCirculatingSupply = await fetchLQTYCirculatingSupply(liquity, EXCLUDED_LQTY_HOLDERS);
 
-  fs.mkdirSync(outputDir, { recursive: true });
-  fs.writeFileSync(outputFile, `${latestCirculatingSupply}`);
+    fs.mkdirSync(outputDir, { recursive: true });
+    fs.writeFileSync(outputFile, `${latestCirculatingSupply}`);
 
-  console.log(`Latest LQTY circulating supply: ${latestCirculatingSupply}`);
-});
+    console.log(`Latest LQTY circulating supply: ${latestCirculatingSupply}`);
+  })
+  .catch(error => {
+    console.error(error);
+    process.exit(1);
+  });
