@@ -1,7 +1,7 @@
 import { Decimal } from "@liquity/lib-base";
 import { EthersLiquity } from "@liquity/lib-ethers";
 
-const TOTAL_SUPPLY = Decimal.from(100e6);
+import { fetchLQTYCirculatingSupply } from "./fetchLQTYCirculatingSupply";
 
 export class LQTYCirculatingSupplyPoller {
   private readonly _liquity: EthersLiquity | Promise<EthersLiquity>;
@@ -18,24 +18,16 @@ export class LQTYCirculatingSupplyPoller {
     this._excludedAddresses = excludedAddresses;
   }
 
-  private async _fetchCirculatingSupply(
-    liquity: EthersLiquity,
-    blockTag?: number
-  ): Promise<Decimal> {
-    const lockedLQTY = await Promise.all(
-      this._excludedAddresses.map(address => liquity.getLQTYBalance(address, { blockTag }))
-    );
-
-    return lockedLQTY.reduce((a, b) => a.sub(b), TOTAL_SUPPLY);
-  }
-
   async start(): Promise<void> {
     const liquity = await this._liquity;
 
-    this._latestCirculatingSupply = await this._fetchCirculatingSupply(liquity);
+    this._latestCirculatingSupply = await fetchLQTYCirculatingSupply(
+      liquity,
+      this._excludedAddresses
+    );
 
     liquity.connection.provider.on("block", async (blockTag: number) => {
-      const supply = await this._fetchCirculatingSupply(liquity, blockTag);
+      const supply = await fetchLQTYCirculatingSupply(liquity, this._excludedAddresses, blockTag);
 
       if (this._latestBlockTag === undefined || blockTag > this._latestBlockTag) {
         this._latestCirculatingSupply = supply;
