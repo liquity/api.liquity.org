@@ -397,9 +397,9 @@
   resolved "https://registry.yarnpkg.com/@liquity/lib-ethers/-/lib-ethers-3.2.2.tgz#a9984b0f9ae00704b92b27593787b9cf270e7d6b"
   integrity sha512-1lM+pxv3cU1DYO9/eLJUfu+aGFiRxHubD398BthX3kpkSjzDEBiSroPcTrwV5DF7tYcgyn6oI/e2mD4/7h2OMQ==
 
-"@liquity/providers@https://gitpkg.now.sh/liquity/dev/packages/providers?e3fb2d8d55ae0c918afbccc1e11f32ef851e28c8&scripts.postinstall=npm%20install%20--ignore-scripts%20%26%26%20tsc%20index.ts%20src%2F*.ts%20--target%20es6%20--module%20CommonJS%20--moduleResolution%20Node%20--outDir%20dist":
+"@liquity/providers@https://gitpkg.now.sh/liquity/dev/packages/providers?e3fb2d8d55ae0c918afbccc1e11f32ef851e28c8":
   version "0.0.1"
-  resolved "https://gitpkg.now.sh/liquity/dev/packages/providers?e3fb2d8d55ae0c918afbccc1e11f32ef851e28c8&scripts.postinstall=npm%20install%20--ignore-scripts%20%26%26%20tsc%20index.ts%20src%2F*.ts%20--target%20es6%20--module%20CommonJS%20--moduleResolution%20Node%20--outDir%20dist#3353dab6ba2e7e1a418a8bcc41f028b32988d6a6"
+  resolved "https://gitpkg.now.sh/liquity/dev/packages/providers?e3fb2d8d55ae0c918afbccc1e11f32ef851e28c8#f165ff3bdcbb80168377025b9a88d2b15d8a447c"
 
 "@nodelib/fs.scandir@2.1.4":
   version "2.1.4"

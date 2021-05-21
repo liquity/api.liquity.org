@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "prepare": "cd node_modules/@liquity/providers && tsc index.ts src/*.ts --target es6 --module CommonJS --moduleResolution Node --outDir dist",
     "start": "ts-node src/index.ts",
     "once": "ts-node src/once.ts",
     "build": "tsc --project tsconfig.json"
@@ -10,7 +11,7 @@
   "dependencies": {
     "@liquity/lib-base": "3.0.0",
     "@liquity/lib-ethers": "3.2.2",
-    "@liquity/providers": "https://gitpkg.now.sh/liquity/dev/packages/providers?e3fb2d8d55ae0c918afbccc1e11f32ef851e28c8&scripts.postinstall=npm%20install%20--ignore-scripts%20%26%26%20tsc%20index.ts%20src%2F*.ts%20--target%20es6%20--module%20CommonJS%20--moduleResolution%20Node%20--outDir%20dist",
+    "@liquity/providers": "https://gitpkg.now.sh/liquity/dev/packages/providers?e3fb2d8d55ae0c918afbccc1e11f32ef851e28c8",
     "ethers": "5.1.4",
     "express": "4.17.1",
     "ws": "7.4.5"
