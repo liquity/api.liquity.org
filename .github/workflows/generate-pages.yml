@@ -7,6 +7,8 @@ env:
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
   schedule:
     - cron: "*/15 * * * *"
 
@@ -46,6 +48,7 @@ jobs:
 
       - name: Commit generated files
         uses: EndBug/add-and-commit@v7.2.1
+        if: ${{ github.event_name != 'pull_request' }}
         with:
           message: "chore: update LQTY circulating supply"
           add: docs
