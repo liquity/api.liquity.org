@@ -1,6 +1,9 @@
 export const DEFAULT_SERVER_PORT = 8080;
 export const DEFAULT_NETWORK = "mainnet";
-export const DEFAULT_OUTPUT_FILE = "docs/v1/lqty_circulating_supply.txt";
+
+export const DEFAULT_OUTPUT_DIR = "docs/v1";
+export const LQTY_CIRCULATING_SUPPLY_FILE = "lqty_circulating_supply.txt";
+export const LUSD_TOTAL_SUPPLY_FILE = "lusd_total_supply.txt";
 
 export const EXCLUDED_LQTY_HOLDERS = Object.freeze([
   "0xb8a9fada75c6d891fb77a7988ff9bad9e485ca1c", // LQTY Safe
