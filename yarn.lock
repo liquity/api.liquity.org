@@ -407,10 +407,10 @@
   dependencies:
     "@ethersproject/bignumber" "5.0.15"
 
-"@liquity/lib-ethers@3.2.2":
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/@liquity/lib-ethers/-/lib-ethers-3.2.2.tgz#a9984b0f9ae00704b92b27593787b9cf270e7d6b"
-  integrity sha512-1lM+pxv3cU1DYO9/eLJUfu+aGFiRxHubD398BthX3kpkSjzDEBiSroPcTrwV5DF7tYcgyn6oI/e2mD4/7h2OMQ==
+"@liquity/lib-ethers@3.3.0":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@liquity/lib-ethers/-/lib-ethers-3.3.0.tgz#2f5f3a05b0914c94d28059ef8eb988e11b3ce8ab"
+  integrity sha512-K5/j8bFAMFPsbkaMDPkA/EQ9v4m0/9XfQYTTs2mWgnICE8HuNz2hb7ItyK0bp8tXBTczM0z7kP4cbn9tG/rERw==
 
 "@liquity/providers@https://gitpkg.now.sh/liquity/dev/packages/providers?e3fb2d8d55ae0c918afbccc1e11f32ef851e28c8":
   version "0.0.1"
@@ -1922,10 +1922,10 @@ type-is@~1.6.17, type-is@~1.6.18:
     media-typer "0.3.0"
     mime-types "~2.1.24"
 
-typescript@4.3.2:
-  version "4.3.2"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.3.2.tgz#399ab18aac45802d6f2498de5054fcbbe716a805"
-  integrity sha512-zZ4hShnmnoVnAHpVHWpTcxdv7dWP60S2FsydQLV8V5PbS3FifjWFFRiHSWpDJahly88PRyV5teTSLoq4eG7mKw==
+typescript@4.3.5:
+  version "4.3.5"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.3.5.tgz#4d1c37cc16e893973c45a06886b7113234f119f4"
+  integrity sha512-DqQgihaQ9cUrskJo9kIyW/+g0Vxsk8cDtZ52a3NGh0YNTfpUSArXSohyUGnvbPazEPLu398C0UxmKSOrPumUzA==
 
 unpipe@1.0.0, unpipe@~1.0.0:
   version "1.0.0"
