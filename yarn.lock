@@ -419,10 +419,10 @@
   dependencies:
     "@ethersproject/bignumber" "5.0.15"
 
-"@liquity/lib-ethers@3.3.0":
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/@liquity/lib-ethers/-/lib-ethers-3.3.0.tgz#2f5f3a05b0914c94d28059ef8eb988e11b3ce8ab"
-  integrity sha512-K5/j8bFAMFPsbkaMDPkA/EQ9v4m0/9XfQYTTs2mWgnICE8HuNz2hb7ItyK0bp8tXBTczM0z7kP4cbn9tG/rERw==
+"@liquity/lib-ethers@3.3.1":
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/@liquity/lib-ethers/-/lib-ethers-3.3.1.tgz#86f8c5498f434ca4db29eb34af0882b18a7f2067"
+  integrity sha512-o0IZ/k67MwDnFuuZjWn+iHNpk1SzBnikbx5oz1DgFW5Gcxz2n5shysS7lKMdDcapukLCoZzeC2xd0QrPtR6KaQ==
 
 "@liquity/providers@https://gitpkg.now.sh/liquity/dev/packages/providers?e3fb2d8d55ae0c918afbccc1e11f32ef851e28c8":
   version "0.0.1"
