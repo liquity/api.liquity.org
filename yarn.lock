@@ -424,9 +424,10 @@
   resolved "https://registry.yarnpkg.com/@liquity/lib-ethers/-/lib-ethers-3.3.1.tgz#86f8c5498f434ca4db29eb34af0882b18a7f2067"
   integrity sha512-o0IZ/k67MwDnFuuZjWn+iHNpk1SzBnikbx5oz1DgFW5Gcxz2n5shysS7lKMdDcapukLCoZzeC2xd0QrPtR6KaQ==
 
-"@liquity/providers@https://gitpkg.now.sh/liquity/dev/packages/providers?e3fb2d8d55ae0c918afbccc1e11f32ef851e28c8":
-  version "0.0.1"
-  resolved "https://gitpkg.now.sh/liquity/dev/packages/providers?e3fb2d8d55ae0c918afbccc1e11f32ef851e28c8#f165ff3bdcbb80168377025b9a88d2b15d8a447c"
+"@liquity/providers@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@liquity/providers/-/providers-1.0.1.tgz#8a1ecc1fbdc6c3d9745ffaf53a562552dd7618bb"
+  integrity sha512-cCJcty5EW2QC5U3+QEga5GZDLhLW0Tyyce5FTxV/GBhLxglBGSIjoy2QBQ7fyESwQePqwB1O6yhP77zWASEZzg==
 
 "@nodelib/fs.scandir@2.1.4":
   version "2.1.4"
