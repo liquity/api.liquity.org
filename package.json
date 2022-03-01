@@ -12,7 +12,7 @@
     "@liquity/lib-ethers": "3.3.1",
     "@liquity/providers": "1.0.1",
     "ethers": "5.5.4",
-    "express": "4.17.2",
+    "express": "4.17.3",
     "ws": "8.5.0"
   },
   "devDependencies": {
