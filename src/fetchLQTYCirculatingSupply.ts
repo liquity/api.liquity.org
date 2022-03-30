@@ -1,13 +1,25 @@
+import { BlockTag } from "@ethersproject/abstract-provider";
 import { Decimal } from "@liquity/lib-base";
 import { EthersLiquity } from "@liquity/lib-ethers";
 
-const TOTAL_SUPPLY = Decimal.from(100e6);
+import { TOTAL_LQTY_SUPPLY } from "./constants";
+import { getExcludedLQTYHolders } from "./excludedLQTYHolders";
 
-export const fetchLQTYCirculatingSupply = (
+const getLQTYBalance = (liquity: EthersLiquity, blockTag: BlockTag) => (address: string) =>
+  liquity.getLQTYBalance(address, { blockTag });
+
+const subtract = (a: Decimal, b: Decimal) => a.sub(b);
+
+const subtractAllFrom = (initialValue: Decimal) => (xs: Decimal[]) =>
+  xs.reduce(subtract, initialValue);
+
+export const fetchLQTYCirculatingSupply = async (
   liquity: EthersLiquity,
-  excludedAddresses: readonly string[],
-  blockTag?: number
-): Promise<Decimal> =>
-  Promise.all(excludedAddresses.map(address => liquity.getLQTYBalance(address, { blockTag }))).then(
-    lockedLQTY => lockedLQTY.reduce((a, b) => a.sub(b), TOTAL_SUPPLY)
+  blockTag: BlockTag = "latest"
+): Promise<Decimal> => {
+  const excludedAddresses = await getExcludedLQTYHolders(liquity, blockTag);
+
+  return Promise.all(excludedAddresses.map(getLQTYBalance(liquity, blockTag))).then(
+    subtractAllFrom(TOTAL_LQTY_SUPPLY)
   );
+};

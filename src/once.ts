@@ -8,7 +8,6 @@ import { fetchLUSDTotalSupply } from "./fetchLUSDTotalSupply";
 import {
   DEFAULT_NETWORK,
   DEFAULT_OUTPUT_DIR,
-  EXCLUDED_LQTY_HOLDERS,
   LQTY_CIRCULATING_SUPPLY_FILE,
   LUSD_TOTAL_SUPPLY_FILE
 } from "./constants";
@@ -22,7 +21,7 @@ const lusdTotalSupplyFile = path.join(outputDir, LUSD_TOTAL_SUPPLY_FILE);
 connectToLiquity(DEFAULT_NETWORK, { alchemyApiKey })
   .then(async liquity => {
     const [lqtyCirculatingSupply, lusdTotalSupply] = await Promise.all([
-      fetchLQTYCirculatingSupply(liquity, EXCLUDED_LQTY_HOLDERS),
+      fetchLQTYCirculatingSupply(liquity),
       fetchLUSDTotalSupply(liquity)
     ]);
 
