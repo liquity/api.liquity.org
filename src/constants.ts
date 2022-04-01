@@ -1,3 +1,5 @@
+import { Decimal } from "@liquity/lib-base";
+
 export const DEFAULT_SERVER_PORT = 8080;
 export const DEFAULT_NETWORK = "mainnet";
 
@@ -5,13 +7,18 @@ export const DEFAULT_OUTPUT_DIR = "docs/v1";
 export const LQTY_CIRCULATING_SUPPLY_FILE = "lqty_circulating_supply.txt";
 export const LUSD_TOTAL_SUPPLY_FILE = "lusd_total_supply.txt";
 
-export const EXCLUDED_LQTY_HOLDERS = Object.freeze([
-  "0xb8a9fada75c6d891fb77a7988ff9bad9e485ca1c", // LQTY Safe
-  "0xf06016d822943c42e3cb7fc3a6a3b1889c1045f8", // General Safe
+export const TOTAL_LQTY_SUPPLY = Decimal.from(100e6); // 100 million
+
+export const GNOSIS_SAFE_RESERVE = "0xb8a9fada75c6d891fb77a7988ff9bad9e485ca1c";
+export const GNOSIS_SAFE_FUNDS = "0xf06016d822943c42e3cb7fc3a6a3b1889c1045f8";
+
+export const REWARD_CONTRACTS = Object.freeze([
   "0xd8c9d9071123a059c6e0a945cf0e0c82b508d816", // Stability Pool rewards
   "0xd37a77e71ddf3373a79be2ebb76b6c4808bdf0d5", // Uniswap v2 ETH/LUSD LP rewards
-  "0xeb31da939878d1d780fdbcc244531c0fb80a2cf3", // Curve LUSD/3Pool LP rewards
-  //            Lockup contracts
+  "0xeb31da939878d1d780fdbcc244531c0fb80a2cf3" //  Curve LUSD/3Pool LP rewards
+]);
+
+export const LOCKUP_CONTRACTS = Object.freeze([
   "0x241aD9DfC7466C5299d622DF7664B71AB60Fe8D6",
   "0xd651d97Fdaf2323FC738827544eB7C91368f2BCA",
   "0xfEE47986A4B9083d7dB1829BeEd6f88A91DD4338",

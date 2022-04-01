@@ -1,7 +1,7 @@
 import WebSocket from "ws";
 import express from "express";
 
-import { EXCLUDED_LQTY_HOLDERS, DEFAULT_NETWORK, DEFAULT_SERVER_PORT } from "./constants";
+import { DEFAULT_NETWORK, DEFAULT_SERVER_PORT } from "./constants";
 import { connectToLiquity } from "./connection";
 import { LQTYCirculatingSupplyPoller } from "./LQTYCirculatingSupplyPoller";
 
@@ -12,10 +12,10 @@ const alchemyApiKey = process.env.ALCHEMY_API_KEY || undefined; // filter out em
 
 const app = express();
 const liquity = connectToLiquity(DEFAULT_NETWORK, { alchemyApiKey, useWebSocket: true });
-const poller = new LQTYCirculatingSupplyPoller(liquity, EXCLUDED_LQTY_HOLDERS);
+const poller = new LQTYCirculatingSupplyPoller(liquity);
 
 app.get("/", (_req, res) => {
-  res.send(`${poller.latestCirculatingSupply}`);
+  res.type("text/plain").send(`${poller.latestCirculatingSupply}`);
 });
 
 poller.start().then(() =>
