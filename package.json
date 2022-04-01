@@ -11,7 +11,7 @@
     "@liquity/lib-base": "3.0.0",
     "@liquity/lib-ethers": "3.4.0",
     "@liquity/providers": "1.0.1",
-    "ethers": "5.6.1",
+    "ethers": "5.6.2",
     "express": "4.17.3",
     "ws": "8.5.0"
   },
