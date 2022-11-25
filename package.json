@@ -2,9 +2,10 @@
   "name": "@liquity/lqty-circulating-supply",
   "version": "0.0.1",
   "private": true,
+  "type": "module",
   "scripts": {
-    "start": "ts-node src/index.ts",
-    "once": "ts-node src/once.ts",
+    "start": "ts-node-esm src/index.ts",
+    "once": "ts-node-esm src/once.ts",
     "build": "tsc --project tsconfig.json"
   },
   "dependencies": {
@@ -13,6 +14,7 @@
     "@liquity/providers": "1.0.1",
     "ethers": "5.7.2",
     "express": "4.18.1",
+    "node-fetch": "^3.3.0",
     "ws": "8.11.0"
   },
   "devDependencies": {
