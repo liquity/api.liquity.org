@@ -6,6 +6,7 @@ export const DEFAULT_NETWORK = "mainnet";
 export const DEFAULT_OUTPUT_DIR = "docs/v1";
 export const LQTY_CIRCULATING_SUPPLY_FILE = "lqty_circulating_supply.txt";
 export const LUSD_TOTAL_SUPPLY_FILE = "lusd_total_supply.txt";
+export const LUSD_CB_BAMM_STATS_FILE = "lusd_cb_bamm_stats.json";
 
 export const TOTAL_LQTY_SUPPLY = Decimal.from(100e6); // 100 million
 
