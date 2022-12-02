@@ -156,5 +156,7 @@ export const fetchLUSDCBBAMMStats = async (transposeApiKey: string): Promise<LUS
     throw new Error(`fetchLUSDCBBAMMStats: query failed (${response.message})`);
   }
 
+  console.log("fetchLUSDCBBAMMStats: query stats", response.stats);
+
   return response.results[0];
 };
