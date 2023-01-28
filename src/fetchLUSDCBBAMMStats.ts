@@ -129,7 +129,7 @@ interface SQLQueryResponseError {
 }
 
 const executeSQLQuery = async <T extends unknown[]>(sql: string, transposeApiKey: string) => {
-  const response = await fetch("https://sql.transpose.io", {
+  const response = await fetch("https://api.transpose.io/sql", {
     method: "POST",
     headers: {
       "X-API-Key": transposeApiKey,
