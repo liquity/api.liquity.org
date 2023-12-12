@@ -23,7 +23,7 @@
     "@types/ws": "8.5.9",
     "@typescript-eslint/eslint-plugin": "5.62.0",
     "@typescript-eslint/parser": "5.62.0",
-    "eslint": "8.53.0",
+    "eslint": "8.55.0",
     "ts-node": "10.9.2",
     "typescript": "5.2.2"
   }
