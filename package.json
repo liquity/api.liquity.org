@@ -12,7 +12,7 @@
     "@liquity/lib-base": "3.0.0",
     "@liquity/lib-ethers": "3.4.0",
     "@liquity/providers": "1.0.1",
-    "ethers": "5.7.2",
+    "ethers": "6.13.2",
     "express": "4.19.2",
     "node-fetch": "^3.3.2",
     "ws": "8.18.0"
