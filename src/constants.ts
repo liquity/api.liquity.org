@@ -1,9 +1,9 @@
+import path from "path";
 import { Decimal } from "@liquity/lib-base";
 
-export const DEFAULT_SERVER_PORT = 8080;
-export const DEFAULT_NETWORK = "mainnet";
-
-export const DEFAULT_OUTPUT_DIR = "docs/v1";
+export const OUTPUT_DIR = "docs";
+export const OUTPUT_DIR_V1 = path.join(OUTPUT_DIR, "v1");
+export const OUTPUT_DIR_V2 = path.join(OUTPUT_DIR, "v2");
 export const LQTY_CIRCULATING_SUPPLY_FILE = "lqty_circulating_supply.txt";
 export const LUSD_TOTAL_SUPPLY_FILE = "lusd_total_supply.txt";
 export const LUSD_CB_BAMM_STATS_FILE = "lusd_cb_bamm_stats.json";
