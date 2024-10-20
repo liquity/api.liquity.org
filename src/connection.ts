@@ -1,7 +1,8 @@
-import { AlchemyProvider } from "@ethersproject/providers";
+import type { Provider } from "@ethersproject/abstract-provider";
 import { Networkish, getNetwork } from "@ethersproject/networks";
-import { EthersLiquity } from "@liquity/lib-ethers";
 import { Batched, WebSocketAugmented } from "@liquity/providers";
+
+import { AlchemyProvider } from "./AlchemyProvider.js";
 
 const BatchedWebSocketAugmentedAlchemyProvider = Batched(WebSocketAugmented(AlchemyProvider));
 
@@ -10,13 +11,12 @@ export interface LiquityConnectionOptions {
   useWebSocket?: boolean;
 }
 
-export const connectToLiquity = (
+export const getProvider = (
   networkish: Networkish,
   options?: LiquityConnectionOptions
-): Promise<EthersLiquity> => {
+): Provider => {
   const network = getNetwork(networkish);
   const provider = new BatchedWebSocketAugmentedAlchemyProvider(network, options?.alchemyApiKey);
-  const liquity = EthersLiquity.connect(provider);
 
   provider.chainId = network.chainId;
 
@@ -27,5 +27,5 @@ export const connectToLiquity = (
     );
   }
 
-  return liquity;
+  return provider;
 };

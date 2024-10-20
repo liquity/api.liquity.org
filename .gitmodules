@@ -1,0 +1,3 @@
+[submodule "bold"]
+	path = bold
+	url = git@github.com:liquity/bold.git
