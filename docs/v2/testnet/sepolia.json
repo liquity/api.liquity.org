@@ -1,0 +1,49 @@
+{
+  "total_bold_supply": "3009156.977365933987846234",
+  "total_debt_pending": "1337.718083106992078439",
+  "total_coll_value": "18016000",
+  "total_sp_deposits": "750000",
+  "total_value_locked": "18766000",
+  "max_sp_apy": "0.25023972602739725",
+  "branch": {
+    "WETH": {
+      "coll_active": "1002",
+      "coll_default": "0",
+      "coll_price": "8000",
+      "sp_deposits": "250000",
+      "interest_accrual_1y": "50244.513230739876141014",
+      "interest_pending": "0.516210752370615166",
+      "batch_management_fees_pending": "0",
+      "debt_pending": "0.516210752370615166",
+      "coll_value": "8016000",
+      "sp_apy": "0.2009780529229595",
+      "value_locked": "8266000"
+    },
+    "wstETH": {
+      "coll_active": "1000",
+      "coll_default": "0",
+      "coll_price": "8000",
+      "sp_deposits": "300000",
+      "interest_accrual_1y": "50047.945205479452054794",
+      "interest_pending": "668.639024415671066075",
+      "batch_management_fees_pending": "0",
+      "debt_pending": "668.639024415671066075",
+      "coll_value": "8000000",
+      "sp_apy": "0.16682648401826483",
+      "value_locked": "8300000"
+    },
+    "rETH": {
+      "coll_active": "1000",
+      "coll_default": "0",
+      "coll_price": "2000",
+      "sp_deposits": "200000",
+      "interest_accrual_1y": "50047.945205479452054794",
+      "interest_pending": "668.562847938950397198",
+      "batch_management_fees_pending": "0",
+      "debt_pending": "668.562847938950397198",
+      "coll_value": "2000000",
+      "sp_apy": "0.25023972602739725",
+      "value_locked": "2200000"
+    }
+  }
+}
