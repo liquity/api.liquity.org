@@ -3,7 +3,7 @@ import type { BigNumber } from "@ethersproject/bignumber";
 import { resolveProperties } from "@ethersproject/properties";
 import { Decimal } from "@liquity/lib-base";
 
-import { getContracts, type LiquityV2Addresses } from "./contracts.js";
+import { getContracts, type LiquityV2Deployment } from "./contracts.js";
 
 const ONE_WEI = Decimal.fromBigNumberString("1");
 
@@ -14,10 +14,11 @@ const mapObj = <T extends Record<string, any>, U>(t: T, f: (v: T[keyof T]) => U)
 
 export const fetchV2Stats = async (
   provider: Provider,
-  addresses: LiquityV2Addresses,
+  deployment: LiquityV2Deployment,
   blockTag: BlockTag = "latest"
 ) => {
-  const contracts = getContracts(provider, addresses);
+  const SP_YIELD_SPLIT = Number(Decimal.fromBigNumberString(deployment.constants.SP_YIELD_SPLIT));
+  const contracts = getContracts(provider, deployment);
 
   const [total_bold_supply, branches] = await Promise.all([
     contracts.boldToken.totalSupply({ blockTag }).then(decimalify),
@@ -47,7 +48,8 @@ export const fetchV2Stats = async (
             ...branch,
             debt_pending: branch.interest_pending.add(branch.batch_management_fees_pending),
             coll_value: branch.coll_active.add(branch.coll_default).mul(branch.coll_price),
-            sp_apy: Number(branch.interest_accrual_1y) / Number(branch.sp_deposits)
+            sp_apy:
+              (SP_YIELD_SPLIT * Number(branch.interest_accrual_1y)) / Number(branch.sp_deposits)
           }))
           .then(branch => ({
             ...branch,
