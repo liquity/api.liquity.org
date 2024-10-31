@@ -42,7 +42,7 @@ jobs:
           TRANSPOSE_API_KEY: ${{ secrets.TRANSPOSE_API_KEY }}
 
       - name: Commit generated files
-        uses: EndBug/add-and-commit@v7.2.1
+        uses: EndBug/add-and-commit@v9
         if: ${{ github.event_name != 'pull_request' }}
         with:
           message: "chore: update generated files"
