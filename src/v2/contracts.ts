@@ -2,9 +2,14 @@ import type { Provider } from "@ethersproject/abstract-provider";
 import type { BigNumber } from "@ethersproject/bignumber";
 import { type CallOverrides, Contract } from "@ethersproject/contracts";
 
-export interface LiquityV2Addresses {
+export interface LiquityV2Deployment {
+  constants: LiquityV2Constants;
   boldToken: string;
   branches: LiquityV2BranchAddresses[];
+}
+
+export interface LiquityV2Constants {
+  SP_YIELD_SPLIT: string;
 }
 
 export interface LiquityV2BranchAddresses {
@@ -63,9 +68,9 @@ export interface StabilityPool {
   getTotalBoldDeposits(overrides?: CallOverrides): Promise<BigNumber>;
 }
 
-export const getContracts = (provider: Provider, addresses: LiquityV2Addresses) => ({
-  boldToken: new Contract(addresses.boldToken, erc20Abi, provider) as unknown as ERC20,
-  branches: addresses.branches.map(branch => ({
+export const getContracts = (provider: Provider, deployment: LiquityV2Deployment) => ({
+  boldToken: new Contract(deployment.boldToken, erc20Abi, provider) as unknown as ERC20,
+  branches: deployment.branches.map(branch => ({
     activePool: new Contract(branch.activePool, activePoolAbi, provider) as unknown as ActivePool,
     collToken: new Contract(branch.collToken, erc20Abi, provider) as unknown as ERC20,
     defaultPool: new Contract(

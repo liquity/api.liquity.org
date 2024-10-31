@@ -8,8 +8,8 @@ import { fetchLQTYCirculatingSupply } from "./fetchLQTYCirculatingSupply.js";
 import { fetchLUSDTotalSupply } from "./fetchLUSDTotalSupply.js";
 import { fetchLUSDCBBAMMStats } from "./fetchLUSDCBBAMMStats.js";
 import { fetchV2Stats } from "./v2/fetchV2Stats.js";
-// import v2MainnetAddresses from "../bold/contracts/addresses/1.json";
-import v2SepoliaAddresses from "../bold/contracts/addresses/11155111.json";
+// import v2MainnetDeployment from "../bold/contracts/addresses/1.json";
+import v2SepoliaDeployment from "../bold/contracts/addresses/11155111.json";
 
 import {
   OUTPUT_DIR_V1,
@@ -61,8 +61,8 @@ EthersLiquity.connect(mainnetProvider)
       fetchLQTYCirculatingSupply(liquity),
       fetchLUSDTotalSupply(liquity),
       fetchLUSDCBBAMMStats(transposeApiKey),
-      // fetchV2Stats(mainnetProvider, v2MainnetAddresses),
-      fetchV2Stats(sepoliaProvider, v2SepoliaAddresses)
+      // fetchV2Stats(mainnetProvider, v2MainnetDeployment),
+      fetchV2Stats(sepoliaProvider, v2SepoliaDeployment)
     ]);
 
     const v2Stats = {
