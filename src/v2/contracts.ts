@@ -6,6 +6,7 @@ export interface LiquityV2Deployment {
   constants: LiquityV2Constants;
   boldToken: string;
   branches: LiquityV2BranchAddresses[];
+  governance: LiquityV2Governance;
 }
 
 export interface LiquityV2Constants {
@@ -13,11 +14,16 @@ export interface LiquityV2Constants {
 }
 
 export interface LiquityV2BranchAddresses {
-  activePool: string;
+  collSymbol: string;
   collToken: string;
+  activePool: string;
   defaultPool: string;
   priceFeed: string;
   stabilityPool: string;
+}
+
+export interface LiquityV2Governance {
+  governance: string;
 }
 
 const erc20Abi = [
@@ -68,11 +74,23 @@ export interface StabilityPool {
   getTotalBoldDeposits(overrides?: CallOverrides): Promise<BigNumber>;
 }
 
+const governanceAbi = ["function owner() view returns (address)"];
+
+export interface Governance {
+  owner(overrides?: CallOverrides): Promise<string>;
+}
+
 export const getContracts = (provider: Provider, deployment: LiquityV2Deployment) => ({
   boldToken: new Contract(deployment.boldToken, erc20Abi, provider) as unknown as ERC20,
+  governance: new Contract(
+    deployment.governance.governance,
+    governanceAbi,
+    provider
+  ) as unknown as Governance,
   branches: deployment.branches.map(branch => ({
-    activePool: new Contract(branch.activePool, activePoolAbi, provider) as unknown as ActivePool,
+    collSymbol: branch.collSymbol,
     collToken: new Contract(branch.collToken, erc20Abi, provider) as unknown as ERC20,
+    activePool: new Contract(branch.activePool, activePoolAbi, provider) as unknown as ActivePool,
     defaultPool: new Contract(
       branch.defaultPool,
       defaultPoolAbi,
@@ -86,3 +104,6 @@ export const getContracts = (provider: Provider, deployment: LiquityV2Deployment
     ) as unknown as StabilityPool
   }))
 });
+
+export type LiquityV2Contracts = ReturnType<typeof getContracts>;
+export type LiquityV2BranchContracts = LiquityV2Contracts["branches"][0];

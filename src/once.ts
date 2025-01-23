@@ -8,7 +8,7 @@ import { fetchLQTYCirculatingSupply } from "./fetchLQTYCirculatingSupply.js";
 import { fetchLUSDTotalSupply } from "./fetchLUSDTotalSupply.js";
 import { fetchLUSDCBBAMMStats } from "./fetchLUSDCBBAMMStats.js";
 import { fetchV2Stats } from "./v2/fetchV2Stats.js";
-// import v2MainnetDeployment from "../bold/contracts/addresses/1.json";
+import v2MainnetDeployment from "../bold/contracts/addresses/1.json";
 import v2SepoliaDeployment from "../bold/contracts/addresses/11155111.json";
 
 import {
@@ -51,22 +51,17 @@ const writeTree = (parentDir: string, tree: Tree) => {
 
 EthersLiquity.connect(mainnetProvider)
   .then(async liquity => {
-    const [
-      lqtyCirculatingSupply,
-      lusdTotalSupply,
-      lusdCBBAMMStats,
-      // v2MainnetStats,
-      v2SepoliaStats
-    ] = await Promise.all([
-      fetchLQTYCirculatingSupply(liquity),
-      fetchLUSDTotalSupply(liquity),
-      fetchLUSDCBBAMMStats(transposeApiKey),
-      // fetchV2Stats(mainnetProvider, v2MainnetDeployment),
-      fetchV2Stats(sepoliaProvider, v2SepoliaDeployment)
-    ]);
+    const [lqtyCirculatingSupply, lusdTotalSupply, lusdCBBAMMStats, v2MainnetStats, v2SepoliaStats] =
+      await Promise.all([
+        fetchLQTYCirculatingSupply(liquity),
+        fetchLUSDTotalSupply(liquity),
+        fetchLUSDCBBAMMStats(transposeApiKey),
+        fetchV2Stats(mainnetProvider, v2MainnetDeployment),
+        fetchV2Stats(sepoliaProvider, v2SepoliaDeployment)
+      ]);
 
     const v2Stats = {
-      // ...v2MainnetStats,
+      ...v2MainnetStats,
       testnet: {
         sepolia: v2SepoliaStats
       }
@@ -78,10 +73,10 @@ EthersLiquity.connect(mainnetProvider)
     fs.writeFileSync(lusdCBBAMMStatsFile, JSON.stringify(lusdCBBAMMStats));
 
     writeTree(OUTPUT_DIR_V2, v2Stats);
-    // fs.writeFileSync(
-    //   path.join(OUTPUT_DIR_V2, "mainnet.json"),
-    //   JSON.stringify(v2MainnetStats, null, 2)
-    // );
+    fs.writeFileSync(
+      path.join(OUTPUT_DIR_V2, "mainnet.json"),
+      JSON.stringify(v2MainnetStats, null, 2)
+    );
     fs.writeFileSync(
       path.join(OUTPUT_DIR_V2, "testnet", "sepolia.json"),
       JSON.stringify(v2SepoliaStats, null, 2)
