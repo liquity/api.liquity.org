@@ -2,7 +2,7 @@ import type { Provider } from "@ethersproject/abstract-provider";
 import { Networkish, getNetwork } from "@ethersproject/networks";
 import { Batched } from "@liquity/providers";
 
-import { AlchemyProvider } from "./AlchemyProvider.js";
+import { AlchemyProvider } from "./AlchemyProvider";
 
 const BatchedAlchemyProvider = Batched(AlchemyProvider);
 

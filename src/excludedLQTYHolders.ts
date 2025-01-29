@@ -8,7 +8,7 @@ import {
   GNOSIS_SAFE_FUNDS,
   REWARD_CONTRACTS,
   LOCKUP_CONTRACTS
-} from "./constants.js";
+} from "./constants";
 
 const oneYear = 365 * 24 * 60 * 60;
 

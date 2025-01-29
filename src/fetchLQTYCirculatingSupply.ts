@@ -2,8 +2,8 @@ import { BlockTag } from "@ethersproject/abstract-provider";
 import { Decimal } from "@liquity/lib-base";
 import { EthersLiquity } from "@liquity/lib-ethers";
 
-import { TOTAL_LQTY_SUPPLY } from "./constants.js";
-import { getExcludedLQTYHolders } from "./excludedLQTYHolders.js";
+import { TOTAL_LQTY_SUPPLY } from "./constants";
+import { getExcludedLQTYHolders } from "./excludedLQTYHolders";
 
 const getLQTYBalance = (liquity: EthersLiquity, blockTag: BlockTag) => (address: string) =>
   liquity.getLQTYBalance(address, { blockTag });

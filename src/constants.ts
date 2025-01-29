@@ -1,5 +1,5 @@
-import path from "path";
 import { Decimal } from "@liquity/lib-base";
+import path from "path";
 
 export const OUTPUT_DIR = "docs";
 export const OUTPUT_DIR_V1 = path.join(OUTPUT_DIR, "v1");

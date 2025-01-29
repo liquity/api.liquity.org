@@ -1,23 +1,23 @@
+import { EthersLiquity } from "@liquity/lib-ethers";
 import fs from "fs";
 import path from "path";
 import util from "util";
-import { EthersLiquity } from "@liquity/lib-ethers";
 
-import { getProvider } from "./connection.js";
-import { fetchLQTYCirculatingSupply } from "./fetchLQTYCirculatingSupply.js";
-import { fetchLUSDTotalSupply } from "./fetchLUSDTotalSupply.js";
-import { fetchLUSDCBBAMMStats } from "./fetchLUSDCBBAMMStats.js";
-import { fetchV2Stats } from "./v2/fetchV2Stats.js";
 import v2MainnetDeployment from "../bold/contracts/addresses/1.json";
 import v2SepoliaDeployment from "../bold/contracts/addresses/11155111.json";
+import { getProvider } from "./connection";
+import { fetchLQTYCirculatingSupply } from "./fetchLQTYCirculatingSupply";
+import { fetchLUSDCBBAMMStats } from "./fetchLUSDCBBAMMStats";
+import { fetchLUSDTotalSupply } from "./fetchLUSDTotalSupply";
+import { fetchV2Stats } from "./v2/fetchV2Stats";
 
 import {
-  OUTPUT_DIR_V1,
-  OUTPUT_DIR_V2,
   LQTY_CIRCULATING_SUPPLY_FILE,
   LUSD_CB_BAMM_STATS_FILE,
-  LUSD_TOTAL_SUPPLY_FILE
-} from "./constants.js";
+  LUSD_TOTAL_SUPPLY_FILE,
+  OUTPUT_DIR_V1,
+  OUTPUT_DIR_V2
+} from "./constants";
 
 const panic = <T>(message: string): T => {
   throw new Error(message);
