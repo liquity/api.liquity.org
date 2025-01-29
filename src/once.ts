@@ -24,6 +24,7 @@ const panic = <T>(message: string): T => {
 };
 
 const alchemyApiKey = process.env.ALCHEMY_API_KEY || undefined; // filter out empty string
+const duneApiKey: string = process.env.DUNE_API_KEY || panic("missing DUNE_API_KEY");
 const transposeApiKey: string = process.env.TRANSPOSE_API_KEY || panic("missing TRANSPOSE_API_KEY");
 
 const lqtyCirculatingSupplyFile = path.join(OUTPUT_DIR_V1, LQTY_CIRCULATING_SUPPLY_FILE);
@@ -51,14 +52,15 @@ const writeTree = (parentDir: string, tree: Tree) => {
 
 EthersLiquity.connect(mainnetProvider)
   .then(async liquity => {
-    const [lqtyCirculatingSupply, lusdTotalSupply, lusdCBBAMMStats, v2MainnetStats, v2SepoliaStats] =
-      await Promise.all([
+    const [lqtyCirculatingSupply, lusdTotalSupply, lusdCBBAMMStats, v2MainnetStats, v2SepoliaStats] = await Promise.all(
+      [
         fetchLQTYCirculatingSupply(liquity),
         fetchLUSDTotalSupply(liquity),
         fetchLUSDCBBAMMStats(transposeApiKey),
-        fetchV2Stats(mainnetProvider, v2MainnetDeployment),
-        fetchV2Stats(sepoliaProvider, v2SepoliaDeployment)
-      ]);
+        fetchV2Stats("mainnet", mainnetProvider, duneApiKey, v2MainnetDeployment),
+        fetchV2Stats("sepolia", sepoliaProvider, duneApiKey, v2SepoliaDeployment)
+      ]
+    );
 
     const v2Stats = {
       ...v2MainnetStats,
