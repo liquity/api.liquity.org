@@ -3,8 +3,9 @@ import type { BigNumber } from "@ethersproject/bignumber";
 import { AddressZero } from "@ethersproject/constants";
 import { resolveProperties } from "@ethersproject/properties";
 import { Decimal } from "@liquity/lib-base";
+import { DUNE_SPV2_AVERAGE_APY_URL_MAINNET, DUNE_SPV2_AVERAGE_APY_URL_SEPOLIA } from "../constants";
 
-import { getContracts, LiquityV2BranchContracts, type LiquityV2Deployment } from "./contracts.js";
+import { getContracts, LiquityV2BranchContracts, type LiquityV2Deployment } from "./contracts";
 
 const ONE_WEI = Decimal.fromBigNumberString("1");
 
@@ -55,8 +56,48 @@ const emptyBranchData = (branches: LiquityV2BranchContracts[]): ReturnType<typeo
     }))
   );
 
+const fetchSpAverageApys = async (
+  branches: LiquityV2BranchContracts[],
+  duneQueryUrl: string,
+  duneApiKey: string
+) => {
+  const response = await fetch(`${duneQueryUrl}?limit=${branches.length}`, {
+    headers: { "X-Dune-API-Key": duneApiKey }
+  });
+
+  const data = await response.json() as {
+    result?: {
+      rows?: {
+        collateral_type?: string;
+        apr?: number;
+      }[];
+    };
+  };
+
+  if (data.result?.rows?.length !== branches.length) {
+    throw new Error("Dune query returned unexpected number of rows");
+  }
+
+  return data.result.rows.map(row => {
+    if (typeof row.apr !== "number") {
+      throw new Error("Dune query returned undefined APR");
+    }
+    if (typeof row.collateral_type !== "string") {
+      throw new Error("Dune query returned undefined collateral type");
+    }
+
+    let symbol = row.collateral_type.toUpperCase();
+    if (symbol === "WSTETH") symbol = "wstETH";
+    if (symbol === "RETH") symbol = "rETH";
+
+    return { symbol, avg_apy: row.apr };
+  });
+};
+
 export const fetchV2Stats = async (
+  network: "mainnet" | "sepolia",
   provider: Provider,
+  duneApiKey: string,
   deployment: LiquityV2Deployment,
   blockTag: BlockTag = "latest"
 ) => {
@@ -69,7 +110,13 @@ export const fetchV2Stats = async (
     .then(owner => owner == AddressZero)
     .catch(() => false);
 
-  const [total_bold_supply, branches] = await Promise.all([
+  const spV2AverageApyUrl = network === "mainnet"
+    ? DUNE_SPV2_AVERAGE_APY_URL_MAINNET
+    : network === "sepolia"
+    ? DUNE_SPV2_AVERAGE_APY_URL_SEPOLIA
+    : null;
+
+  const [total_bold_supply, branches, spV2AverageApys] = await Promise.all([
     deployed ? contracts.boldToken.totalSupply({ blockTag }).then(decimalify) : Decimal.ZERO,
 
     (deployed ? fetchBranchData : emptyBranchData)(contracts.branches)
@@ -86,7 +133,11 @@ export const fetchV2Stats = async (
           ...branch,
           value_locked: branch.coll_value.add(branch.sp_deposits) // taking BOLD at face value
         }))
-      )
+      ),
+
+    deployed && spV2AverageApyUrl
+      ? fetchSpAverageApys(contracts.branches, spV2AverageApyUrl, duneApiKey)
+      : null
   ]);
 
   const sp_apys = branches.map(b => b.sp_apy).filter(x => !isNaN(x));
@@ -100,7 +151,16 @@ export const fetchV2Stats = async (
     max_sp_apy: `${sp_apys.length > 0 ? Math.max(...sp_apys) : NaN}`,
 
     branch: Object.fromEntries(
-      branches.map(({ coll_symbol, ...b }) => [coll_symbol, mapObj(b, x => `${x}`)])
+      branches.map(({ coll_symbol, ...branch }) => {
+        const sp_apy_avg = spV2AverageApys?.find(x => x.symbol === coll_symbol)?.avg_apy;
+        return [
+          coll_symbol,
+          mapObj({
+            ...branch,
+            ...(typeof sp_apy_avg === "number" ? { sp_apy_avg } : {})
+          }, x => `${x}`)
+        ];
+      })
     )
   };
 };
