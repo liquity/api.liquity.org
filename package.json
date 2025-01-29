@@ -4,7 +4,6 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "tsx src/index.ts",
     "once": "tsx src/once.ts",
     "build": "tsc --project tsconfig.json"
   },
