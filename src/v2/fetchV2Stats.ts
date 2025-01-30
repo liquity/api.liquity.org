@@ -56,42 +56,54 @@ const emptyBranchData = (branches: LiquityV2BranchContracts[]): ReturnType<typeo
     }))
   );
 
+const isDuneSpAverageApyResponse = (data: unknown): data is {
+  result: {
+    rows: {
+      collateral_type: string;
+      apr: number;
+    }[];
+  };
+} => (
+  typeof data === "object"
+  && data !== null
+  && "result" in data
+  && typeof data.result === "object"
+  && data.result !== null
+  && "rows" in data.result
+  && Array.isArray(data.result.rows)
+  && data.result.rows.length > 0
+  && data.result.rows.every((row: unknown) =>
+    typeof row === "object"
+    && row !== null
+    && "collateral_type" in row
+    && typeof row.collateral_type === "string"
+    && "apr" in row
+    && typeof row.apr === "number"
+  )
+);
+
 const fetchSpAverageApys = async (
   branches: LiquityV2BranchContracts[],
   duneQueryUrl: string,
   duneApiKey: string
 ) => {
-  const response = await fetch(`${duneQueryUrl}?limit=${branches.length}`, {
+  const response = await fetch(`${duneQueryUrl}?limit=${branches.length * 7}`, {
     headers: { "X-Dune-API-Key": duneApiKey }
   });
 
-  const data = await response.json() as {
-    result?: {
-      rows?: {
-        collateral_type?: string;
-        apr?: number;
-      }[];
-    };
-  };
+  const data = await response.json();
 
-  if (data.result?.rows?.length !== branches.length) {
-    throw new Error("Dune query returned unexpected number of rows");
+  if (!isDuneSpAverageApyResponse(data)) {
+    throw new Error("Dune query returned unexpected response");
   }
 
-  return data.result.rows.map(row => {
-    if (typeof row.apr !== "number") {
-      throw new Error("Dune query returned undefined APR");
-    }
-    if (typeof row.collateral_type !== "string") {
-      throw new Error("Dune query returned undefined collateral type");
-    }
-
-    let symbol = row.collateral_type.toUpperCase();
-    if (symbol === "WSTETH") symbol = "wstETH";
-    if (symbol === "RETH") symbol = "rETH";
-
-    return { symbol, avg_apy: row.apr };
-  });
+  return Object.fromEntries(branches.map(branch => {
+    const apys = data.result.rows.filter(row => row.collateral_type === branch.collSymbol);
+    return [branch.collSymbol, {
+      apy_avg_1d: apys[0].apr,
+      apy_avg_7d: apys.reduce((acc, { apr }) => acc + apr, 0) / apys.length
+    }];
+  })) as Record<string, { apy_avg_1d: number; apy_avg_7d: number }>;
 };
 
 export const fetchV2Stats = async (
@@ -152,12 +164,16 @@ export const fetchV2Stats = async (
 
     branch: Object.fromEntries(
       branches.map(({ coll_symbol, ...branch }) => {
-        const sp_apy_avg = spV2AverageApys?.find(x => x.symbol === coll_symbol)?.avg_apy;
+        const {
+          apy_avg_1d: sp_apy_avg_1d,
+          apy_avg_7d: sp_apy_avg_7d
+        } = spV2AverageApys?.[coll_symbol] ?? {};
         return [
           coll_symbol,
           mapObj({
             ...branch,
-            ...(typeof sp_apy_avg === "number" ? { sp_apy_avg } : {})
+            ...(sp_apy_avg_1d !== undefined ? { sp_apy_avg_1d } : {}),
+            ...(sp_apy_avg_7d !== undefined ? { sp_apy_avg_7d } : {})
           }, x => `${x}`)
         ];
       })
