@@ -3,6 +3,7 @@ import type { BigNumber } from "@ethersproject/bignumber";
 import { AddressZero } from "@ethersproject/constants";
 import { resolveProperties } from "@ethersproject/properties";
 import { Decimal } from "@liquity/lib-base";
+import util from "util";
 import { DUNE_SPV2_AVERAGE_APY_URL_MAINNET, DUNE_SPV2_AVERAGE_APY_URL_SEPOLIA } from "../constants";
 
 import { getContracts, LiquityV2BranchContracts, type LiquityV2Deployment } from "./contracts";
@@ -97,13 +98,20 @@ const fetchSpAverageApys = async (
     throw new Error("Dune query returned unexpected response");
   }
 
-  return Object.fromEntries(branches.map(branch => {
+  console.log(
+    "SP Average APYs (Dune):",
+    util.inspect(data, { colors: true, depth: null })
+  );
+
+  const spAvgApys = Object.fromEntries(branches.map(branch => {
     const apys = data.result.rows.filter(row => row.collateral_type === branch.collSymbol);
     return [branch.collSymbol, {
       apy_avg_1d: apys[0].apr,
       apy_avg_7d: apys.reduce((acc, { apr }) => acc + apr, 0) / apys.length
     }];
   })) as Record<string, { apy_avg_1d: number; apy_avg_7d: number }>;
+
+  return spAvgApys;
 };
 
 export const fetchV2Stats = async (
