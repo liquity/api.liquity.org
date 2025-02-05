@@ -175,7 +175,7 @@ export const fetchV2Stats = async ({
     max_sp_apy: `${sp_apys.length > 0 ? Math.max(...sp_apys) : NaN}`,
 
     branch: Object.fromEntries(
-      branches.map(({ coll_symbol, ...branch }) => {
+      branches.map(({ coll_symbol, sp_apy, ...branch }) => {
         const {
           apy_avg_1d: sp_apy_avg_1d,
           apy_avg_7d: sp_apy_avg_7d
@@ -184,9 +184,10 @@ export const fetchV2Stats = async ({
           coll_symbol,
           mapObj({
             ...branch,
-            ...(sp_apy_avg_1d !== undefined ? { sp_apy_avg_1d } : {}),
-            ...(sp_apy_avg_7d !== undefined ? { sp_apy_avg_7d } : {}),
-            apy_avg: sp_apy_avg_1d ?? branch.sp_apy
+            sp_apy,
+            apy_avg: sp_apy,
+            ...(sp_apy_avg_1d !== undefined ? { sp_apy_avg_1d: sp_apy } : {}),
+            ...(sp_apy_avg_7d !== undefined ? { sp_apy_avg_7d } : {})
           }, x => `${x}`)
         ];
       })
