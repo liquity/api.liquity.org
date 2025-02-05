@@ -184,7 +184,7 @@ export const fetchV2Stats = async ({
           coll_symbol,
           mapObj({
             ...branch,
-            ...(sp_apy !== undefined ? { sp_apy } : {}),
+            ...(sp_apy_avg_1d !== undefined ? { sp_apy } : {}),
             ...(sp_apy_avg_7d !== undefined ? { sp_apy_avg_7d } : {})
           }, x => `${x}`)
         ];
