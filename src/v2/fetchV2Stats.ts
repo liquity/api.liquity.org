@@ -177,7 +177,7 @@ export const fetchV2Stats = async ({
     branch: Object.fromEntries(
       branches.map(({ coll_symbol, ...branch }) => {
         const {
-          sp_apy: sp_apy_avg_1d,
+          sp_apys: sp_apy_avg_1d,
           apy_avg_7d: sp_apy_avg_7d
         } = spV2AverageApys?.[coll_symbol] ?? {};
         return [
