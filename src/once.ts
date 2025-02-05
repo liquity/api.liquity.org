@@ -57,8 +57,18 @@ EthersLiquity.connect(mainnetProvider)
         fetchLQTYCirculatingSupply(liquity),
         fetchLUSDTotalSupply(liquity),
         fetchLUSDCBBAMMStats(transposeApiKey),
-        fetchV2Stats("mainnet", mainnetProvider, duneApiKey, v2MainnetDeployment),
-        fetchV2Stats("sepolia", sepoliaProvider, duneApiKey, v2SepoliaDeployment)
+        fetchV2Stats({
+          network: "mainnet",
+          deployment: v2MainnetDeployment,
+          duneApiKey,
+          provider: mainnetProvider
+        }),
+        fetchV2Stats({
+          network: "sepolia",
+          deployment: v2SepoliaDeployment,
+          provider: sepoliaProvider,
+          duneApiKey
+        })
       ]
     );
 
