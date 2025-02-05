@@ -185,7 +185,8 @@ export const fetchV2Stats = async ({
           mapObj({
             ...branch,
             ...(sp_apy_avg_1d !== undefined ? { sp_apy_avg_1d } : {}),
-            ...(sp_apy_avg_7d !== undefined ? { sp_apy_avg_7d } : {})
+            ...(sp_apy_avg_7d !== undefined ? { sp_apy_avg_7d } : {}),
+            apy_avg: sp_apy_avg_1d ?? branch.sp_apy
           }, x => `${x}`)
         ];
       })
