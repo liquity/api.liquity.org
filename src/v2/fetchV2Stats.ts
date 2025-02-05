@@ -3,9 +3,9 @@ import type { BigNumber } from "@ethersproject/bignumber";
 import { AddressZero } from "@ethersproject/constants";
 import { resolveProperties } from "@ethersproject/properties";
 import { Decimal } from "@liquity/lib-base";
-import util from "util";
 import { DUNE_SPV2_AVERAGE_APY_URL_MAINNET, DUNE_SPV2_AVERAGE_APY_URL_SEPOLIA } from "../constants";
 
+import { duneFetch, type DuneResponse, isDuneResponse } from "../dune";
 import { getContracts, LiquityV2BranchContracts, type LiquityV2Deployment } from "./contracts";
 
 const ONE_WEI = Decimal.fromBigNumberString("1");
@@ -57,21 +57,11 @@ const emptyBranchData = (branches: LiquityV2BranchContracts[]): ReturnType<typeo
     }))
   );
 
-const isDuneSpAverageApyResponse = (data: unknown): data is {
-  result: {
-    rows: {
-      collateral_type: string;
-      apr: number;
-    }[];
-  };
-} => (
-  typeof data === "object"
-  && data !== null
-  && "result" in data
-  && typeof data.result === "object"
-  && data.result !== null
-  && "rows" in data.result
-  && Array.isArray(data.result.rows)
+const isDuneSpAverageApyResponse = (data: unknown): data is DuneResponse<{
+  apr: number;
+  collateral_type: string;
+}> => (
+  isDuneResponse(data)
   && data.result.rows.length > 0
   && data.result.rows.every((row: unknown) =>
     typeof row === "object"
@@ -83,44 +73,57 @@ const isDuneSpAverageApyResponse = (data: unknown): data is {
   )
 );
 
-const fetchSpAverageApys = async (
-  branches: LiquityV2BranchContracts[],
-  duneQueryUrl: string,
-  duneApiKey: string
-) => {
-  const response = await fetch(`${duneQueryUrl}?limit=${branches.length * 7}`, {
-    headers: { "X-Dune-API-Key": duneApiKey }
-  });
+const fetchSpAverageApysFromDune = async ({
+  branches,
+  apiKey,
+  network
+}: {
+  branches: LiquityV2BranchContracts[];
+  apiKey: string;
+  network: "mainnet" | "sepolia";
+}) => {
+  const url = network === "sepolia"
+    ? DUNE_SPV2_AVERAGE_APY_URL_SEPOLIA
+    : DUNE_SPV2_AVERAGE_APY_URL_MAINNET;
 
-  const data = await response.json();
-
-  if (!isDuneSpAverageApyResponse(data)) {
-    throw new Error("Dune query returned unexpected response");
+  // disabled when DUNE_SPV2_AVERAGE_APY_URL_* is null
+  if (!url) {
+    return null;
   }
 
-  console.log(
-    "SP Average APYs (Dune):",
-    util.inspect(data, { colors: true, depth: null })
-  );
+  const { result: { rows: sevenDaysApys } } = await duneFetch({
+    apiKey,
+    url: `${url}?limit=${branches.length * 7}`,
+    validate: isDuneSpAverageApyResponse
+  });
 
-  const spAvgApys = Object.fromEntries(branches.map(branch => {
-    const apys = data.result.rows.filter(row => row.collateral_type === branch.collSymbol);
+  return Object.fromEntries(branches.map(branch => {
+    const apys = sevenDaysApys.filter(row => (
+      row.collateral_type === branch.collSymbol
+    ));
     return [branch.collSymbol, {
       apy_avg_1d: apys[0].apr,
       apy_avg_7d: apys.reduce((acc, { apr }) => acc + apr, 0) / apys.length
     }];
-  })) as Record<string, { apy_avg_1d: number; apy_avg_7d: number }>;
-
-  return spAvgApys;
+  })) as Record<string, {
+    apy_avg_1d: number;
+    apy_avg_7d: number;
+  }>;
 };
 
-export const fetchV2Stats = async (
-  network: "mainnet" | "sepolia",
-  provider: Provider,
-  duneApiKey: string,
-  deployment: LiquityV2Deployment,
-  blockTag: BlockTag = "latest"
-) => {
+export const fetchV2Stats = async ({
+  network,
+  provider,
+  duneApiKey,
+  deployment,
+  blockTag = "latest"
+}: {
+  network: "mainnet" | "sepolia";
+  provider: Provider;
+  duneApiKey: string;
+  deployment: LiquityV2Deployment;
+  blockTag?: BlockTag;
+}) => {
   const SP_YIELD_SPLIT = Number(Decimal.fromBigNumberString(deployment.constants.SP_YIELD_SPLIT));
   const contracts = getContracts(provider, deployment);
 
@@ -130,15 +133,11 @@ export const fetchV2Stats = async (
     .then(owner => owner == AddressZero)
     .catch(() => false);
 
-  const spV2AverageApyUrl = network === "mainnet"
-    ? DUNE_SPV2_AVERAGE_APY_URL_MAINNET
-    : network === "sepolia"
-    ? DUNE_SPV2_AVERAGE_APY_URL_SEPOLIA
-    : null;
-
   const [total_bold_supply, branches, spV2AverageApys] = await Promise.all([
+    // total_bold_supply
     deployed ? contracts.boldToken.totalSupply({ blockTag }).then(decimalify) : Decimal.ZERO,
 
+    // branches
     (deployed ? fetchBranchData : emptyBranchData)(contracts.branches)
       .then(branches =>
         branches.map(branch => ({
@@ -155,8 +154,13 @@ export const fetchV2Stats = async (
         }))
       ),
 
-    deployed && spV2AverageApyUrl
-      ? fetchSpAverageApys(contracts.branches, spV2AverageApyUrl, duneApiKey)
+    // spV2AverageApys
+    deployed
+      ? fetchSpAverageApysFromDune({
+        branches: contracts.branches,
+        apiKey: duneApiKey,
+        network
+      })
       : null
   ]);
 
