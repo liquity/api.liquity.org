@@ -177,8 +177,8 @@ export const fetchV2Stats = async ({
     branch: Object.fromEntries(
       branches.map(({ coll_symbol, sp_apy, ...branch }) => {
         const {
-          apy_avg_1d: sp_apy_avg_1d,
-          apy_avg_7d: sp_apy_avg_7d
+          // apy_avg_1d: sp_apy_avg_1d,
+          // apy_avg_7d: sp_apy_avg_7d
         } = spV2AverageApys?.[coll_symbol] ?? {};
         return [
           coll_symbol,
@@ -186,8 +186,8 @@ export const fetchV2Stats = async ({
             ...branch,
             sp_apy,
             apy_avg: sp_apy,
-            ...(sp_apy_avg_1d !== undefined ? { sp_apy_avg_1d } : {}),
-            ...(sp_apy_avg_7d !== undefined ? { sp_apy_avg_7d } : {})
+            // ...(sp_apy_avg_1d !== undefined ? { sp_apy_avg_1d } : {}),
+            // ...(sp_apy_avg_7d !== undefined ? { sp_apy_avg_7d } : {})
           }, x => `${x}`)
         ];
       })
