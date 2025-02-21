@@ -87,11 +87,9 @@ const fetchSpAverageApysFromDune = async ({
     : DUNE_SPV2_AVERAGE_APY_URL_MAINNET;
 
   // disabled when DUNE_SPV2_AVERAGE_APY_URL_* is null
-  /*if (!url) {
+  if (!url) {
     return null;
   }
-  */
-  return null;
 
   const { result: { rows: sevenDaysApys } } = await duneFetch({
     apiKey,
