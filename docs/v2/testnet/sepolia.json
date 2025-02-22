@@ -1,0 +1,52 @@
+{
+  "total_bold_supply": "1006572599.98357018063956762",
+  "total_debt_pending": "167888.194520702934433311",
+  "total_coll_value": "2003441241.1940458272303814",
+  "total_sp_deposits": "1350261.99678408137547677",
+  "total_value_locked": "2004791503.19082990860585817",
+  "max_sp_apy": "Infinity",
+  "branch": {
+    "WETH": {
+      "coll_active": "1000019.717629185351947857",
+      "coll_default": "0",
+      "coll_price": "2000",
+      "sp_deposits": "1265257.34883174105851416",
+      "interest_accrual_1y": "50240139.79249515217574632",
+      "interest_pending": "167352.429126142527453",
+      "batch_management_fees_pending": "0.000000000000000006",
+      "debt_pending": "167352.429126142527453006",
+      "coll_value": "2000039435.258370703895714",
+      "value_locked": "2001304692.60720244495422816",
+      "sp_apy": "29.78058564857402",
+      "apy_avg": "29.78058564857402"
+    },
+    "wstETH": {
+      "coll_active": "843.266307727586727796",
+      "coll_default": "39.863401230222329169",
+      "coll_price": "2000",
+      "sp_deposits": "0",
+      "interest_accrual_1y": "59488.427054935132861909",
+      "interest_pending": "204.497127098281579253",
+      "batch_management_fees_pending": "27.480305134084349947",
+      "debt_pending": "231.9774322323659292",
+      "coll_value": "1766259.41791561811393",
+      "value_locked": "1766259.41791561811393",
+      "sp_apy": "Infinity",
+      "apy_avg": "Infinity"
+    },
+    "rETH": {
+      "coll_active": "845.980884664141853677",
+      "coll_default": "14.833072051387209869",
+      "coll_price": "1900",
+      "sp_deposits": "85004.64795234031696261",
+      "interest_accrual_1y": "82350.401884493232219165",
+      "interest_pending": "303.455590505872321466",
+      "batch_management_fees_pending": "0.332371822168729639",
+      "debt_pending": "303.787962328041051105",
+      "coll_value": "1635546.5177595052207374",
+      "value_locked": "1720551.16571184553770001",
+      "sp_apy": "0.7265814623219022",
+      "apy_avg": "0.7265814623219022"
+    }
+  }
+}
