@@ -1,0 +1,52 @@
+{
+  "total_bold_supply": "1006964513.701349094188591321",
+  "total_debt_pending": "311787.068006131773395737",
+  "total_coll_value": "2003447241.1940458272303814",
+  "total_sp_deposits": "1350261.99678408137547677",
+  "total_value_locked": "2004797503.19082990860585817",
+  "max_sp_apy": "Infinity",
+  "branch": {
+    "WETH": {
+      "coll_active": "1000022.717629185351947857",
+      "coll_default": "0",
+      "coll_price": "2000",
+      "sp_deposits": "1265257.34883174105851416",
+      "interest_accrual_1y": "50240210.209904767411625762",
+      "interest_pending": "310827.845434871237954956",
+      "batch_management_fees_pending": "0.000000000000000006",
+      "debt_pending": "310827.845434871237954962",
+      "coll_value": "2000045435.258370703895714",
+      "value_locked": "2001310692.60720244495422816",
+      "sp_apy": "29.780627389534676",
+      "apy_avg": "29.780627389534676"
+    },
+    "wstETH": {
+      "coll_active": "843.266307727586727796",
+      "coll_default": "39.863401230222329169",
+      "coll_price": "2000",
+      "sp_deposits": "0",
+      "interest_accrual_1y": "59488.427054935132861909",
+      "interest_pending": "373.885216768022674841",
+      "batch_management_fees_pending": "48.742026488243330857",
+      "debt_pending": "422.627243256266005698",
+      "coll_value": "1766259.41791561811393",
+      "value_locked": "1766259.41791561811393",
+      "sp_apy": "Infinity",
+      "apy_avg": "Infinity"
+    },
+    "rETH": {
+      "coll_active": "845.980884664141853677",
+      "coll_default": "14.833072051387209869",
+      "coll_price": "1900",
+      "sp_deposits": "85004.64795234031696261",
+      "interest_accrual_1y": "82350.401884493232219165",
+      "interest_pending": "535.935663405817256714",
+      "batch_management_fees_pending": "0.659664598452178363",
+      "debt_pending": "536.595328004269435077",
+      "coll_value": "1635546.5177595052207374",
+      "value_locked": "1720551.16571184553770001",
+      "sp_apy": "0.7265814623219022",
+      "apy_avg": "0.7265814623219022"
+    }
+  }
+}
