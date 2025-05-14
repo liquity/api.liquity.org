@@ -86,7 +86,7 @@ EthersLiquity.connect(mainnetProvider)
 
     writeTree(OUTPUT_DIR_V2, v2Stats);
     fs.writeFileSync(
-      path.join(OUTPUT_DIR_V2, "mainnet.json"),
+      path.join(OUTPUT_DIR_V2, "ethereum.json"),
       JSON.stringify(v2MainnetStats, null, 2)
     );
     fs.writeFileSync(
