@@ -139,20 +139,25 @@ export const fetchV2Stats = async ({
 
     // branches
     (deployed ? fetchBranchData : emptyBranchData)(contracts.branches)
-      .then(branches =>
-        branches.map(branch => ({
-          ...branch,
-          debt_pending: branch.interest_pending.add(branch.batch_management_fees_pending),
-          coll_value: branch.coll_active.add(branch.coll_default).mul(branch.coll_price),
-          sp_apy: (SP_YIELD_SPLIT * Number(branch.interest_accrual_1y)) / Number(branch.sp_deposits)
-        }))
-      )
-      .then(branches =>
-        branches.map(branch => ({
+      .then(branches => {
+        return branches.map(branch => {
+          const sp_deposits = Number(branch.sp_deposits);
+          return {
+            ...branch,
+            debt_pending: branch.interest_pending.add(branch.batch_management_fees_pending),
+            coll_value: branch.coll_active.add(branch.coll_default).mul(branch.coll_price),
+            sp_apy: sp_deposits === 0
+              ? 0
+              : (SP_YIELD_SPLIT * Number(branch.interest_accrual_1y)) / sp_deposits
+          };
+        });
+      })
+      .then(branches => {
+        return branches.map(branch => ({
           ...branch,
           value_locked: branch.coll_value.add(branch.sp_deposits) // taking BOLD at face value
-        }))
-      ),
+        }));
+      }),
 
     // spV2AverageApys
     deployed
