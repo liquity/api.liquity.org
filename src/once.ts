@@ -85,28 +85,18 @@ EthersLiquity.connect(mainnetProvider)
       ...v2RelaunchStats,
       legacy: v2LegacyStats,
       testnet: {
-        sepolia: v2SepoliaStats
-      }
+        sepolia: v2SepoliaStats,
+        "sepolia.json": JSON.stringify(v2SepoliaStats, null, 2),
+      },
+      "mainnet.json": JSON.stringify(v2LegacyStats, null, 2),
+      "ethereum.json": JSON.stringify(v2RelaunchStats, null, 2),
     };
 
     fs.mkdirSync(OUTPUT_DIR_V1, { recursive: true });
     fs.writeFileSync(lqtyCirculatingSupplyFile, `${lqtyCirculatingSupply}`);
     fs.writeFileSync(lusdTotalSupplyFile, `${lusdTotalSupply}`);
     fs.writeFileSync(lusdCBBAMMStatsFile, JSON.stringify(lusdCBBAMMStats));
-
     writeTree(OUTPUT_DIR_V2, v2Stats);
-    fs.writeFileSync(
-      path.join(OUTPUT_DIR_V2, "mainnet.json"),
-      JSON.stringify(v2LegacyStats, null, 2)
-    );
-    fs.writeFileSync(
-      path.join(OUTPUT_DIR_V2, "ethereum.json"),
-      JSON.stringify(v2RelaunchStats, null, 2)
-    );
-    fs.writeFileSync(
-      path.join(OUTPUT_DIR_V2, "testnet", "sepolia.json"),
-      JSON.stringify(v2SepoliaStats, null, 2)
-    );
 
     console.log(`LQTY circulating supply: ${lqtyCirculatingSupply}`);
     console.log(`LUSD total supply: ${lusdTotalSupply}`);
