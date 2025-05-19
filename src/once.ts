@@ -4,7 +4,7 @@ import path from "path";
 import util from "util";
 
 import v2LegacyDeployment from "../addresses/legacy.json";
-import v2RelaunchDeployment from "../addresses/legacy.json"; // TODO: legacy => relaunch
+import v2RelaunchDeployment from "../addresses/relaunch.json";
 import v2SepoliaDeployment from "../addresses/sepolia.json";
 import { getProvider } from "./connection";
 import { fetchLQTYCirculatingSupply } from "./fetchLQTYCirculatingSupply";
