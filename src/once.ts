@@ -3,8 +3,9 @@ import fs from "fs";
 import path from "path";
 import util from "util";
 
-import v2MainnetDeployment from "../bold/contracts/addresses/1.json";
-import v2SepoliaDeployment from "../bold/contracts/addresses/11155111.json";
+import v2LegacyDeployment from "../addresses/legacy.json";
+import v2RelaunchDeployment from "../addresses/legacy.json"; // TODO: legacy => relaunch
+import v2SepoliaDeployment from "../addresses/sepolia.json";
 import { getProvider } from "./connection";
 import { fetchLQTYCirculatingSupply } from "./fetchLQTYCirculatingSupply";
 import { fetchLUSDCBBAMMStats } from "./fetchLUSDCBBAMMStats";
@@ -12,6 +13,8 @@ import { fetchLUSDTotalSupply } from "./fetchLUSDTotalSupply";
 import { fetchV2Stats } from "./v2/fetchV2Stats";
 
 import {
+  DUNE_SPV2_AVERAGE_APY_URL_MAINNET,
+  DUNE_SPV2_AVERAGE_APY_URL_SEPOLIA,
   LQTY_CIRCULATING_SUPPLY_FILE,
   LUSD_CB_BAMM_STATS_FILE,
   LUSD_TOTAL_SUPPLY_FILE,
@@ -52,28 +55,35 @@ const writeTree = (parentDir: string, tree: Tree) => {
 
 EthersLiquity.connect(mainnetProvider)
   .then(async liquity => {
-    const [lqtyCirculatingSupply, lusdTotalSupply, lusdCBBAMMStats, v2MainnetStats, v2SepoliaStats] = await Promise.all(
+    const [lqtyCirculatingSupply, lusdTotalSupply, lusdCBBAMMStats, v2LegacyStats, v2RelaunchStats, v2SepoliaStats] = await Promise.all(
       [
         fetchLQTYCirculatingSupply(liquity),
         fetchLUSDTotalSupply(liquity),
         fetchLUSDCBBAMMStats(transposeApiKey),
         fetchV2Stats({
-          network: "mainnet",
-          deployment: v2MainnetDeployment,
+          deployment: v2LegacyDeployment,
+          provider: mainnetProvider,
+          duneUrl: DUNE_SPV2_AVERAGE_APY_URL_MAINNET,
           duneApiKey,
-          provider: mainnetProvider
         }),
         fetchV2Stats({
-          network: "sepolia",
+          deployment: v2RelaunchDeployment,
+          provider: mainnetProvider,
+          duneUrl: null, // TODO
+          duneApiKey,
+        }),
+        fetchV2Stats({
           deployment: v2SepoliaDeployment,
           provider: sepoliaProvider,
+          duneUrl: DUNE_SPV2_AVERAGE_APY_URL_SEPOLIA,
           duneApiKey
         })
       ]
     );
 
     const v2Stats = {
-      ...v2MainnetStats,
+      ...v2RelaunchStats,
+      legacy: v2LegacyStats,
       testnet: {
         sepolia: v2SepoliaStats
       }
@@ -86,8 +96,12 @@ EthersLiquity.connect(mainnetProvider)
 
     writeTree(OUTPUT_DIR_V2, v2Stats);
     fs.writeFileSync(
+      path.join(OUTPUT_DIR_V2, "mainnet.json"),
+      JSON.stringify(v2LegacyStats, null, 2)
+    );
+    fs.writeFileSync(
       path.join(OUTPUT_DIR_V2, "ethereum.json"),
-      JSON.stringify(v2MainnetStats, null, 2)
+      JSON.stringify(v2RelaunchStats, null, 2)
     );
     fs.writeFileSync(
       path.join(OUTPUT_DIR_V2, "testnet", "sepolia.json"),

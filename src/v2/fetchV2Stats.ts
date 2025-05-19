@@ -3,7 +3,6 @@ import type { BigNumber } from "@ethersproject/bignumber";
 import { AddressZero } from "@ethersproject/constants";
 import { resolveProperties } from "@ethersproject/properties";
 import { Decimal } from "@liquity/lib-base";
-import { DUNE_SPV2_AVERAGE_APY_URL_MAINNET, DUNE_SPV2_AVERAGE_APY_URL_SEPOLIA } from "../constants";
 
 import { duneFetch, type DuneResponse, isDuneResponse } from "../dune";
 import { getContracts, LiquityV2BranchContracts, type LiquityV2Deployment } from "./contracts";
@@ -76,15 +75,12 @@ const isDuneSpAverageApyResponse = (data: unknown): data is DuneResponse<{
 const fetchSpAverageApysFromDune = async ({
   branches,
   apiKey,
-  network
+  url
 }: {
   branches: LiquityV2BranchContracts[];
   apiKey: string;
-  network: "mainnet" | "sepolia";
+  url: string | null;
 }) => {
-  const url = network === "sepolia"
-    ? DUNE_SPV2_AVERAGE_APY_URL_SEPOLIA
-    : DUNE_SPV2_AVERAGE_APY_URL_MAINNET;
 
   // disabled when DUNE_SPV2_AVERAGE_APY_URL_* is null
   if (!url) {
@@ -112,14 +108,14 @@ const fetchSpAverageApysFromDune = async ({
 };
 
 export const fetchV2Stats = async ({
-  network,
   provider,
+  duneUrl,
   duneApiKey,
   deployment,
   blockTag = "latest"
 }: {
-  network: "mainnet" | "sepolia";
   provider: Provider;
+  duneUrl: string | null;
   duneApiKey: string;
   deployment: LiquityV2Deployment;
   blockTag?: BlockTag;
@@ -164,7 +160,7 @@ export const fetchV2Stats = async ({
       ? fetchSpAverageApysFromDune({
         branches: contracts.branches,
         apiKey: duneApiKey,
-        network
+        url: duneUrl
       })
       : null
   ]);
