@@ -187,8 +187,8 @@ export const fetchV2Stats = async ({
             ...branch,
             sp_apy,
             apy_avg: sp_apy,
-            ...(sp_apy_avg_1d !== undefined ? { sp_apy_avg_1d } : {}),
-            ...(sp_apy_avg_7d !== undefined ? { sp_apy_avg_7d } : {})
+            ...(sp_apy_avg_1d !== undefined ? { sp_apy_avg_1d } : { sp_apy_avg_1d: sp_apy }),
+            ...(sp_apy_avg_7d !== undefined ? { sp_apy_avg_7d } : { sp_apy_avg_7d: sp_apy })
           }, x => `${x}`)
         ];
       })
