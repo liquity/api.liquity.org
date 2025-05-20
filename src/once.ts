@@ -63,13 +63,13 @@ EthersLiquity.connect(mainnetProvider)
         fetchV2Stats({
           deployment: v2LegacyDeployment,
           provider: mainnetProvider,
-          duneUrl: DUNE_SPV2_AVERAGE_APY_URL_MAINNET,
+          duneUrl: null,
           duneApiKey,
         }),
         fetchV2Stats({
           deployment: v2RelaunchDeployment,
           provider: mainnetProvider,
-          duneUrl: null, // TODO
+          duneUrl: DUNE_SPV2_AVERAGE_APY_URL_MAINNET,
           duneApiKey,
         }),
         fetchV2Stats({
