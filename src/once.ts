@@ -81,6 +81,12 @@ EthersLiquity.connect(mainnetProvider)
       ]
     );
 
+    for (const branch of Object.values(v2LegacyStats.branch)) {
+      // Forgive me father
+      delete (branch as any).sp_apy_avg_1d;
+      delete (branch as any).sp_apy_avg_7d;
+    }
+
     const v2Stats = {
       ...v2RelaunchStats,
       legacy: v2LegacyStats,
