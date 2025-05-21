@@ -5,13 +5,15 @@ export interface DuneResponse<Row = unknown> {
 }
 
 export const isDuneResponse = (data: unknown): data is DuneResponse => {
-  return typeof data === "object"
-    && data !== null
-    && "result" in data
-    && typeof data.result === "object"
-    && data.result !== null
-    && "rows" in data.result
-    && Array.isArray(data.result.rows);
+  return (
+    typeof data === "object" &&
+    data !== null &&
+    "result" in data &&
+    typeof data.result === "object" &&
+    data.result !== null &&
+    "rows" in data.result &&
+    Array.isArray(data.result.rows)
+  );
 };
 
 export const duneFetch = async <T extends DuneResponse>({
@@ -28,10 +30,7 @@ export const duneFetch = async <T extends DuneResponse>({
   });
   const data = await response.json();
 
-  console.log(
-    `Dune response for ${url}:`,
-    util.inspect(data, { colors: true, depth: null })
-  );
+  console.log(`Dune response for ${url}:`, util.inspect(data, { colors: true, depth: null }));
 
   if (!validate(data)) {
     throw new Error("Dune query returned unexpected response");
