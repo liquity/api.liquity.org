@@ -55,31 +55,36 @@ const writeTree = (parentDir: string, tree: Tree) => {
 
 EthersLiquity.connect(mainnetProvider)
   .then(async liquity => {
-    const [lqtyCirculatingSupply, lusdTotalSupply, lusdCBBAMMStats, v2LegacyStats, v2RelaunchStats, v2SepoliaStats] = await Promise.all(
-      [
-        fetchLQTYCirculatingSupply(liquity),
-        fetchLUSDTotalSupply(liquity),
-        fetchLUSDCBBAMMStats(transposeApiKey),
-        fetchV2Stats({
-          deployment: v2LegacyDeployment,
-          provider: mainnetProvider,
-          duneUrl: null,
-          duneApiKey,
-        }),
-        fetchV2Stats({
-          deployment: v2RelaunchDeployment,
-          provider: mainnetProvider,
-          duneUrl: DUNE_SPV2_AVERAGE_APY_URL_MAINNET,
-          duneApiKey,
-        }),
-        fetchV2Stats({
-          deployment: v2SepoliaDeployment,
-          provider: sepoliaProvider,
-          duneUrl: DUNE_SPV2_AVERAGE_APY_URL_SEPOLIA,
-          duneApiKey
-        })
-      ]
-    );
+    const [
+      lqtyCirculatingSupply,
+      lusdTotalSupply,
+      lusdCBBAMMStats,
+      v2LegacyStats,
+      v2RelaunchStats,
+      v2SepoliaStats
+    ] = await Promise.all([
+      fetchLQTYCirculatingSupply(liquity),
+      fetchLUSDTotalSupply(liquity),
+      fetchLUSDCBBAMMStats(transposeApiKey),
+      fetchV2Stats({
+        deployment: v2LegacyDeployment,
+        provider: mainnetProvider,
+        duneUrl: null,
+        duneApiKey
+      }),
+      fetchV2Stats({
+        deployment: v2RelaunchDeployment,
+        provider: mainnetProvider,
+        duneUrl: DUNE_SPV2_AVERAGE_APY_URL_MAINNET,
+        duneApiKey
+      }),
+      fetchV2Stats({
+        deployment: v2SepoliaDeployment,
+        provider: sepoliaProvider,
+        duneUrl: DUNE_SPV2_AVERAGE_APY_URL_SEPOLIA,
+        duneApiKey
+      })
+    ]);
 
     for (const branch of Object.values(v2LegacyStats.branch)) {
       // Forgive me father

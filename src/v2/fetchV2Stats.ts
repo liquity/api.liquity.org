@@ -56,21 +56,23 @@ const emptyBranchData = (branches: LiquityV2BranchContracts[]): ReturnType<typeo
     }))
   );
 
-const isDuneSpAverageApyResponse = (data: unknown): data is DuneResponse<{
+const isDuneSpAverageApyResponse = (
+  data: unknown
+): data is DuneResponse<{
   apr: number;
   collateral_type: string;
-}> => (
-  isDuneResponse(data)
-  && data.result.rows.length > 0
-  && data.result.rows.every((row: unknown) =>
-    typeof row === "object"
-    && row !== null
-    && "collateral_type" in row
-    && typeof row.collateral_type === "string"
-    && "apr" in row
-    && typeof row.apr === "number"
-  )
-);
+}> =>
+  isDuneResponse(data) &&
+  data.result.rows.length > 0 &&
+  data.result.rows.every(
+    (row: unknown) =>
+      typeof row === "object" &&
+      row !== null &&
+      "collateral_type" in row &&
+      typeof row.collateral_type === "string" &&
+      "apr" in row &&
+      typeof row.apr === "number"
+  );
 
 const fetchSpAverageApysFromDune = async ({
   branches,
@@ -81,30 +83,37 @@ const fetchSpAverageApysFromDune = async ({
   apiKey: string;
   url: string | null;
 }) => {
-
   // disabled when DUNE_SPV2_AVERAGE_APY_URL_* is null
   if (!url) {
     return null;
   }
 
-  const { result: { rows: sevenDaysApys } } = await duneFetch({
+  const {
+    result: { rows: sevenDaysApys }
+  } = await duneFetch({
     apiKey,
     url: `${url}?limit=${branches.length * 7}`,
     validate: isDuneSpAverageApyResponse
   });
 
-  return Object.fromEntries(branches.map(branch => {
-    const apys = sevenDaysApys.filter(row => (
-      row.collateral_type === branch.collSymbol
-    ));
-    return [branch.collSymbol, {
-      apy_avg_1d: apys[0].apr,
-      apy_avg_7d: apys.reduce((acc, { apr }) => acc + apr, 0) / apys.length
-    }];
-  })) as Record<string, {
-    apy_avg_1d: number;
-    apy_avg_7d: number;
-  }>;
+  return Object.fromEntries(
+    branches.map(branch => {
+      const apys = sevenDaysApys.filter(row => row.collateral_type === branch.collSymbol);
+      return [
+        branch.collSymbol,
+        {
+          apy_avg_1d: apys[0].apr,
+          apy_avg_7d: apys.reduce((acc, { apr }) => acc + apr, 0) / apys.length
+        }
+      ];
+    })
+  ) as Record<
+    string,
+    {
+      apy_avg_1d: number;
+      apy_avg_7d: number;
+    }
+  >;
 };
 
 export const fetchV2Stats = async ({
@@ -142,9 +151,10 @@ export const fetchV2Stats = async ({
             ...branch,
             debt_pending: branch.interest_pending.add(branch.batch_management_fees_pending),
             coll_value: branch.coll_active.add(branch.coll_default).mul(branch.coll_price),
-            sp_apy: sp_deposits === 0
-              ? 0
-              : (SP_YIELD_SPLIT * Number(branch.interest_accrual_1y)) / sp_deposits
+            sp_apy:
+              sp_deposits === 0
+                ? 0
+                : (SP_YIELD_SPLIT * Number(branch.interest_accrual_1y)) / sp_deposits
           };
         });
       })
@@ -158,10 +168,10 @@ export const fetchV2Stats = async ({
     // spV2AverageApys
     deployed
       ? fetchSpAverageApysFromDune({
-        branches: contracts.branches,
-        apiKey: duneApiKey,
-        url: duneUrl
-      })
+          branches: contracts.branches,
+          apiKey: duneApiKey,
+          url: duneUrl
+        })
       : null
   ]);
 
@@ -177,19 +187,20 @@ export const fetchV2Stats = async ({
 
     branch: Object.fromEntries(
       branches.map(({ coll_symbol, sp_apy, ...branch }) => {
-        const {
-          apy_avg_1d: sp_apy_avg_1d,
-          apy_avg_7d: sp_apy_avg_7d
-        } = spV2AverageApys?.[coll_symbol] ?? {};
+        const { apy_avg_1d: sp_apy_avg_1d, apy_avg_7d: sp_apy_avg_7d } =
+          spV2AverageApys?.[coll_symbol] ?? {};
         return [
           coll_symbol,
-          mapObj({
-            ...branch,
-            sp_apy,
-            apy_avg: sp_apy,
-            ...(sp_apy_avg_1d !== undefined ? { sp_apy_avg_1d } : {}),
-            ...(sp_apy_avg_7d !== undefined ? { sp_apy_avg_7d } : {})
-          }, x => `${x}`)
+          mapObj(
+            {
+              ...branch,
+              sp_apy,
+              apy_avg: sp_apy,
+              ...(sp_apy_avg_1d !== undefined ? { sp_apy_avg_1d } : {}),
+              ...(sp_apy_avg_7d !== undefined ? { sp_apy_avg_7d } : {})
+            },
+            x => `${x}`
+          )
         ];
       })
     )
