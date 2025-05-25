@@ -8,7 +8,7 @@ export const LQTY_CIRCULATING_SUPPLY_FILE = "lqty_circulating_supply.txt";
 export const LUSD_TOTAL_SUPPLY_FILE = "lusd_total_supply.txt";
 export const LUSD_CB_BAMM_STATS_FILE = "lusd_cb_bamm_stats.json";
 
-export const DUNE_SPV2_AVERAGE_APY_URL_MAINNET = "https://api.dune.com/api/v1/query/5162039/results";
+export const DUNE_SPV2_AVERAGE_APY_URL_MAINNET = "https://api.dune.com/api/v1/query/4412077/results";
 export const DUNE_SPV2_AVERAGE_APY_URL_SEPOLIA = null;
 
 export const TOTAL_LQTY_SUPPLY = Decimal.from(100e6); // 100 million
