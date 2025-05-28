@@ -14,7 +14,7 @@ import { fetchV2Stats } from "./v2/fetchV2Stats";
 
 import {
   DUNE_SPV2_AVERAGE_APY_URL_MAINNET,
-  DUNE_SPV2_AVERAGE_APY_URL_SEPOLIA,
+  DUNE_SPV2_UPFRONT_FEE_URL_MAINNET,
   LQTY_CIRCULATING_SUPPLY_FILE,
   LUSD_CB_BAMM_STATS_FILE,
   LUSD_TOTAL_SUPPLY_FILE,
@@ -69,19 +69,22 @@ EthersLiquity.connect(mainnetProvider)
       fetchV2Stats({
         deployment: v2LegacyDeployment,
         provider: mainnetProvider,
-        duneUrl: null,
+        duneSpApyUrl: null,
+        duneSpUpfrontFeeUrl: null,
         duneApiKey
       }),
       fetchV2Stats({
         deployment: v2RelaunchDeployment,
         provider: mainnetProvider,
-        duneUrl: DUNE_SPV2_AVERAGE_APY_URL_MAINNET,
+        duneSpApyUrl: DUNE_SPV2_AVERAGE_APY_URL_MAINNET,
+        duneSpUpfrontFeeUrl: DUNE_SPV2_UPFRONT_FEE_URL_MAINNET,
         duneApiKey
       }),
       fetchV2Stats({
         deployment: v2SepoliaDeployment,
         provider: sepoliaProvider,
-        duneUrl: DUNE_SPV2_AVERAGE_APY_URL_SEPOLIA,
+        duneSpApyUrl: null,
+        duneSpUpfrontFeeUrl: null,
         duneApiKey
       })
     ]);

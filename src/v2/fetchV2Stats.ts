@@ -116,15 +116,46 @@ const fetchSpAverageApysFromDune = async ({
   >;
 };
 
+const isDuneSpUpfrontFeeResponse = (
+  data: unknown
+): data is DuneResponse<{
+  collateral_type: string;
+  upfront_fees: number;
+}> =>
+  isDuneResponse(data) &&
+  data.result.rows.every(
+    row =>
+      typeof row === "object" &&
+      row !== null &&
+      "collateral_type" in row &&
+      typeof row.collateral_type === "string" &&
+      "upfront_fees" in row &&
+      typeof row.upfront_fees === "number"
+  );
+
+const fetchSpUpfrontFeeFromDune = async ({
+  apiKey,
+  url
+}: {
+  apiKey: string;
+  url: string | null;
+}) => {
+  if (!url) return null;
+  const { result } = await duneFetch({ apiKey, url, validate: isDuneSpUpfrontFeeResponse });
+  return Object.fromEntries(result.rows.map(row => [row.collateral_type, row.upfront_fees]));
+};
+
 export const fetchV2Stats = async ({
   provider,
-  duneUrl,
+  duneSpApyUrl,
+  duneSpUpfrontFeeUrl,
   duneApiKey,
   deployment,
   blockTag = "latest"
 }: {
   provider: Provider;
-  duneUrl: string | null;
+  duneSpApyUrl: string | null;
+  duneSpUpfrontFeeUrl: string | null;
   duneApiKey: string;
   deployment: LiquityV2Deployment;
   blockTag?: BlockTag;
@@ -138,7 +169,7 @@ export const fetchV2Stats = async ({
     .then(owner => owner == AddressZero)
     .catch(() => false);
 
-  const [total_bold_supply, branches, spV2AverageApys] = await Promise.all([
+  const [total_bold_supply, branches, spV2AverageApys, spUpfrontFee24h] = await Promise.all([
     // total_bold_supply
     deployed ? contracts.boldToken.totalSupply({ blockTag }).then(decimalify) : Decimal.ZERO,
 
@@ -170,7 +201,15 @@ export const fetchV2Stats = async ({
       ? fetchSpAverageApysFromDune({
           branches: contracts.branches,
           apiKey: duneApiKey,
-          url: duneUrl
+          url: duneSpApyUrl
+        })
+      : null,
+
+    // spUpfrontFee24h
+    deployed
+      ? fetchSpUpfrontFeeFromDune({
+          apiKey: duneApiKey,
+          url: duneSpUpfrontFeeUrl
         })
       : null
   ]);
@@ -187,8 +226,13 @@ export const fetchV2Stats = async ({
 
     branch: Object.fromEntries(
       branches.map(({ coll_symbol, sp_apy, ...branch }) => {
-        const { apy_avg_1d: sp_apy_avg_1d, apy_avg_7d: sp_apy_avg_7d } =
-          spV2AverageApys?.[coll_symbol] ?? {};
+        const sp_apy_avg_1d =
+          spUpfrontFee24h && branch.sp_deposits.nonZero
+            ? sp_apy + (365 * (spUpfrontFee24h[coll_symbol] ?? 0)) / Number(branch.sp_deposits)
+            : undefined;
+
+        const sp_apy_avg_7d = spV2AverageApys?.[coll_symbol].apy_avg_7d;
+
         return [
           coll_symbol,
           mapObj(
