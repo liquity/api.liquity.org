@@ -16,9 +16,9 @@ export const TOTAL_LQTY_SUPPLY = Decimal.from(100e6); // 100 million
 // { [coinGeckoId]: symbol }
 export const PRICES = {
   "ethereum": "ETH",
-  "legacy-bold": "LEGACY_BOLD",
   "liquity": "LQTY",
-  "liquity-bold": "BOLD",
+  "liquity-bold": "LEGACY_BOLD",
+  "liquity-bold-2": "BOLD",
   "liquity-usd": "LUSD",
   "rocket-pool-eth": "RETH",
   "wrapped-steth": "WSTETH"
