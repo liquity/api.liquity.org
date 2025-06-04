@@ -41,6 +41,7 @@ jobs:
           ALCHEMY_API_KEY: ${{ secrets.ALCHEMY_API_KEY }}
           DUNE_API_KEY: ${{ secrets.DUNE_API_KEY }}
           TRANSPOSE_API_KEY: ${{ secrets.TRANSPOSE_API_KEY }}
+          COINGECKO_DEMO_KEY: ${{ secrets.COINGECKO_DEMO_KEY }}
 
       - name: Commit generated files
         uses: EndBug/add-and-commit@v9
