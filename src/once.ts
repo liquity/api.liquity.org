@@ -10,6 +10,7 @@ import { getProvider } from "./connection";
 import { fetchLQTYCirculatingSupply } from "./fetchLQTYCirculatingSupply";
 import { fetchLUSDCBBAMMStats } from "./fetchLUSDCBBAMMStats";
 import { fetchLUSDTotalSupply } from "./fetchLUSDTotalSupply";
+import { fetchPrices } from "./fetchPrices";
 import { fetchV2Stats } from "./v2/fetchV2Stats";
 
 import {
@@ -61,7 +62,8 @@ EthersLiquity.connect(mainnetProvider)
       lusdCBBAMMStats,
       v2LegacyStats,
       v2RelaunchStats,
-      v2SepoliaStats
+      v2SepoliaStats,
+      prices
     ] = await Promise.all([
       fetchLQTYCirculatingSupply(liquity),
       fetchLUSDTotalSupply(liquity),
@@ -86,12 +88,14 @@ EthersLiquity.connect(mainnetProvider)
         duneSpApyUrl: null,
         duneSpUpfrontFeeUrl: null,
         duneApiKey
-      })
+      }),
+      fetchPrices()
     ]);
 
     const v2Stats = {
       ...v2RelaunchStats,
       legacy: v2LegacyStats,
+      prices,
       testnet: {
         sepolia: v2SepoliaStats
       }
@@ -105,15 +109,15 @@ EthersLiquity.connect(mainnetProvider)
     writeTree(OUTPUT_DIR_V2, v2Stats);
     fs.writeFileSync(
       path.join(OUTPUT_DIR_V2, "mainnet.json"),
-      JSON.stringify(v2LegacyStats, null, 2)
+      JSON.stringify({ ...v2LegacyStats, prices }, null, 2)
     );
     fs.writeFileSync(
       path.join(OUTPUT_DIR_V2, "ethereum.json"),
-      JSON.stringify(v2RelaunchStats, null, 2)
+      JSON.stringify({ ...v2RelaunchStats, prices }, null, 2)
     );
     fs.writeFileSync(
       path.join(OUTPUT_DIR_V2, "testnet", "sepolia.json"),
-      JSON.stringify(v2SepoliaStats, null, 2)
+      JSON.stringify({ ...v2SepoliaStats, prices }, null, 2)
     );
 
     console.log(`LQTY circulating supply: ${lqtyCirculatingSupply}`);
