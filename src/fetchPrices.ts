@@ -1,14 +1,4 @@
-const API_KEY = process.env.COINGECKO_DEMO_KEY;
-
-const PRICES = {
-  "ethereum": "ETH",
-  "legacy-bold": "LEGACY_BOLD",
-  "liquity": "LQTY",
-  "liquity-bold": "BOLD",
-  "liquity-usd": "LUSD",
-  "rocket-pool-eth": "RETH",
-  "wrapped-steth": "WSTETH"
-} as const;
+import { PRICES } from "./constants";
 
 type CoinGeckoId = keyof typeof PRICES;
 type Symbol = typeof PRICES[CoinGeckoId];
@@ -46,13 +36,17 @@ function isCoinGeckoResult(result: unknown): result is Record<CoinGeckoId, { usd
   return true;
 }
 
-export async function fetchPrices() {
+export async function fetchPrices({
+  coinGeckoDemoApiKey
+}: {
+  coinGeckoDemoApiKey: string;
+}) {
   const ids = Object.keys(PRICES) as CoinGeckoId[];
 
   const response = await fetch(getCoingeckoUrl(ids), {
     headers: {
       "accept": "application/json",
-      "x-cg-demo-api-key": KEY
+      "x-cg-demo-api-key": coinGeckoDemoApiKey
     }
   });
 

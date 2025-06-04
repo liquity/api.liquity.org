@@ -30,6 +30,7 @@ const panic = <T>(message: string): T => {
 const alchemyApiKey = process.env.ALCHEMY_API_KEY || undefined; // filter out empty string
 const duneApiKey: string = process.env.DUNE_API_KEY || panic("missing DUNE_API_KEY");
 const transposeApiKey: string = process.env.TRANSPOSE_API_KEY || panic("missing TRANSPOSE_API_KEY");
+const coinGeckoDemoApiKey: string = process.env.COINGECKO_DEMO_KEY || panic("missing COINGECKO_DEMO_KEY");
 
 const lqtyCirculatingSupplyFile = path.join(OUTPUT_DIR_V1, LQTY_CIRCULATING_SUPPLY_FILE);
 const lusdTotalSupplyFile = path.join(OUTPUT_DIR_V1, LUSD_TOTAL_SUPPLY_FILE);
@@ -89,7 +90,7 @@ EthersLiquity.connect(mainnetProvider)
         duneSpUpfrontFeeUrl: null,
         duneApiKey
       }),
-      fetchPrices()
+      fetchPrices({ coinGeckoDemoApiKey })
     ]);
 
     const v2Stats = {

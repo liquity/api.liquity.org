@@ -13,6 +13,17 @@ export const DUNE_SPV2_UPFRONT_FEE_URL_MAINNET = "https://api.dune.com/api/v1/qu
 
 export const TOTAL_LQTY_SUPPLY = Decimal.from(100e6); // 100 million
 
+// { [coinGeckoId]: symbol }
+export const PRICES = {
+  "ethereum": "ETH",
+  "legacy-bold": "LEGACY_BOLD",
+  "liquity": "LQTY",
+  "liquity-bold": "BOLD",
+  "liquity-usd": "LUSD",
+  "rocket-pool-eth": "RETH",
+  "wrapped-steth": "WSTETH"
+} as const;
+
 export const GNOSIS_SAFE_RESERVE = "0xb8a9fada75c6d891fb77a7988ff9bad9e485ca1c";
 export const GNOSIS_SAFE_FUNDS = "0xf06016d822943c42e3cb7fc3a6a3b1889c1045f8";
 
