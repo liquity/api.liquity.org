@@ -1,10 +1,10 @@
 {
   "0xba415afa8fcd65196764b5e08cb4dbf90bee33b4": {
-    "name": "BOLD/USDC 0.04%",
+    "name": "BOLD/USDC",
     "group": "Curve"
   },
   "0x0c76eae597afa2aa163a8c845f7e7e870256ac7e": {
-    "name": "BOLD/LUSD 0.04%",
+    "name": "BOLD/LUSD",
     "group": "Curve"
   },
   "0xdc6f869d2d34e4aee3e89a51f2af6d54f0f7f690": {
@@ -16,7 +16,11 @@
     "group": "Paladin Quest"
   },
     "0x00000C771F6176268D5A9846E0956C3eF58597A1": {
-    "name": "BOLD/USDC Concentrated Pool",
+    "name": "OLD Initiative",
+    "group": "Ekubo"
+  },
+    "0xaEAa52A51e90CFe5d862568fdc99Bc7510f53E04": {
+    "name": "Ekubo Liquidity Inititative",
     "group": "Ekubo"
   }
 }
