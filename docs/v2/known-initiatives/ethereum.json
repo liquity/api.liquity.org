@@ -22,5 +22,9 @@
     "0xaEAa52A51e90CFe5d862568fdc99Bc7510f53E04": {
     "name": "Ekubo Liquidity Inititative",
     "group": "Ekubo"
+  },
+  "0xA7e5d44349E3342cd6F323dE3E6C33B249c9Df38": {
+    "name": "Dynamic E-CLP: BOLD/USDC",
+    "group": "Gyroscope"
   }
 }
