@@ -5,6 +5,7 @@ env:
   FORCE_COLOR: true
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: "0 1 * * 4" # 1am on Thursday (UTC)
 
