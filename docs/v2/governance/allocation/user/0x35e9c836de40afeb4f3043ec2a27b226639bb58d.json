@@ -1,0 +1,34 @@
+[
+  {
+    "epoch": 2,
+    "initiative": "0x0c76eae597afa2aa163a8c845f7e7e870256ac7e",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "5078733125098931348539",
+    "voteOffset": "8875987931200274473118943130457"
+  },
+  {
+    "epoch": 2,
+    "initiative": "0xba415afa8fcd65196764b5e08cb4dbf90bee33b4",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "28779487708893944308389",
+    "voteOffset": "50297264943468222014343007976007"
+  },
+  {
+    "epoch": 8,
+    "initiative": "0x0c76eae597afa2aa163a8c845f7e7e870256ac7e",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "0",
+    "voteOffset": "0"
+  },
+  {
+    "epoch": 8,
+    "initiative": "0xba415afa8fcd65196764b5e08cb4dbf90bee33b4",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "33858220833992875656928",
+    "voteOffset": "59173252874668496487461951106464"
+  }
+]

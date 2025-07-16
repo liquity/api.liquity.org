@@ -1,0 +1,18 @@
+[
+  {
+    "epoch": 7,
+    "initiative": "0x0c76eae597afa2aa163a8c845f7e7e870256ac7e",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "620552160114389914193",
+    "voteOffset": "1084590371472555440745134112031"
+  },
+  {
+    "epoch": 7,
+    "initiative": "0xba415afa8fcd65196764b5e08cb4dbf90bee33b4",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "620552160114389914194",
+    "voteOffset": "1084590371472555440746881894798"
+  }
+]

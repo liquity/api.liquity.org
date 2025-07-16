@@ -1,0 +1,178 @@
+[
+  {
+    "epoch": 2,
+    "initiative": "0x0c76eae597afa2aa163a8c845f7e7e870256ac7e",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "3524503775273943634099",
+    "voteOffset": "6159686821771053441342986390189"
+  },
+  {
+    "epoch": 2,
+    "initiative": "0xba415afa8fcd65196764b5e08cb4dbf90bee33b4",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "4699338367031924845466",
+    "voteOffset": "8212915762361404588458480303526"
+  },
+  {
+    "epoch": 2,
+    "initiative": "0xdc6f869d2d34e4aee3e89a51f2af6d54f0f7f690",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "3524503775273943634100",
+    "voteOffset": "6159686821771053441344734065100"
+  },
+  {
+    "epoch": 3,
+    "initiative": "0x0c76eae597afa2aa163a8c845f7e7e870256ac7e",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "3524503775273943634099",
+    "voteOffset": "6159686821771053441342986390189"
+  },
+  {
+    "epoch": 3,
+    "initiative": "0xba415afa8fcd65196764b5e08cb4dbf90bee33b4",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "6461590254668896662516",
+    "voteOffset": "11292759173246931309130847336076"
+  },
+  {
+    "epoch": 3,
+    "initiative": "0xdc6f869d2d34e4aee3e89a51f2af6d54f0f7f690",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "1762251887636971817050",
+    "voteOffset": "3079843410885526720672367032550"
+  },
+  {
+    "epoch": 5,
+    "initiative": "0x0c76eae597afa2aa163a8c845f7e7e870256ac7e",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "1762251887636971817049",
+    "voteOffset": "3079843410885526720670619357639"
+  },
+  {
+    "epoch": 5,
+    "initiative": "0xa58fbe38aab33b9fadef1b5aaff4d7bc27c43ad4",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "2349669183515962422734",
+    "voteOffset": "4106457881180702294230987826674"
+  },
+  {
+    "epoch": 5,
+    "initiative": "0xba415afa8fcd65196764b5e08cb4dbf90bee33b4",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "5874172958789906056832",
+    "voteOffset": "10266144702951755735572226541952"
+  },
+  {
+    "epoch": 5,
+    "initiative": "0xdc6f869d2d34e4aee3e89a51f2af6d54f0f7f690",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "1762251887636971817050",
+    "voteOffset": "3079843410885526720672367032550"
+  },
+  {
+    "epoch": 7,
+    "initiative": "0x00000c771f6176268d5a9846e0956c3ef58597a1",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "0",
+    "voteOffset": "0"
+  },
+  {
+    "epoch": 7,
+    "initiative": "0x0c76eae597afa2aa163a8c845f7e7e870256ac7e",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "1762251887636971817049",
+    "voteOffset": "3079843410885526720670619357639"
+  },
+  {
+    "epoch": 7,
+    "initiative": "0xa58fbe38aab33b9fadef1b5aaff4d7bc27c43ad4",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "1762251887636971817049",
+    "voteOffset": "3079843410885526720670619357639"
+  },
+  {
+    "epoch": 7,
+    "initiative": "0xaeaa52a51e90cfe5d862568fdc99bc7510f53e04",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "1762251887636971817051",
+    "voteOffset": "3079843410885526720674114707461"
+  },
+  {
+    "epoch": 7,
+    "initiative": "0xba415afa8fcd65196764b5e08cb4dbf90bee33b4",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "4699338367031924845466",
+    "voteOffset": "8212915762361404588458480303526"
+  },
+  {
+    "epoch": 7,
+    "initiative": "0xdc6f869d2d34e4aee3e89a51f2af6d54f0f7f690",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "1762251887636971817050",
+    "voteOffset": "3079843410885526720672367032550"
+  },
+  {
+    "epoch": 9,
+    "initiative": "0x0c76eae597afa2aa163a8c845f7e7e870256ac7e",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "1409801510109577453639",
+    "voteOffset": "2463874728708421376536145951129"
+  },
+  {
+    "epoch": 9,
+    "initiative": "0xa58fbe38aab33b9fadef1b5aaff4d7bc27c43ad4",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "1409801510109577453639",
+    "voteOffset": "2463874728708421376536145951129"
+  },
+  {
+    "epoch": 9,
+    "initiative": "0xa7e5d44349e3342cd6f323de3e6c33b249c9df38",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "1409801510109577453641",
+    "voteOffset": "2463874728708421376539641300951"
+  },
+  {
+    "epoch": 9,
+    "initiative": "0xaeaa52a51e90cfe5d862568fdc99bc7510f53e04",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "1409801510109577453640",
+    "voteOffset": "2463874728708421376537893626040"
+  },
+  {
+    "epoch": 9,
+    "initiative": "0xba415afa8fcd65196764b5e08cb4dbf90bee33b4",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "4699338367031924845466",
+    "voteOffset": "8212915762361404588458480303526"
+  },
+  {
+    "epoch": 9,
+    "initiative": "0xdc6f869d2d34e4aee3e89a51f2af6d54f0f7f690",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "1409801510109577453640",
+    "voteOffset": "2463874728708421376537893626040"
+  }
+]
