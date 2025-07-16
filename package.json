@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "once": "tsx src/once.ts",
+    "snapshot": "tsx src/snapshot.ts",
     "build": "tsc --project tsconfig.json"
   },
   "dependencies": {
