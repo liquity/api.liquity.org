@@ -1,0 +1,50 @@
+[
+  {
+    "epoch": 10,
+    "initiative": "0x00000c771f6176268d5a9846e0956c3ef58597a1",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "235800000000000000000",
+    "voteOffset": "413067136890600000000000000000"
+  },
+  {
+    "epoch": 10,
+    "initiative": "0x0c76eae597afa2aa163a8c845f7e7e870256ac7e",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "440160000000000000000",
+    "voteOffset": "771058655529120000000000000000"
+  },
+  {
+    "epoch": 10,
+    "initiative": "0xa58fbe38aab33b9fadef1b5aaff4d7bc27c43ad4",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "188640000000000000000",
+    "voteOffset": "330453709512480000000000000000"
+  },
+  {
+    "epoch": 10,
+    "initiative": "0xaeaa52a51e90cfe5d862568fdc99bc7510f53e04",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "141480000000000000000",
+    "voteOffset": "247840282134360000000000000000"
+  },
+  {
+    "epoch": 10,
+    "initiative": "0xba415afa8fcd65196764b5e08cb4dbf90bee33b4",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "471600000000000000000",
+    "voteOffset": "826134273781200000000000000000"
+  },
+  {
+    "epoch": 10,
+    "initiative": "0xdc6f869d2d34e4aee3e89a51f2af6d54f0f7f690",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "94320000000000000000",
+    "voteOffset": "165226854756240000000000000000"
+  }
+]
