@@ -21,7 +21,8 @@ export const PRICES = {
   "liquity-bold-2": "BOLD",
   "liquity-usd": "LUSD",
   "rocket-pool-eth": "RETH",
-  "wrapped-steth": "WSTETH"
+  "wrapped-steth": "WSTETH",
+  "smardex": "SDEX"
 } as const;
 
 export const GNOSIS_SAFE_RESERVE = "0xb8a9fada75c6d891fb77a7988ff9bad9e485ca1c";
