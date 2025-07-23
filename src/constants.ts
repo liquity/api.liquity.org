@@ -15,15 +15,30 @@ export const TOTAL_LQTY_SUPPLY = Decimal.from(100e6); // 100 million
 
 // { [coinGeckoId]: symbol }
 export const PRICES = {
-  "ethereum": "ETH",
-  "liquity": "LQTY",
+  ethereum: "ETH",
+  liquity: "LQTY",
   "liquity-bold": "LEGACY_BOLD",
   "liquity-bold-2": "BOLD",
   "liquity-usd": "LUSD",
   "rocket-pool-eth": "RETH",
   "wrapped-steth": "WSTETH",
-  "smardex": "SDEX"
+  smardex: "SDEX"
 } as const;
+
+// DO NOT TOUCH THIS
+// No token outside of these should be exposed under the "prices" field,
+// otherwise we break legacy (pre-v1.7) versions of the frontend due to
+// an overly strict valibot schema
+export const SAFE_PRICES = new Set([
+  "ETH",
+  "RETH",
+  "WSTETH",
+  "BOLD",
+  "LEGACY_BOLD",
+  "LQTY",
+  "LUSD",
+  "SBOLD"
+]);
 
 export const GNOSIS_SAFE_RESERVE = "0xb8a9fada75c6d891fb77a7988ff9bad9e485ca1c";
 export const GNOSIS_SAFE_FUNDS = "0xf06016d822943c42e3cb7fc3a6a3b1889c1045f8";
