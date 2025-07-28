@@ -106,9 +106,11 @@ const getAllocationsInEpoch = async (subgraphUrl: string, epoch: number) => {
   return allocations;
 };
 
-const allocationDir = path.join(OUTPUT_DIR_V2, "governance", "allocation");
+const governanceDir = path.join(OUTPUT_DIR_V2, "governance");
+const allocationDir = path.join(governanceDir, "allocation");
 const userDir = path.join(allocationDir, "user");
 const totalDir = path.join(allocationDir, "total");
+const latestCompletedEpochFile = path.join(governanceDir, "latest_completed_epoch.json");
 
 export const snapshotEpoch = async (subgraphUrl: string, epoch: number) => {
   const allocations = await getAllocationsInEpoch(subgraphUrl, epoch);
@@ -151,5 +153,13 @@ export const snapshotEpoch = async (subgraphUrl: string, epoch: number) => {
     });
 
     fs.writeFileSync(fileName, JSON.stringify(allocations, null, 2));
+
+    const prevLatestCompletedEpoch: number = JSON.parse(
+      fs.readFileSync(latestCompletedEpochFile, "utf-8")
+    );
+
+    if (epoch > prevLatestCompletedEpoch) {
+      fs.writeFileSync(latestCompletedEpochFile, JSON.stringify(epoch));
+    }
   }
 };
