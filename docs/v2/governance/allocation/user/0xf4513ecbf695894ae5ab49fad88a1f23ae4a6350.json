@@ -14,5 +14,53 @@
     "vetoOffset": "0",
     "voteLQTY": "88671636856000000000",
     "voteOffset": "155451549247270651496000000000"
+  },
+  {
+    "epoch": 13,
+    "initiative": "0x0c76eae597afa2aa163a8c845f7e7e870256ac7e",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "181449025714000000000",
+    "voteOffset": "318222301018161763190000000000"
+  },
+  {
+    "epoch": 13,
+    "initiative": "0xa58fbe38aab33b9fadef1b5aaff4d7bc27c43ad4",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "172376574428300000000",
+    "voteOffset": "302311185967253675030500000000"
+  },
+  {
+    "epoch": 13,
+    "initiative": "0xa7e5d44349e3342cd6f323de3e6c33b249c9df38",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "99796964142700000000",
+    "voteOffset": "175022265559988969754500000000"
+  },
+  {
+    "epoch": 13,
+    "initiative": "0xaeaa52a51e90cfe5d862568fdc99bc7510f53e04",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "136086769285500000000",
+    "voteOffset": "238666725763621322392500000000"
+  },
+  {
+    "epoch": 13,
+    "initiative": "0xba415afa8fcd65196764b5e08cb4dbf90bee33b4",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "90724512857000000000",
+    "voteOffset": "159111150509080881595000000000"
+  },
+  {
+    "epoch": 13,
+    "initiative": "0xdc6f869d2d34e4aee3e89a51f2af6d54f0f7f690",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "226811282142500000000",
+    "voteOffset": "397777876272702203987500000000"
   }
 ]
