@@ -116,7 +116,7 @@ export const snapshotEpoch = async (subgraphUrl: string, epoch: number) => {
   const allocations = await getAllocationsInEpoch(subgraphUrl, epoch);
   const updates = new Map<string, AllocationJson[]>();
 
-  for (const { id, user, initiative, ...allocation } of allocations) {
+  for (const { user, initiative, vetoLQTY, vetoOffset, voteLQTY, voteOffset } of allocations) {
     const fileName =
       user !== null
         ? path.join(userDir, `${user}.json`)
@@ -131,7 +131,10 @@ export const snapshotEpoch = async (subgraphUrl: string, epoch: number) => {
     newAllocations.push({
       epoch,
       ...(user !== null ? { initiative: initiative.id } : {}),
-      ...allocation
+      vetoLQTY,
+      vetoOffset,
+      voteLQTY,
+      voteOffset
     });
   }
 
