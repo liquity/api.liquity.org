@@ -14,6 +14,7 @@ import { fetchPrices } from "./fetchPrices";
 import { fetchV2Stats } from "./v2/fetchV2Stats";
 
 import {
+  DUNE_BOLD_YIELD_OPPORTUNITIES_URL_MAINNET,
   DUNE_SPV2_AVERAGE_APY_URL_MAINNET,
   DUNE_SPV2_UPFRONT_FEE_URL_MAINNET,
   LQTY_CIRCULATING_SUPPLY_FILE,
@@ -41,20 +42,97 @@ const lusdCBBAMMStatsFile = path.join(OUTPUT_DIR_V1, LUSD_CB_BAMM_STATS_FILE);
 const mainnetProvider = getProvider("mainnet", { alchemyApiKey });
 const sepoliaProvider = getProvider("sepolia", { alchemyApiKey });
 
-interface Tree extends Record<string, string | Tree> {}
+const safeKey = (s: string) =>
+  String(s)
+    .normalize("NFKD")
+    .replace(/[\/\\:*?"<>|]+/g, "-")
+    .replace(/[^\w.-]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 80);
 
-const writeTree = (parentDir: string, tree: Tree) => {
-  if (!fs.existsSync(parentDir)) fs.mkdirSync(parentDir);
-
-  for (const [k, v] of Object.entries(tree)) {
-    const prefix = path.join(parentDir, k);
-
-    if (typeof v === "string") {
-      fs.writeFileSync(`${prefix}.txt`, v);
-    } else {
-      writeTree(prefix, v);
-    }
+/* Trying to retrieve a “human-readable” label for an array item */
+const guessLabel = (v: unknown): string | null => {
+  if (v && typeof v === "object") {
+    const o = v as Record<string, unknown>;
+    const c =
+      o["asset"] ?? o["source"] ?? o["symbol"] ?? o["name"] ?? o["id"];
+    if (typeof c === "string" && c.trim()) return c;
   }
+  return null;
+};
+
+/**
+ * Writes a tree of any structure:
+ * - object → subdirectories by keys
+ * - array → subfolders item_01[-label], item_02[-label], …
+ * - string/number/boolean/null/undefined → <key>.txt with the stringified value
+ *
+ * If the input is a primitive (rare, but possible), it writes a value.txt file.
+ */
+const ensureDir = (dir: string) => {
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+};
+
+const isPrimitive = (x: unknown): x is string | number | boolean | null | undefined =>
+  typeof x === "string" || typeof x === "number" || typeof x === "boolean" || x == null;
+
+const writeLeaf = (dir: string, name: string, value: unknown) => {
+  ensureDir(dir);
+  const file = path.join(dir, `${safeKey(name)}.txt`);
+  fs.writeFileSync(file, String(value ?? ""));
+};
+
+const writeArrayNode = (dir: string, arr: unknown[]) => {
+  ensureDir(dir);
+  arr.forEach((item, idx) => {
+    const label = guessLabel(item);
+    const folder =
+      `${String(idx + 1).padStart(2, "0")}` + (label ? `-${safeKey(label)}` : "");
+    writeNode(path.join(dir, folder), item);
+  });
+};
+
+const writeObjectNode = (dir: string, obj: Record<string, unknown>) => {
+  ensureDir(dir);
+  for (const [k, v] of Object.entries(obj)) {
+    const entryPath = path.join(dir, safeKey(k));
+    writeNode(entryPath, v, k);
+  }
+};
+
+const writeNode = (dir: string, node: unknown, leafName = "value") => {
+  if (isPrimitive(node)) {
+    writeLeaf(path.dirname(path.join(dir, "_")), leafName, node);
+    return;
+  }
+
+  if (Array.isArray(node)) {
+    writeArrayNode(dir, node);
+    return;
+  }
+
+  if (typeof node === "object" && node !== null) {
+    writeObjectNode(dir, node as Record<string, unknown>);
+    return;
+  }
+
+  // fallback for exotic types (symbol, function, bigint)
+  writeLeaf(path.dirname(path.join(dir, "_")), leafName, String(node));
+};
+
+export const writeTree = (parentDir: string, node: unknown): void => {
+  // top level: if primitive — value.txt in parentDir
+  if (isPrimitive(node)) {
+    writeLeaf(parentDir, "value", node);
+    return;
+  }
+
+  if (Array.isArray(node)) {
+    writeArrayNode(parentDir, node);
+    return;
+  }
+
+  writeObjectNode(parentDir, node as Record<string, unknown>);
 };
 
 EthersLiquity.connect(mainnetProvider)
@@ -76,6 +154,7 @@ EthersLiquity.connect(mainnetProvider)
         provider: mainnetProvider,
         duneSpApyUrl: null,
         duneSpUpfrontFeeUrl: null,
+        duneYieldUrl: null,
         duneApiKey
       }),
       fetchV2Stats({
@@ -83,6 +162,7 @@ EthersLiquity.connect(mainnetProvider)
         provider: mainnetProvider,
         duneSpApyUrl: DUNE_SPV2_AVERAGE_APY_URL_MAINNET,
         duneSpUpfrontFeeUrl: DUNE_SPV2_UPFRONT_FEE_URL_MAINNET,
+        duneYieldUrl: DUNE_BOLD_YIELD_OPPORTUNITIES_URL_MAINNET,
         duneApiKey
       }),
       fetchV2Stats({
@@ -90,6 +170,7 @@ EthersLiquity.connect(mainnetProvider)
         provider: sepoliaProvider,
         duneSpApyUrl: null,
         duneSpUpfrontFeeUrl: null,
+        duneYieldUrl: null,
         duneApiKey
       }),
       fetchPrices({ coinGeckoDemoApiKey })

@@ -133,6 +133,60 @@ const isDuneSpUpfrontFeeResponse = (
       typeof row.upfront_fees === "number"
   );
 
+export const fetchBoldYieldOpportunitiesFromDune = async (
+  {
+    apiKey,
+    url
+  }: {
+  apiKey: string;
+  url: string | null;
+}) => {
+  if (!url) return null;
+
+  const {
+    result: { rows }
+  } = await duneFetch({
+    apiKey,
+    url,
+    validate: isDuneBoldYieldOpportunitiesResponse
+  });
+
+  const extractLink = (htmlLink?: string): string | undefined => {
+    if (!htmlLink) return undefined;
+    const match = htmlLink.match(/href=(?:"|')?([^"'\s>]+)/i);
+    return match?.[1];
+  };
+
+  return rows
+    .slice(0, 3).map(row => ({
+      asset: row.asset,
+      weekly_apr: row.weekly_apr,
+      tvl: row.tvl,
+      link: extractLink(row.link)
+    }));
+};
+
+const isDuneBoldYieldOpportunitiesResponse = (
+  data: unknown
+): data is DuneResponse<{
+  asset: string;
+  weekly_apr: number;
+  tvl: number;
+  link?: string;
+}> =>
+  isDuneResponse(data) &&
+  data.result.rows.every(
+    row =>
+      typeof row === "object" &&
+      row !== null &&
+      "asset" in row &&
+      typeof row.asset === "string" &&
+      "weekly_apr" in row &&
+      typeof row.weekly_apr === "number" &&
+      "tvl" in row &&
+      typeof row.tvl === "number"
+  );
+
 const fetchSpUpfrontFeeFromDune = async ({
   apiKey,
   url
@@ -151,6 +205,7 @@ export const fetchV2Stats = async ({
   duneSpUpfrontFeeUrl,
   duneApiKey,
   deployment,
+  duneYieldUrl,
   blockTag = "latest"
 }: {
   provider: Provider;
@@ -158,6 +213,7 @@ export const fetchV2Stats = async ({
   duneSpUpfrontFeeUrl: string | null;
   duneApiKey: string;
   deployment: LiquityV2Deployment;
+  duneYieldUrl: string | null;
   blockTag?: BlockTag;
 }) => {
   const SP_YIELD_SPLIT = Number(Decimal.fromBigNumberString(deployment.constants.SP_YIELD_SPLIT));
@@ -169,7 +225,7 @@ export const fetchV2Stats = async ({
     .then(owner => owner == AddressZero)
     .catch(() => false);
 
-  const [total_bold_supply, branches, spV2AverageApys, spUpfrontFee24h] = await Promise.all([
+  const [total_bold_supply, branches, spV2AverageApys, spUpfrontFee24h, boldYield] = await Promise.all([
     // total_bold_supply
     deployed ? contracts.boldToken.totalSupply({ blockTag }).then(decimalify) : Decimal.ZERO,
 
@@ -211,7 +267,12 @@ export const fetchV2Stats = async ({
           apiKey: duneApiKey,
           url: duneSpUpfrontFeeUrl
         })
-      : null
+      : null,
+
+    deployed ? fetchBoldYieldOpportunitiesFromDune({
+      apiKey: duneApiKey,
+      url: duneYieldUrl
+    }) : null
   ]);
 
   const sp_apys = branches.map(b => b.sp_apy).filter(x => !isNaN(x));
@@ -247,6 +308,7 @@ export const fetchV2Stats = async ({
           )
         ];
       })
-    )
+    ),
+    boldYield: boldYield,
   };
 };
