@@ -162,7 +162,8 @@ export const fetchBoldYieldOpportunitiesFromDune = async (
       asset: row.asset,
       weekly_apr: row.weekly_apr,
       tvl: row.tvl,
-      link: extractLink(row.link)
+      link: extractLink(row.link),
+      protocol: row.protocol
     }));
 };
 
@@ -173,6 +174,7 @@ const isDuneBoldYieldOpportunitiesResponse = (
   weekly_apr: number;
   tvl: number;
   link?: string;
+  protocol: string;
 }> =>
   isDuneResponse(data) &&
   data.result.rows.every(
@@ -184,7 +186,9 @@ const isDuneBoldYieldOpportunitiesResponse = (
       "weekly_apr" in row &&
       typeof row.weekly_apr === "number" &&
       "tvl" in row &&
-      typeof row.tvl === "number"
+      typeof row.tvl === "number" &&
+      "protocol" in row &&
+      typeof row.protocol === "string"
   );
 
 const fetchSpUpfrontFeeFromDune = async ({

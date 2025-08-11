@@ -42,97 +42,92 @@ const lusdCBBAMMStatsFile = path.join(OUTPUT_DIR_V1, LUSD_CB_BAMM_STATS_FILE);
 const mainnetProvider = getProvider("mainnet", { alchemyApiKey });
 const sepoliaProvider = getProvider("sepolia", { alchemyApiKey });
 
-const safeKey = (s: string) =>
-  String(s)
-    .normalize("NFKD")
-    .replace(/[\/\\:*?"<>|]+/g, "-")
-    .replace(/[^\w.-]+/g, "-")
-    .replace(/^-+|-+$/g, "")
-    .slice(0, 80);
+type Leaf = string | number | boolean | null | undefined | bigint;
 
-/* Trying to retrieve a “human-readable” label for an array item */
-const guessLabel = (v: unknown): string | null => {
-  if (v && typeof v === "object") {
-    const o = v as Record<string, unknown>;
-    const c =
-      o["asset"] ?? o["source"] ?? o["symbol"] ?? o["name"] ?? o["id"];
-    if (typeof c === "string" && c.trim()) return c;
-  }
-  return null;
-};
+export type Tree = Record<string, Leaf | Tree | Array<Leaf | Tree>>;
 
-/**
- * Writes a tree of any structure:
- * - object → subdirectories by keys
- * - array → subfolders item_01[-label], item_02[-label], …
- * - string/number/boolean/null/undefined → <key>.txt with the stringified value
- *
- * If the input is a primitive (rare, but possible), it writes a value.txt file.
- */
+/* files/folder sanitizer */
+const safeKey = (key: string) =>
+  String(key).replace(/[^a-zA-Z0-9-_]/g, "_");
+
+const isPrimitive = (v: unknown): v is Leaf =>
+  typeof v === "string" ||
+  typeof v === "number" ||
+  typeof v === "boolean" ||
+  typeof v === "bigint" ||
+  v == null;
+
+const isArrayNode = (v: unknown): v is Array<Leaf | Tree> =>
+  Array.isArray(v);
+
+const isBranch = (v: unknown): v is Tree =>
+  typeof v === "object" && v !== null && !Array.isArray(v);
+
 const ensureDir = (dir: string) => {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 };
 
-const isPrimitive = (x: unknown): x is string | number | boolean | null | undefined =>
-  typeof x === "string" || typeof x === "number" || typeof x === "boolean" || x == null;
-
-const writeLeaf = (dir: string, name: string, value: unknown) => {
+/** write primitives in to <dir>/<name>.txt */
+const writeLeaf = (dir: string, name: string, value: Leaf) => {
   ensureDir(dir);
   const file = path.join(dir, `${safeKey(name)}.txt`);
   fs.writeFileSync(file, String(value ?? ""));
 };
 
-const writeArrayNode = (dir: string, arr: unknown[]) => {
+const writeArray = (dir: string, arr: Array<Leaf | Tree>) => {
   ensureDir(dir);
+
   arr.forEach((item, idx) => {
-    const label = guessLabel(item);
-    const folder =
-      `${String(idx + 1).padStart(2, "0")}` + (label ? `-${safeKey(label)}` : "");
-    writeNode(path.join(dir, folder), item);
+    const base = path.join(dir, String(idx + 1));
+
+    if (isPrimitive(item)) {
+      fs.writeFileSync(`${base}.txt`, String(item ?? ""));
+      return;
+    }
+
+    if (isArrayNode(item)) {
+      writeArray(base, item);
+      return;
+    }
+
+    if (isBranch(item)) {
+      writeTree(base, item);
+      return;
+    }
+
+    // fallback
+    fs.writeFileSync(`${base}.txt`, String(item));
   });
 };
 
-const writeObjectNode = (dir: string, obj: Record<string, unknown>) => {
-  ensureDir(dir);
-  for (const [k, v] of Object.entries(obj)) {
-    const entryPath = path.join(dir, safeKey(k));
-    writeNode(entryPath, v, k);
+export const writeTree = (parentDir: string, tree: Tree): void => {
+  ensureDir(parentDir);
+
+  for (const [rawKey, value] of Object.entries(tree)) {
+    const key = safeKey(rawKey);
+    const base = path.join(parentDir, key);
+
+    if (isPrimitive(value)) {
+      // <parent>/<key>.txt
+      writeLeaf(parentDir, key, value);
+      continue;
+    }
+
+    if (isArrayNode(value)) {
+      // array: <parent>/<key>/<01>.txt or <01>/* (if object/subarray)
+      writeArray(base, value);
+      continue;
+    }
+
+    if (isBranch(value)) {
+      // object: recursion in <parent>/<key>/
+      writeTree(base, value);
+      continue;
+    }
+
+    // fallback
+    writeLeaf(parentDir, key, String(value) as unknown as Leaf);
   }
-};
-
-const writeNode = (dir: string, node: unknown, leafName = "value") => {
-  if (isPrimitive(node)) {
-    writeLeaf(path.dirname(path.join(dir, "_")), leafName, node);
-    return;
-  }
-
-  if (Array.isArray(node)) {
-    writeArrayNode(dir, node);
-    return;
-  }
-
-  if (typeof node === "object" && node !== null) {
-    writeObjectNode(dir, node as Record<string, unknown>);
-    return;
-  }
-
-  // fallback for exotic types (symbol, function, bigint)
-  writeLeaf(path.dirname(path.join(dir, "_")), leafName, String(node));
-};
-
-export const writeTree = (parentDir: string, node: unknown): void => {
-  // top level: if primitive — value.txt in parentDir
-  if (isPrimitive(node)) {
-    writeLeaf(parentDir, "value", node);
-    return;
-  }
-
-  if (Array.isArray(node)) {
-    writeArrayNode(parentDir, node);
-    return;
-  }
-
-  writeObjectNode(parentDir, node as Record<string, unknown>);
 };
 
 EthersLiquity.connect(mainnetProvider)
