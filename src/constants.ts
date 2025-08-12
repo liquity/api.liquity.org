@@ -10,6 +10,7 @@ export const LUSD_CB_BAMM_STATS_FILE = "lusd_cb_bamm_stats.json";
 
 export const DUNE_SPV2_AVERAGE_APY_URL_MAINNET = "https://api.dune.com/api/v1/query/5162039/results";
 export const DUNE_SPV2_UPFRONT_FEE_URL_MAINNET = "https://api.dune.com/api/v1/query/5190924/results";
+export const DUNE_BOLD_YIELD_OPPORTUNITIES_URL_MAINNET = "https://api.dune.com/api/v1/query/5486369/results";
 
 export const TOTAL_LQTY_SUPPLY = Decimal.from(100e6); // 100 million
 

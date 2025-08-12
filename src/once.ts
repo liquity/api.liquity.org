@@ -14,6 +14,7 @@ import { fetchPrices } from "./fetchPrices";
 import { fetchV2Stats } from "./v2/fetchV2Stats";
 
 import {
+  DUNE_BOLD_YIELD_OPPORTUNITIES_URL_MAINNET,
   DUNE_SPV2_AVERAGE_APY_URL_MAINNET,
   DUNE_SPV2_UPFRONT_FEE_URL_MAINNET,
   LQTY_CIRCULATING_SUPPLY_FILE,
@@ -41,19 +42,91 @@ const lusdCBBAMMStatsFile = path.join(OUTPUT_DIR_V1, LUSD_CB_BAMM_STATS_FILE);
 const mainnetProvider = getProvider("mainnet", { alchemyApiKey });
 const sepoliaProvider = getProvider("sepolia", { alchemyApiKey });
 
-interface Tree extends Record<string, string | Tree> {}
+type Leaf = string | number | boolean | null | undefined | bigint;
 
-const writeTree = (parentDir: string, tree: Tree) => {
-  if (!fs.existsSync(parentDir)) fs.mkdirSync(parentDir);
+export type Tree = Record<string, Leaf | Tree | Array<Leaf | Tree>>;
 
-  for (const [k, v] of Object.entries(tree)) {
-    const prefix = path.join(parentDir, k);
+/* files/folder sanitizer */
+const safeKey = (key: string) =>
+  String(key).replace(/[^a-zA-Z0-9-_]/g, "_");
 
-    if (typeof v === "string") {
-      fs.writeFileSync(`${prefix}.txt`, v);
-    } else {
-      writeTree(prefix, v);
+const isPrimitive = (v: unknown): v is Leaf =>
+  typeof v === "string" ||
+  typeof v === "number" ||
+  typeof v === "boolean" ||
+  typeof v === "bigint" ||
+  v == null;
+
+const isArrayNode = (v: unknown): v is Array<Leaf | Tree> =>
+  Array.isArray(v);
+
+const isBranch = (v: unknown): v is Tree =>
+  typeof v === "object" && v !== null && !Array.isArray(v);
+
+const ensureDir = (dir: string) => {
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+};
+
+/** write primitives in to <dir>/<name>.txt */
+const writeLeaf = (dir: string, name: string, value: Leaf) => {
+  ensureDir(dir);
+  const file = path.join(dir, `${safeKey(name)}.txt`);
+  fs.writeFileSync(file, String(value ?? ""));
+};
+
+const writeArray = (dir: string, arr: Array<Leaf | Tree>) => {
+  ensureDir(dir);
+
+  arr.forEach((item, idx) => {
+    const base = path.join(dir, String(idx + 1));
+
+    if (isPrimitive(item)) {
+      fs.writeFileSync(`${base}.txt`, String(item ?? ""));
+      return;
     }
+
+    if (isArrayNode(item)) {
+      writeArray(base, item);
+      return;
+    }
+
+    if (isBranch(item)) {
+      writeTree(base, item);
+      return;
+    }
+
+    // fallback
+    fs.writeFileSync(`${base}.txt`, String(item));
+  });
+};
+
+export const writeTree = (parentDir: string, tree: Tree): void => {
+  ensureDir(parentDir);
+
+  for (const [rawKey, value] of Object.entries(tree)) {
+    const key = safeKey(rawKey);
+    const base = path.join(parentDir, key);
+
+    if (isPrimitive(value)) {
+      // <parent>/<key>.txt
+      writeLeaf(parentDir, key, value);
+      continue;
+    }
+
+    if (isArrayNode(value)) {
+      // array: <parent>/<key>/<01>.txt or <01>/* (if object/subarray)
+      writeArray(base, value);
+      continue;
+    }
+
+    if (isBranch(value)) {
+      // object: recursion in <parent>/<key>/
+      writeTree(base, value);
+      continue;
+    }
+
+    // fallback
+    writeLeaf(parentDir, key, String(value) as unknown as Leaf);
   }
 };
 
@@ -76,6 +149,7 @@ EthersLiquity.connect(mainnetProvider)
         provider: mainnetProvider,
         duneSpApyUrl: null,
         duneSpUpfrontFeeUrl: null,
+        duneYieldUrl: null,
         duneApiKey
       }),
       fetchV2Stats({
@@ -83,6 +157,7 @@ EthersLiquity.connect(mainnetProvider)
         provider: mainnetProvider,
         duneSpApyUrl: DUNE_SPV2_AVERAGE_APY_URL_MAINNET,
         duneSpUpfrontFeeUrl: DUNE_SPV2_UPFRONT_FEE_URL_MAINNET,
+        duneYieldUrl: DUNE_BOLD_YIELD_OPPORTUNITIES_URL_MAINNET,
         duneApiKey
       }),
       fetchV2Stats({
@@ -90,6 +165,7 @@ EthersLiquity.connect(mainnetProvider)
         provider: sepoliaProvider,
         duneSpApyUrl: null,
         duneSpUpfrontFeeUrl: null,
+        duneYieldUrl: null,
         duneApiKey
       }),
       fetchPrices({ coinGeckoDemoApiKey })
