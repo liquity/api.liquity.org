@@ -47,8 +47,7 @@ type Leaf = string | number | boolean | null | undefined | bigint;
 export type Tree = Record<string, Leaf | Tree | Array<Leaf | Tree>>;
 
 /* files/folder sanitizer */
-const safeKey = (key: string) =>
-  String(key).replace(/[^a-zA-Z0-9-_]/g, "_");
+const safeKey = (key: string) => String(key).replace(/[^a-zA-Z0-9-_]/g, "_");
 
 const isPrimitive = (v: unknown): v is Leaf =>
   typeof v === "string" ||
@@ -57,11 +56,9 @@ const isPrimitive = (v: unknown): v is Leaf =>
   typeof v === "bigint" ||
   v == null;
 
-const isArrayNode = (v: unknown): v is Array<Leaf | Tree> =>
-  Array.isArray(v);
+const isArrayNode = (v: unknown): v is Array<Leaf | Tree> => Array.isArray(v);
 
-const isBranch = (v: unknown): v is Tree =>
-  typeof v === "object" && v !== null && !Array.isArray(v);
+const isBranch = (v: unknown): v is Tree => typeof v === "object" && v !== null && !Array.isArray(v);
 
 const ensureDir = (dir: string) => {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
