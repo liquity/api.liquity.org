@@ -44,7 +44,7 @@ const sepoliaProvider = getProvider("sepolia", { alchemyApiKey });
 
 type Leaf = string | number | boolean | null | undefined | bigint;
 
-export type Tree = Record<string, Leaf | Tree | Array<Leaf | Tree>>;
+interface Tree extends Record<string, Leaf | Tree | Array<Leaf | Tree>> {}
 
 /* files/folder sanitizer */
 const safeKey = (key: string) => String(key).replace(/[^a-zA-Z0-9-_]/g, "_");
