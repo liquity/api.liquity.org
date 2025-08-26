@@ -1,0 +1,65 @@
+{
+  "total_bold_supply": "1016711149.341929759732519361",
+  "total_debt_pending": "26756.727553133821556628",
+  "total_coll_value": "2003099532.10450214341412157",
+  "total_sp_deposits": "126064.527820672029861649",
+  "total_value_locked": "2003225596.632322815443983219",
+  "max_sp_apy": "507.6625961559189",
+  "branch": {
+    "WETH": {
+      "coll_active": "1000109.132850606912639126",
+      "coll_default": "0",
+      "coll_price": "2000",
+      "sp_deposits": "73947.500490621625844073",
+      "interest_accrual_1y": "50053840.104413414156866266",
+      "interest_pending": "25960.191804534050036457",
+      "batch_management_fees_pending": "12.633639945085418496",
+      "debt_pending": "25972.825444479135454953",
+      "coll_value": "2000218265.701213825278252",
+      "value_locked": "2000292213.201704446904096073",
+      "sp_apy": "507.6625961559189",
+      "apy_avg": "507.6625961559189"
+    },
+    "wstETH": {
+      "coll_active": "588.546130258058372243",
+      "coll_default": "0",
+      "coll_price": "1990",
+      "sp_deposits": "19818.71964452538618012",
+      "interest_accrual_1y": "14292.180323114686416146",
+      "interest_pending": "8.337105188483567077",
+      "batch_management_fees_pending": "71.801356088801275833",
+      "debt_pending": "80.13846127728484291",
+      "coll_value": "1171206.79921353616076357",
+      "value_locked": "1191025.51885806154694369",
+      "sp_apy": "0.5408591187825299",
+      "apy_avg": "0.5408591187825299"
+    },
+    "rETH": {
+      "coll_active": "855.029802037390987553",
+      "coll_default": "0",
+      "coll_price": "2000",
+      "sp_deposits": "32298.307685525017837456",
+      "interest_accrual_1y": "26513.359870634074774884",
+      "interest_pending": "9.826488780059965309",
+      "batch_management_fees_pending": "693.937158597341293456",
+      "debt_pending": "703.763647377401258765",
+      "coll_value": "1710059.604074781975106",
+      "value_locked": "1742357.911760306992943456",
+      "sp_apy": "0.6156675481758239",
+      "apy_avg": "0.6156675481758239"
+    }
+  },
+  "boldYield": null,
+  "prices": {
+    "ETH": "4430.97",
+    "LQTY": "0.840168",
+    "LEGACY_BOLD": "0.997114",
+    "BOLD": "0.998362",
+    "LUSD": "1.003",
+    "RETH": "5031.97",
+    "WSTETH": "5353.25"
+  },
+  "otherPrices": {
+    "SDEX": "0.00435584"
+  }
+}
