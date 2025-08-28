@@ -169,7 +169,7 @@ const isDuneBoldYieldOpportunitiesResponse = (
   data: unknown
 ): data is DuneResponse<{
   asset: string;
-  weekly_apr: number;
+  weekly_apr: number | null;
   tvl: number;
   link?: string;
   protocol: string;
@@ -182,7 +182,7 @@ const isDuneBoldYieldOpportunitiesResponse = (
       "asset" in row &&
       typeof row.asset === "string" &&
       "weekly_apr" in row &&
-      typeof row.weekly_apr === "number" &&
+      (row.weekly_apr === null || typeof row.weekly_apr === "number") &&
       "tvl" in row &&
       typeof row.tvl === "number" &&
       "protocol" in row &&
