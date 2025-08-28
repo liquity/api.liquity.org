@@ -133,11 +133,10 @@ const isDuneSpUpfrontFeeResponse = (
       typeof row.upfront_fees === "number"
   );
 
-export const fetchBoldYieldOpportunitiesFromDune = async (
-  {
-    apiKey,
-    url
-  }: {
+export const fetchBoldYieldOpportunitiesFromDune = async ({
+  apiKey,
+  url
+}: {
   apiKey: string;
   url: string | null;
 }) => {
@@ -157,14 +156,13 @@ export const fetchBoldYieldOpportunitiesFromDune = async (
     return match?.[1];
   };
 
-  return rows
-    .slice(0, 3).map(row => ({
-      asset: row.asset,
-      weekly_apr: row.weekly_apr,
-      tvl: row.tvl,
-      link: extractLink(row.link),
-      protocol: row.protocol
-    }));
+  return rows.slice(0, 3).map(row => ({
+    asset: row.asset,
+    weekly_apr: row.weekly_apr,
+    tvl: row.tvl,
+    link: extractLink(row.link),
+    protocol: row.protocol
+  }));
 };
 
 const isDuneBoldYieldOpportunitiesResponse = (
@@ -229,55 +227,58 @@ export const fetchV2Stats = async ({
     .then(owner => owner == AddressZero)
     .catch(() => false);
 
-  const [total_bold_supply, branches, spV2AverageApys, spUpfrontFee24h, boldYield] = await Promise.all([
-    // total_bold_supply
-    deployed ? contracts.boldToken.totalSupply({ blockTag }).then(decimalify) : Decimal.ZERO,
+  const [total_bold_supply, branches, spV2AverageApys, spUpfrontFee24h, boldYield] =
+    await Promise.all([
+      // total_bold_supply
+      deployed ? contracts.boldToken.totalSupply({ blockTag }).then(decimalify) : Decimal.ZERO,
 
-    // branches
-    (deployed ? fetchBranchData : emptyBranchData)(contracts.branches)
-      .then(branches => {
-        return branches.map(branch => {
-          const sp_deposits = Number(branch.sp_deposits);
-          return {
+      // branches
+      (deployed ? fetchBranchData : emptyBranchData)(contracts.branches)
+        .then(branches => {
+          return branches.map(branch => {
+            const sp_deposits = Number(branch.sp_deposits);
+            return {
+              ...branch,
+              debt_pending: branch.interest_pending.add(branch.batch_management_fees_pending),
+              coll_value: branch.coll_active.add(branch.coll_default).mul(branch.coll_price),
+              sp_apy:
+                sp_deposits === 0
+                  ? 0
+                  : (SP_YIELD_SPLIT * Number(branch.interest_accrual_1y)) / sp_deposits
+            };
+          });
+        })
+        .then(branches => {
+          return branches.map(branch => ({
             ...branch,
-            debt_pending: branch.interest_pending.add(branch.batch_management_fees_pending),
-            coll_value: branch.coll_active.add(branch.coll_default).mul(branch.coll_price),
-            sp_apy:
-              sp_deposits === 0
-                ? 0
-                : (SP_YIELD_SPLIT * Number(branch.interest_accrual_1y)) / sp_deposits
-          };
-        });
-      })
-      .then(branches => {
-        return branches.map(branch => ({
-          ...branch,
-          value_locked: branch.coll_value.add(branch.sp_deposits) // taking BOLD at face value
-        }));
-      }),
+            value_locked: branch.coll_value.add(branch.sp_deposits) // taking BOLD at face value
+          }));
+        }),
 
-    // spV2AverageApys
-    deployed
-      ? fetchSpAverageApysFromDune({
-          branches: contracts.branches,
-          apiKey: duneApiKey,
-          url: duneSpApyUrl
-        })
-      : null,
+      // spV2AverageApys
+      deployed
+        ? fetchSpAverageApysFromDune({
+            branches: contracts.branches,
+            apiKey: duneApiKey,
+            url: duneSpApyUrl
+          })
+        : null,
 
-    // spUpfrontFee24h
-    deployed
-      ? fetchSpUpfrontFeeFromDune({
-          apiKey: duneApiKey,
-          url: duneSpUpfrontFeeUrl
-        })
-      : null,
+      // spUpfrontFee24h
+      deployed
+        ? fetchSpUpfrontFeeFromDune({
+            apiKey: duneApiKey,
+            url: duneSpUpfrontFeeUrl
+          })
+        : null,
 
-    deployed ? fetchBoldYieldOpportunitiesFromDune({
-      apiKey: duneApiKey,
-      url: duneYieldUrl
-    }) : null
-  ]);
+      deployed
+        ? fetchBoldYieldOpportunitiesFromDune({
+            apiKey: duneApiKey,
+            url: duneYieldUrl
+          })
+        : null
+    ]);
 
   const sp_apys = branches.map(b => b.sp_apy).filter(x => !isNaN(x));
 
@@ -313,6 +314,6 @@ export const fetchV2Stats = async ({
         ];
       })
     ),
-    boldYield: boldYield,
+    boldYield: boldYield
   };
 };
