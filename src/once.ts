@@ -8,7 +8,7 @@ import v2RelaunchDeployment from "../addresses/relaunch.json";
 import v2SepoliaDeployment from "../addresses/sepolia.json";
 import { getProvider } from "./connection";
 import { fetchLQTYCirculatingSupply } from "./fetchLQTYCirculatingSupply";
-import { fetchLUSDCBBAMMStats } from "./fetchLUSDCBBAMMStats";
+// import { fetchLUSDCBBAMMStats } from "./fetchLUSDCBBAMMStats";
 import { fetchLUSDTotalSupply } from "./fetchLUSDTotalSupply";
 import { fetchPrices } from "./fetchPrices";
 import { fetchV2Stats } from "./v2/fetchV2Stats";
@@ -18,7 +18,7 @@ import {
   DUNE_SPV2_AVERAGE_APY_URL_MAINNET,
   DUNE_SPV2_UPFRONT_FEE_URL_MAINNET,
   LQTY_CIRCULATING_SUPPLY_FILE,
-  LUSD_CB_BAMM_STATS_FILE,
+  // LUSD_CB_BAMM_STATS_FILE,
   LUSD_TOTAL_SUPPLY_FILE,
   OUTPUT_DIR_V1,
   OUTPUT_DIR_V2,
@@ -31,13 +31,13 @@ const panic = <T>(message: string): T => {
 
 const alchemyApiKey = process.env.ALCHEMY_API_KEY || undefined; // filter out empty string
 const duneApiKey: string = process.env.DUNE_API_KEY || panic("missing DUNE_API_KEY");
-const transposeApiKey: string = process.env.TRANSPOSE_API_KEY || panic("missing TRANSPOSE_API_KEY");
+// const transposeApiKey: string = process.env.TRANSPOSE_API_KEY || panic("missing TRANSPOSE_API_KEY");
 const coinGeckoDemoApiKey: string =
   process.env.COINGECKO_DEMO_KEY || panic("missing COINGECKO_DEMO_KEY");
 
 const lqtyCirculatingSupplyFile = path.join(OUTPUT_DIR_V1, LQTY_CIRCULATING_SUPPLY_FILE);
 const lusdTotalSupplyFile = path.join(OUTPUT_DIR_V1, LUSD_TOTAL_SUPPLY_FILE);
-const lusdCBBAMMStatsFile = path.join(OUTPUT_DIR_V1, LUSD_CB_BAMM_STATS_FILE);
+// const lusdCBBAMMStatsFile = path.join(OUTPUT_DIR_V1, LUSD_CB_BAMM_STATS_FILE);
 
 const mainnetProvider = getProvider("mainnet", { alchemyApiKey });
 const sepoliaProvider = getProvider("sepolia", { alchemyApiKey });
@@ -132,7 +132,7 @@ EthersLiquity.connect(mainnetProvider)
     const [
       lqtyCirculatingSupply,
       lusdTotalSupply,
-      lusdCBBAMMStats,
+      // lusdCBBAMMStats,
       v2LegacyStats,
       v2RelaunchStats,
       v2SepoliaStats,
@@ -140,7 +140,7 @@ EthersLiquity.connect(mainnetProvider)
     ] = await Promise.all([
       fetchLQTYCirculatingSupply(liquity),
       fetchLUSDTotalSupply(liquity),
-      fetchLUSDCBBAMMStats(transposeApiKey),
+      // fetchLUSDCBBAMMStats(transposeApiKey),
       fetchV2Stats({
         deployment: v2LegacyDeployment,
         provider: mainnetProvider,
@@ -187,7 +187,7 @@ EthersLiquity.connect(mainnetProvider)
     fs.mkdirSync(OUTPUT_DIR_V1, { recursive: true });
     fs.writeFileSync(lqtyCirculatingSupplyFile, `${lqtyCirculatingSupply}`);
     fs.writeFileSync(lusdTotalSupplyFile, `${lusdTotalSupply}`);
-    fs.writeFileSync(lusdCBBAMMStatsFile, JSON.stringify(lusdCBBAMMStats));
+    // fs.writeFileSync(lusdCBBAMMStatsFile, JSON.stringify(lusdCBBAMMStats));
 
     writeTree(OUTPUT_DIR_V2, v2Stats);
     fs.writeFileSync(
@@ -205,7 +205,7 @@ EthersLiquity.connect(mainnetProvider)
 
     console.log(`LQTY circulating supply: ${lqtyCirculatingSupply}`);
     console.log(`LUSD total supply: ${lusdTotalSupply}`);
-    console.log("LUSD CB BAMM stats:", lusdCBBAMMStats);
+    // console.log("LUSD CB BAMM stats:", lusdCBBAMMStats);
     console.log();
     console.log("v2 stats:", util.inspect(v2Stats, { colors: true, depth: null }));
   })
