@@ -29,7 +29,11 @@ const panic = <T>(message: string): T => {
   throw new Error(message);
 };
 
+const provider = process.env.PROVIDER || "alchemy";
+if (provider !== "alchemy" && provider !== "infura") throw new Error("bad PROVIDER");
+
 const alchemyApiKey = process.env.ALCHEMY_API_KEY || undefined; // filter out empty string
+const infuraApiKey = process.env.INFURA_API_KEY || undefined; // filter out empty string
 const duneApiKey: string = process.env.DUNE_API_KEY || panic("missing DUNE_API_KEY");
 // const transposeApiKey: string = process.env.TRANSPOSE_API_KEY || panic("missing TRANSPOSE_API_KEY");
 const coinGeckoDemoApiKey: string =
@@ -39,8 +43,8 @@ const lqtyCirculatingSupplyFile = path.join(OUTPUT_DIR_V1, LQTY_CIRCULATING_SUPP
 const lusdTotalSupplyFile = path.join(OUTPUT_DIR_V1, LUSD_TOTAL_SUPPLY_FILE);
 // const lusdCBBAMMStatsFile = path.join(OUTPUT_DIR_V1, LUSD_CB_BAMM_STATS_FILE);
 
-const mainnetProvider = getProvider("mainnet", { alchemyApiKey });
-const sepoliaProvider = getProvider("sepolia", { alchemyApiKey });
+const mainnetProvider = getProvider("mainnet", { provider, alchemyApiKey, infuraApiKey });
+const sepoliaProvider = getProvider("sepolia", { provider, alchemyApiKey, infuraApiKey });
 
 type Leaf = string | number | boolean | null | undefined | bigint;
 

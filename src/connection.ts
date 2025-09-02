@@ -1,13 +1,14 @@
 import type { Provider } from "@ethersproject/abstract-provider";
 import { Networkish, getNetwork } from "@ethersproject/networks";
-import { Batched } from "@liquity/providers";
+import { InfuraProvider } from "@ethersproject/providers";
 
 import { AlchemyProvider } from "./AlchemyProvider";
-
-const BatchedAlchemyProvider = Batched(AlchemyProvider);
+import { BatchedProvider } from "./BatchedProvider";
 
 export interface LiquityConnectionOptions {
+  provider?: "alchemy" | "infura"; // defaults to Alchemy
   alchemyApiKey?: string;
+  infuraApiKey?: string;
 }
 
 export const getProvider = (
@@ -15,9 +16,10 @@ export const getProvider = (
   options?: LiquityConnectionOptions
 ): Provider => {
   const network = getNetwork(networkish);
-  const provider = new BatchedAlchemyProvider(network, options?.alchemyApiKey);
+  const underlyingProvider =
+    options?.provider === "infura"
+      ? new InfuraProvider(network, options?.infuraApiKey)
+      : new AlchemyProvider(network, options?.alchemyApiKey);
 
-  provider.chainId = network.chainId;
-
-  return provider;
+  return new BatchedProvider(underlyingProvider, network);
 };
