@@ -38,6 +38,7 @@ jobs:
       - name: Fetch API data
         run: yarn once
         env:
+          PROVIDER: ${{ vars.PROVIDER }}
           ALCHEMY_API_KEY: ${{ secrets.ALCHEMY_API_KEY }}
           DUNE_API_KEY: ${{ secrets.DUNE_API_KEY }}
           TRANSPOSE_API_KEY: ${{ secrets.TRANSPOSE_API_KEY }}
