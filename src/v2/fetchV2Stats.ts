@@ -3,10 +3,11 @@ import type { BigNumber } from "@ethersproject/bignumber";
 import { AddressZero } from "@ethersproject/constants";
 import { resolveProperties } from "@ethersproject/properties";
 import { Decimal } from "@liquity/lib-base";
-import { z } from "zod";
 
-import { duneFetch, zDuneResponse, zTypeGuard } from "../dune";
-import { getContracts, LiquityV2BranchContracts, type LiquityV2Deployment } from "./contracts";
+import { getContracts, type LiquityV2BranchContracts, type LiquityV2Deployment } from "./contracts";
+import { fetchSpAverageApysFromDune } from "./dune/fetchSpAverageApysFromDune";
+import { fetchSpUpfrontFeeFromDune } from "./dune/fetchSpUpfrontFeeFromDune";
+import { fetchBoldYieldOpportunitiesFromDune } from "./dune/fetchBoldYieldOpportunitiesFromDune";
 
 const ONE_WEI = Decimal.fromBigNumberString("1");
 
@@ -56,122 +57,6 @@ const emptyBranchData = (branches: LiquityV2BranchContracts[]): ReturnType<typeo
       batch_management_fees_pending: Decimal.ZERO
     }))
   );
-
-const zDuneSpAverageApyResponse = zDuneResponse(
-  z.object({
-    apr: z.number(),
-    collateral_type: z.string()
-  })
-);
-
-const isDuneSpAverageApyResponse = zTypeGuard(zDuneSpAverageApyResponse);
-
-const fetchSpAverageApysFromDune = async ({
-  branches,
-  apiKey,
-  url
-}: {
-  branches: LiquityV2BranchContracts[];
-  apiKey: string;
-  url: string | null;
-}) => {
-  // disabled when DUNE_SPV2_AVERAGE_APY_URL_* is null
-  if (!url) {
-    return null;
-  }
-
-  const {
-    result: { rows: sevenDaysApys }
-  } = await duneFetch({
-    apiKey,
-    url: `${url}?limit=${branches.length * 7}`,
-    validate: isDuneSpAverageApyResponse
-  });
-
-  return Object.fromEntries(
-    branches.map(branch => {
-      const apys = sevenDaysApys.filter(row => row.collateral_type === branch.collSymbol);
-      return [
-        branch.collSymbol,
-        {
-          apy_avg_1d: apys[0].apr,
-          apy_avg_7d: apys.reduce((acc, { apr }) => acc + apr, 0) / apys.length
-        }
-      ];
-    })
-  ) as Record<
-    string,
-    {
-      apy_avg_1d: number;
-      apy_avg_7d: number;
-    }
-  >;
-};
-
-const zDuneSpUpfrontFeeResponse = zDuneResponse(
-  z.object({
-    collateral_type: z.string(),
-    upfront_fees: z.number()
-  })
-);
-
-const isDuneSpUpfrontFeeResponse = zTypeGuard(zDuneSpUpfrontFeeResponse);
-
-export const fetchBoldYieldOpportunitiesFromDune = async ({
-  apiKey,
-  url
-}: {
-  apiKey: string;
-  url: string | null;
-}) => {
-  if (!url) return null;
-
-  const {
-    result: { rows }
-  } = await duneFetch({
-    apiKey,
-    url,
-    validate: isDuneBoldYieldOpportunitiesResponse
-  });
-
-  const extractLink = (htmlLink?: string): string | undefined => {
-    if (!htmlLink) return undefined;
-    const match = htmlLink.match(/href=(?:"|')?([^"'\s>]+)/i);
-    return match?.[1];
-  };
-
-  return rows.slice(0, 3).map(row => ({
-    asset: row.asset,
-    weekly_apr: row.weekly_apr,
-    tvl: row.tvl,
-    link: extractLink(row.link),
-    protocol: row.protocol
-  }));
-};
-
-const zDuneBoldYieldOpportunitiesResponse = zDuneResponse(
-  z.object({
-    asset: z.string(),
-    weekly_apr: z.number().nullable(),
-    tvl: z.number(),
-    link: z.string().optional(),
-    protocol: z.string()
-  })
-);
-
-const isDuneBoldYieldOpportunitiesResponse = zTypeGuard(zDuneBoldYieldOpportunitiesResponse);
-
-const fetchSpUpfrontFeeFromDune = async ({
-  apiKey,
-  url
-}: {
-  apiKey: string;
-  url: string | null;
-}) => {
-  if (!url) return null;
-  const { result } = await duneFetch({ apiKey, url, validate: isDuneSpUpfrontFeeResponse });
-  return Object.fromEntries(result.rows.map(row => [row.collateral_type, row.upfront_fees]));
-};
 
 export const fetchV2Stats = async ({
   provider,
@@ -286,6 +171,6 @@ export const fetchV2Stats = async ({
         ];
       })
     ),
-    boldYield: boldYield
+    boldYield: boldYield?.slice(0, 3) ?? null
   };
 };
