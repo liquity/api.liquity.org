@@ -1,22 +1,22 @@
 import util from "util";
+import { z } from "zod";
 
-export interface DuneResponse<Row = unknown> {
-  result: { rows: Row[] };
-}
+export const zTypeGuard =
+  <T extends z.ZodType>(schema: T) =>
+  (data: unknown): data is z.infer<T> =>
+    schema.safeParse(data).success;
 
-export const isDuneResponse = (data: unknown): data is DuneResponse => {
-  return (
-    typeof data === "object" &&
-    data !== null &&
-    "result" in data &&
-    typeof data.result === "object" &&
-    data.result !== null &&
-    "rows" in data.result &&
-    Array.isArray(data.result.rows)
-  );
-};
+export const zDuneResponse = <T extends z.ZodType>(rowSchema: T) =>
+  z.object({
+    result: z.object({
+      rows: z.array(rowSchema)
+    })
+  });
 
-export const duneFetch = async <T extends DuneResponse>({
+export const DuneUnknownResponse = zDuneResponse(z.unknown());
+export type DuneUnknownResponse = z.infer<typeof DuneUnknownResponse>;
+
+export const duneFetch = async <T extends DuneUnknownResponse>({
   apiKey,
   url,
   validate

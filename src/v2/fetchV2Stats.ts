@@ -3,8 +3,9 @@ import type { BigNumber } from "@ethersproject/bignumber";
 import { AddressZero } from "@ethersproject/constants";
 import { resolveProperties } from "@ethersproject/properties";
 import { Decimal } from "@liquity/lib-base";
+import { z } from "zod";
 
-import { duneFetch, type DuneResponse, isDuneResponse } from "../dune";
+import { duneFetch, zDuneResponse, zTypeGuard } from "../dune";
 import { getContracts, LiquityV2BranchContracts, type LiquityV2Deployment } from "./contracts";
 
 const ONE_WEI = Decimal.fromBigNumberString("1");
@@ -56,23 +57,14 @@ const emptyBranchData = (branches: LiquityV2BranchContracts[]): ReturnType<typeo
     }))
   );
 
-const isDuneSpAverageApyResponse = (
-  data: unknown
-): data is DuneResponse<{
-  apr: number;
-  collateral_type: string;
-}> =>
-  isDuneResponse(data) &&
-  data.result.rows.length > 0 &&
-  data.result.rows.every(
-    (row: unknown) =>
-      typeof row === "object" &&
-      row !== null &&
-      "collateral_type" in row &&
-      typeof row.collateral_type === "string" &&
-      "apr" in row &&
-      typeof row.apr === "number"
-  );
+const zDuneSpAverageApyResponse = zDuneResponse(
+  z.object({
+    apr: z.number(),
+    collateral_type: z.string()
+  })
+);
+
+const isDuneSpAverageApyResponse = zTypeGuard(zDuneSpAverageApyResponse);
 
 const fetchSpAverageApysFromDune = async ({
   branches,
@@ -116,22 +108,14 @@ const fetchSpAverageApysFromDune = async ({
   >;
 };
 
-const isDuneSpUpfrontFeeResponse = (
-  data: unknown
-): data is DuneResponse<{
-  collateral_type: string;
-  upfront_fees: number;
-}> =>
-  isDuneResponse(data) &&
-  data.result.rows.every(
-    row =>
-      typeof row === "object" &&
-      row !== null &&
-      "collateral_type" in row &&
-      typeof row.collateral_type === "string" &&
-      "upfront_fees" in row &&
-      typeof row.upfront_fees === "number"
-  );
+const zDuneSpUpfrontFeeResponse = zDuneResponse(
+  z.object({
+    collateral_type: z.string(),
+    upfront_fees: z.number()
+  })
+);
+
+const isDuneSpUpfrontFeeResponse = zTypeGuard(zDuneSpUpfrontFeeResponse);
 
 export const fetchBoldYieldOpportunitiesFromDune = async ({
   apiKey,
@@ -165,29 +149,17 @@ export const fetchBoldYieldOpportunitiesFromDune = async ({
   }));
 };
 
-const isDuneBoldYieldOpportunitiesResponse = (
-  data: unknown
-): data is DuneResponse<{
-  asset: string;
-  weekly_apr: number | null;
-  tvl: number;
-  link?: string;
-  protocol: string;
-}> =>
-  isDuneResponse(data) &&
-  data.result.rows.every(
-    row =>
-      typeof row === "object" &&
-      row !== null &&
-      "asset" in row &&
-      typeof row.asset === "string" &&
-      "weekly_apr" in row &&
-      (row.weekly_apr === null || typeof row.weekly_apr === "number") &&
-      "tvl" in row &&
-      typeof row.tvl === "number" &&
-      "protocol" in row &&
-      typeof row.protocol === "string"
-  );
+const zDuneBoldYieldOpportunitiesResponse = zDuneResponse(
+  z.object({
+    asset: z.string(),
+    weekly_apr: z.number().nullable(),
+    tvl: z.number(),
+    link: z.string().optional(),
+    protocol: z.string()
+  })
+);
+
+const isDuneBoldYieldOpportunitiesResponse = zTypeGuard(zDuneBoldYieldOpportunitiesResponse);
 
 const fetchSpUpfrontFeeFromDune = async ({
   apiKey,
