@@ -12,6 +12,7 @@ import { fetchLQTYCirculatingSupply } from "./fetchLQTYCirculatingSupply";
 import { fetchLUSDTotalSupply } from "./fetchLUSDTotalSupply";
 import { fetchPrices } from "./fetchPrices";
 import { fetchV2Stats } from "./v2/fetchV2Stats";
+import { fetchBoldYieldOpportunitiesFromDune } from "./v2/dune/fetchBoldYieldOpportunitiesFromDune";
 
 import {
   DUNE_BOLD_YIELD_OPPORTUNITIES_URL_MAINNET,
@@ -140,7 +141,8 @@ EthersLiquity.connect(mainnetProvider)
       v2LegacyStats,
       v2RelaunchStats,
       v2SepoliaStats,
-      allPrices
+      allPrices,
+      boldVenues
     ] = await Promise.all([
       fetchLQTYCirculatingSupply(liquity),
       fetchLUSDTotalSupply(liquity),
@@ -169,7 +171,11 @@ EthersLiquity.connect(mainnetProvider)
         duneYieldUrl: null,
         duneApiKey
       }),
-      fetchPrices({ coinGeckoDemoApiKey })
+      fetchPrices({ coinGeckoDemoApiKey }),
+      fetchBoldYieldOpportunitiesFromDune({
+        apiKey: duneApiKey,
+        url: DUNE_BOLD_YIELD_OPPORTUNITIES_URL_MAINNET
+      })
     ]);
 
     const allPriceEntries = Object.entries(allPrices);
@@ -205,6 +211,12 @@ EthersLiquity.connect(mainnetProvider)
     fs.writeFileSync(
       path.join(OUTPUT_DIR_V2, "testnet", "sepolia.json"),
       JSON.stringify({ ...v2SepoliaStats, ...prices }, null, 2)
+    );
+
+    fs.mkdirSync(path.join(OUTPUT_DIR_V2, "website"), { recursive: true });
+    fs.writeFileSync(
+      path.join(OUTPUT_DIR_V2, "website", "bold-venues.json"),
+      JSON.stringify(boldVenues, null, 2)
     );
 
     console.log(`LQTY circulating supply: ${lqtyCirculatingSupply}`);
