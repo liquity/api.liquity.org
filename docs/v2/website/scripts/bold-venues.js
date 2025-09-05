@@ -1,8 +1,14 @@
 (function () {
   const tableId = "table-BOLD_Venues";
   const apiUrl = "https://api.liquity.org/v2/website/bold-venues.json";
-  const columnNames = ["venue", "asset", "apr", "tvl"];
   const updateIntervalMs = 60_000;
+
+  const columns = {
+    venue: d => [d.protocol],
+    asset: d => [d.asset],
+    apr: d => [percent(d.weekly_apr)],
+    tvl: d => [usd(d.tvl)]
+  };
 
   const numberFormatUsd = new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -15,11 +21,11 @@
     minimumFractionDigits: 2
   });
 
-  function formatUsd(value) {
+  function usd(value) {
     return numberFormatUsd.format(value);
   }
 
-  function formatPercent(value) {
+  function percent(value) {
     return numberFormatPercent.format(value);
   }
 
@@ -29,6 +35,7 @@
 
     const header = table.children[0].cloneNode(true);
     const rowTemplate = table.children[1].cloneNode(true);
+    const columnNames = Object.keys(columns);
     const substitutions = [];
 
     for (const [i, column] of [...rowTemplate.children].entries()) {
@@ -46,18 +53,11 @@
       const data = await response.json();
       const newChildren = [header.cloneNode(true)];
 
-      for (const { protocol, asset, weekly_apr, tvl } of data) {
+      for (const rowData of data) {
         const row = rowTemplate.cloneNode(true);
 
-        const formattedValues = {
-          venue: protocol,
-          asset,
-          apr: formatPercent(weekly_apr),
-          tvl: formatUsd(tvl)
-        };
-
         for (const [i, columnName] of substitutions) {
-          row.children[i].replaceChildren(...formattedValues[columnName]);
+          row.children[i].replaceChildren(...columns[columnName](rowData));
         }
 
         newChildren.push(row);
