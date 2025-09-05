@@ -5,7 +5,7 @@
 
   const columns = {
     venue: d => [d.protocol],
-    asset: d => [d.asset],
+    asset: d => [link(d.link, d.asset)],
     apr: d => [percent(d.weekly_apr)],
     tvl: d => [usd(d.tvl)]
   };
@@ -20,6 +20,13 @@
     style: "percent",
     minimumFractionDigits: 2
   });
+
+  function link(href, children) {
+    const a = document.createElement("a");
+    a.href = href;
+    a.append(children);
+    return a;
+  }
 
   function usd(value) {
     return numberFormatUsd.format(value);
