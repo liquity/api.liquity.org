@@ -17,6 +17,7 @@ import { fetchBoldYieldOpportunitiesFromDune } from "./v2/dune/fetchBoldYieldOpp
 import {
   DUNE_BOLD_YIELD_OPPORTUNITIES_URL_MAINNET,
   DUNE_FORK_VENUES_URL_MAINNET,
+  DUNE_LEADERBOARD_URL_MAINNET,
   DUNE_SPV2_AVERAGE_APY_URL_MAINNET,
   DUNE_SPV2_UPFRONT_FEE_URL_MAINNET,
   LQTY_CIRCULATING_SUPPLY_FILE,
@@ -27,6 +28,7 @@ import {
   SAFE_PRICES
 } from "./constants";
 import { fetchForkVenuesFromDune } from "./v2/dune/fetchForkVenuesFromDune";
+import { fetchLeaderboardFromDune } from "./v2/dune/fetchLeaderboardFromDune";
 
 const panic = <T>(message: string): T => {
   throw new Error(message);
@@ -145,7 +147,8 @@ EthersLiquity.connect(mainnetProvider)
       v2SepoliaStats,
       allPrices,
       boldVenues,
-      forkVenues
+      forkVenues,
+      leaderboard
     ] = await Promise.all([
       fetchLQTYCirculatingSupply(liquity),
       fetchLUSDTotalSupply(liquity),
@@ -182,6 +185,10 @@ EthersLiquity.connect(mainnetProvider)
       fetchForkVenuesFromDune({
         apiKey: duneApiKey,
         url: DUNE_FORK_VENUES_URL_MAINNET
+      }),
+      fetchLeaderboardFromDune({
+        apiKey: duneApiKey,
+        url: DUNE_LEADERBOARD_URL_MAINNET
       })
     ]);
 
@@ -228,6 +235,10 @@ EthersLiquity.connect(mainnetProvider)
     fs.writeFileSync(
       path.join(OUTPUT_DIR_V2, "website", "fork-venues.json"),
       JSON.stringify(forkVenues, null, 2)
+    );
+    fs.writeFileSync(
+      path.join(OUTPUT_DIR_V2, "website", "leaderboard.json"),
+      JSON.stringify(leaderboard, null, 2)
     );
 
     console.log(`LQTY circulating supply: ${lqtyCirculatingSupply}`);

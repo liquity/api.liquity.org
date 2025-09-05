@@ -13,6 +13,7 @@ export const DUNE_SPV2_UPFRONT_FEE_URL_MAINNET = "https://api.dune.com/api/v1/qu
 export const DUNE_BOLD_YIELD_OPPORTUNITIES_URL_MAINNET =
   "https://api.dune.com/api/v1/query/5486369/results";
 export const DUNE_FORK_VENUES_URL_MAINNET = "https://api.dune.com/api/v1/query/5682625/results";
+export const DUNE_LEADERBOARD_URL_MAINNET = "https://api.dune.com/api/v1/query/5691758/results";
 
 export const TOTAL_LQTY_SUPPLY = Decimal.from(100e6); // 100 million
 
