@@ -30,6 +30,8 @@ const fetchBranchData = async (
           .fetchPrice({ blockTag })
           .then(([x]) => x)
           .then(decimalify),
+        debt_recorded: branch.activePool.aggRecordedDebt({ blockTag }).then(decimalify),
+        debt_default: branch.defaultPool.getBoldDebt({ blockTag }).then(decimalify),
         sp_deposits: branch.stabilityPool.getTotalBoldDeposits({ blockTag }).then(decimalify),
         interest_accrual_1y: branch.activePool
           .aggWeightedDebtSum({ blockTag })
@@ -51,6 +53,8 @@ const emptyBranchData = (branches: LiquityV2BranchContracts[]): ReturnType<typeo
       coll_active: Decimal.ZERO,
       coll_default: Decimal.ZERO,
       coll_price: Decimal.ZERO,
+      debt_recorded: Decimal.ZERO,
+      debt_default: Decimal.ZERO,
       sp_deposits: Decimal.ZERO,
       interest_accrual_1y: Decimal.ZERO,
       interest_pending: Decimal.ZERO,
@@ -75,7 +79,7 @@ export const fetchV2Stats = async ({
   duneYieldUrl: string | null;
   blockTag?: BlockTag;
 }) => {
-  const SP_YIELD_SPLIT = Number(Decimal.fromBigNumberString(deployment.constants.SP_YIELD_SPLIT));
+  const SP_YIELD_SPLIT = Decimal.fromBigNumberString(deployment.constants.SP_YIELD_SPLIT);
   const contracts = getContracts(provider, deployment);
 
   // Last step of deployment renounces Governance ownership
@@ -90,27 +94,29 @@ export const fetchV2Stats = async ({
       deployed ? contracts.boldToken.totalSupply({ blockTag }).then(decimalify) : Decimal.ZERO,
 
       // branches
-      (deployed ? fetchBranchData : emptyBranchData)(contracts.branches)
-        .then(branches => {
-          return branches.map(branch => {
-            const sp_deposits = Number(branch.sp_deposits);
-            return {
-              ...branch,
-              debt_pending: branch.interest_pending.add(branch.batch_management_fees_pending),
-              coll_value: branch.coll_active.add(branch.coll_default).mul(branch.coll_price),
-              sp_apy:
-                sp_deposits === 0
-                  ? 0
-                  : (SP_YIELD_SPLIT * Number(branch.interest_accrual_1y)) / sp_deposits
-            };
-          });
-        })
-        .then(branches => {
-          return branches.map(branch => ({
+      (deployed ? fetchBranchData : emptyBranchData)(contracts.branches).then(branches =>
+        branches.map(branch => {
+          const coll = branch.coll_active.add(branch.coll_default);
+          const coll_value = coll.mul(branch.coll_price);
+          const debt_pending = branch.interest_pending.add(branch.batch_management_fees_pending);
+          const debt_active = branch.debt_recorded.add(debt_pending);
+          const debt = debt_active.add(branch.debt_default);
+
+          return {
             ...branch,
-            value_locked: branch.coll_value.add(branch.sp_deposits) // taking BOLD at face value
-          }));
-        }),
+            coll,
+            coll_value,
+            debt_pending,
+            debt_active,
+            debt,
+            value_locked: coll_value.add(branch.sp_deposits), // taking BOLD at face value
+            interest_rate_avg: debt.nonZero ? branch.interest_accrual_1y.div(debt) : Decimal.ZERO,
+            sp_apy: branch.sp_deposits.nonZero
+              ? branch.interest_accrual_1y.mulDiv(SP_YIELD_SPLIT, branch.sp_deposits)
+              : Decimal.ZERO
+          };
+        })
+      ),
 
       // spV2AverageApys
       deployed
@@ -137,7 +143,7 @@ export const fetchV2Stats = async ({
         : null
     ]);
 
-  const sp_apys = branches.map(b => b.sp_apy).filter(x => !isNaN(x));
+  const sp_apys = branches.map(b => Number(b.sp_apy));
 
   return {
     total_bold_supply: `${total_bold_supply}`,
@@ -145,13 +151,14 @@ export const fetchV2Stats = async ({
     total_coll_value: `${branches.map(b => b.coll_value).reduce((a, b) => a.add(b))}`,
     total_sp_deposits: `${branches.map(b => b.sp_deposits).reduce((a, b) => a.add(b))}`,
     total_value_locked: `${branches.map(b => b.value_locked).reduce((a, b) => a.add(b))}`,
-    max_sp_apy: `${sp_apys.length > 0 ? Math.max(...sp_apys) : NaN}`,
+    max_sp_apy: `${Math.max(...sp_apys)}`,
 
     branch: Object.fromEntries(
       branches.map(({ coll_symbol, sp_apy, ...branch }) => {
         const sp_apy_avg_1d =
           spUpfrontFee24h && branch.sp_deposits.nonZero
-            ? sp_apy + (365 * (spUpfrontFee24h[coll_symbol] ?? 0)) / Number(branch.sp_deposits)
+            ? Number(sp_apy) +
+              (365 * (spUpfrontFee24h[coll_symbol] ?? 0)) / Number(branch.sp_deposits)
             : undefined;
 
         const sp_apy_avg_7d = spV2AverageApys?.[coll_symbol].apy_avg_7d;

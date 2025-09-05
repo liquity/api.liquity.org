@@ -54,10 +54,14 @@ export interface ActivePool {
   calcPendingAggBatchManagementFee(overrides?: CallOverrides): Promise<BigNumber>;
 }
 
-const defaultPoolAbi = ["function getCollBalance() view returns (uint256)"];
+const defaultPoolAbi = [
+  "function getCollBalance() view returns (uint256)",
+  "function getBoldDebt() view returns (uint256)"
+];
 
 export interface DefaultPool {
   getCollBalance(overrides?: CallOverrides): Promise<BigNumber>;
+  getBoldDebt(overrides?: CallOverrides): Promise<BigNumber>;
 }
 
 const priceFeedAbi = ["function fetchPrice() returns (uint256, bool)"];
