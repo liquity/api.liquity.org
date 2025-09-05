@@ -171,6 +171,6 @@ export const fetchV2Stats = async ({
         ];
       })
     ),
-    boldYield: boldYield?.slice(0, 3) ?? null
+    boldYield: boldYield?.filter(x => !x.protocol.match(/liquity v2/i)).slice(0, 3) ?? null
   };
 };
