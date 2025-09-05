@@ -2,19 +2,21 @@ import { z } from "zod";
 import { duneFetch, zDuneResponse, zTypeGuard } from "./duneFetch";
 import { extractLink } from "./utils";
 
-const zDuneBoldYieldOpportunitiesResponse = zDuneResponse(
+const zDuneForkVenuesResponse = zDuneResponse(
   z.object({
-    protocol: z.string(),
+    fork: z.string(),
     asset: z.string(),
     link: z.string().nullable(),
-    weekly_apr: z.number().nullable(),
+    protocol: z.string(),
+    chain: z.string(),
+    total_apr: z.string().nullable(),
     tvl: z.number().nullable()
   })
 );
 
-const isDuneBoldYieldOpportunitiesResponse = zTypeGuard(zDuneBoldYieldOpportunitiesResponse);
+const isDuneForkVenuesResponse = zTypeGuard(zDuneForkVenuesResponse);
 
-export const fetchBoldYieldOpportunitiesFromDune = async ({
+export const fetchForkVenuesFromDune = async ({
   apiKey,
   url
 }: {
@@ -28,14 +30,16 @@ export const fetchBoldYieldOpportunitiesFromDune = async ({
   } = await duneFetch({
     apiKey,
     url,
-    validate: isDuneBoldYieldOpportunitiesResponse
+    validate: isDuneForkVenuesResponse
   });
 
   return rows.map(row => ({
-    protocol: row.protocol,
+    fork: row.fork,
     asset: row.asset,
     link: extractLink(row.link),
-    weekly_apr: row.weekly_apr,
+    protocol: row.protocol,
+    chain: row.chain,
+    total_apr: row.total_apr,
     tvl: row.tvl
   }));
 };

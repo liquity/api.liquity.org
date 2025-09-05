@@ -1,12 +1,14 @@
 (function () {
-  const tableId = "table-BOLD_Venues";
-  const apiUrl = "https://api.liquity.org/v2/website/bold-venues.json";
+  const tableId = "table-fork-venues";
+  const apiUrl = "https://api.liquity.org/v2/website/fork-venues.json";
   const updateIntervalMs = 60_000;
 
   const columns = {
-    venue: d => [d.protocol],
+    fork: d => [d.fork],
     asset: d => [d.link ? link(d.link, d.asset) : d.asset],
-    apr: d => [typeof d.weekly_apr === "number" ? percent(d.weekly_apr) : "-"],
+    protocol: d => [d.protocol],
+    chain: d => [d.chain],
+    "total-apr": d => [typeof d.total_apr === "string" ? d.total_apr : "-"],
     tvl: d => [typeof d.tvl === "number" ? usd(d.tvl) : "-"]
   };
 
@@ -14,11 +16,6 @@
     style: "currency",
     currency: "USD",
     notation: "compact"
-  });
-
-  const numberFormatPercent = new Intl.NumberFormat("en-US", {
-    style: "percent",
-    minimumFractionDigits: 2
   });
 
   function link(href, children) {
@@ -30,10 +27,6 @@
 
   function usd(value) {
     return numberFormatUsd.format(value);
-  }
-
-  function percent(value) {
-    return numberFormatPercent.format(value);
   }
 
   document.addEventListener("DOMContentLoaded", function () {
