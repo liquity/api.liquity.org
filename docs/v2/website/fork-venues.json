@@ -1,0 +1,47 @@
+[
+  {
+    "fork": "DeFi Dollar",
+    "asset": "BOLD/USDFI",
+    "link": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-524/deposit",
+    "protocol": "Curve",
+    "chain": "Ethereum",
+    "total_apr": "68.0% - 566.3%",
+    "tvl": 147167
+  },
+  {
+    "fork": "Aesyx",
+    "asset": "BOLD/AXD",
+    "link": "https://pharaoh.exchange/manage/v1/0x3fc764ae09eec2f54b1956febfeaa75d17a596bc",
+    "protocol": "Pharaoh",
+    "chain": "Avalanche",
+    "total_apr": "154.9% - 860.3%",
+    "tvl": 103968.30904925415
+  },
+  {
+    "fork": "Felix",
+    "asset": "USD₮0/feUSD/BOLD",
+    "link": "https://www.curve.finance/dex/hyperliquid/pools/factory-stable-ng-28/deposit",
+    "protocol": "Curve",
+    "chain": "Hyperliquid",
+    "total_apr": "169.2% - 1394.4%",
+    "tvl": 59852
+  },
+  {
+    "fork": "Quill",
+    "asset": "BOLD/USDQ",
+    "link": "https://honeypop.app/pools/45",
+    "protocol": "Honeypop",
+    "chain": "Scroll",
+    "total_apr": "400.1% - 3334.0%",
+    "tvl": 24994.697327805276
+  },
+  {
+    "fork": "Nerite",
+    "asset": "BOLD/USND",
+    "link": "https://bunni.xyz/explore/pools/arbitrum/0x2edd6d9772510c6d661dae96ac65838fd18a535763aaed2b4d5311c87c1cdf95",
+    "protocol": "Bunni",
+    "chain": "Arbitrum",
+    "total_apr": "1325.4% - 11045.1%",
+    "tvl": 7544.8077188276975
+  }
+]
