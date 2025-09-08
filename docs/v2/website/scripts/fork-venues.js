@@ -1,6 +1,8 @@
 (function () {
   const tableId = "table-fork-venues";
   const apiUrl = "https://api.liquity.org/v2/website/fork-venues.json";
+  const linkIcon =
+    "https://cdn.prod.website-files.com/5fd883457ba5da4c3822b02c/671bb202be9edeb45787c0f6_right.svg";
   const updateIntervalMs = 60_000;
 
   const columns = {
@@ -18,10 +20,15 @@
     notation: "compact"
   });
 
-  function link(href, children) {
+  function link(href, ...children) {
     const a = document.createElement("a");
     a.href = href;
-    a.append(children);
+    a.target = "_blank";
+
+    const img = document.createElement("img");
+    img.src = linkIcon;
+
+    a.append(...children, img);
     return a;
   }
 
