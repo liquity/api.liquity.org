@@ -22,17 +22,24 @@ export const fetchLeaderboardFromDune = async ({
   if (!url) return null;
 
   const {
-    result: { rows }
+    result: {
+      rows,
+      metadata: { total_row_count }
+    }
   } = await duneFetch({
     apiKey,
     url: `${url}?limit=10`,
     validate: isDuneLeaderboardResponse
   });
 
-  return rows.map(row => ({
-    rank: row.rank,
-    address: row.address,
-    points: row["Modified Total"],
-    percent: row["Modified %"]
-  }));
+  return {
+    total_row_count,
+
+    rows: rows.map(row => ({
+      rank: row.rank,
+      address: row.address,
+      points: row["Modified Total"],
+      percent: row["Modified %"]
+    }))
+  };
 };

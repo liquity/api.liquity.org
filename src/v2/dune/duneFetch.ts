@@ -9,7 +9,10 @@ export const zTypeGuard =
 export const zDuneResponse = <T extends z.ZodType>(rowSchema: T) =>
   z.object({
     result: z.object({
-      rows: z.array(rowSchema)
+      rows: z.array(rowSchema),
+      metadata: z.object({
+        total_row_count: z.number()
+      })
     })
   });
 

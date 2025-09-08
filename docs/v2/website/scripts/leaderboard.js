@@ -59,7 +59,7 @@
       const data = await response.json();
       const newChildren = [header.cloneNode(true)];
 
-      for (const rowData of data) {
+      for (const rowData of data.rows) {
         const row = rowTemplate.cloneNode(true);
 
         for (const [i, columnName] of substitutions) {
