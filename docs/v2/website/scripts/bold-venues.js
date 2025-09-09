@@ -21,7 +21,7 @@
 
   const numberFormatPercent = new Intl.NumberFormat("en-US", {
     style: "percent",
-    minimumFractionDigits: 2
+    minimumFractionDigits: 1
   });
 
   function link(href, ...children) {
