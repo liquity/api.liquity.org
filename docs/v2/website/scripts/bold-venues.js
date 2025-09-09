@@ -9,6 +9,7 @@
     venue: d => [d.protocol],
     asset: d => [d.link ? link(d.link, d.asset) : d.asset],
     apr: d => [typeof d.weekly_apr === "number" ? percent(d.weekly_apr) : "-"],
+    "base-apr": d => [typeof d.total_apr === "string" ? d.total_apr : "-"],
     tvl: d => [typeof d.tvl === "number" ? usd(d.tvl) : "-"]
   };
 
