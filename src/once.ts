@@ -29,6 +29,7 @@ import {
 } from "./constants";
 import { fetchForkVenuesFromDune } from "./v2/dune/fetchForkVenuesFromDune";
 import { fetchLeaderboardFromDune } from "./v2/dune/fetchLeaderboardFromDune";
+import { fetchDefiAvgBorrowRates } from "./v2/fetchDefiAvgBorrowRates";
 
 const panic = <T>(message: string): T => {
   throw new Error(message);
@@ -148,7 +149,8 @@ EthersLiquity.connect(mainnetProvider)
       allPrices,
       boldVenues,
       forkVenues,
-      leaderboard
+      leaderboard,
+      defiAvgBorrowRates
     ] = await Promise.all([
       fetchLQTYCirculatingSupply(liquity),
       fetchLUSDTotalSupply(liquity),
@@ -189,7 +191,8 @@ EthersLiquity.connect(mainnetProvider)
       fetchLeaderboardFromDune({
         apiKey: duneApiKey,
         url: DUNE_LEADERBOARD_URL_MAINNET
-      })
+      }),
+      fetchDefiAvgBorrowRates()
     ]);
 
     const allPriceEntries = Object.entries(allPrices);
@@ -207,6 +210,12 @@ EthersLiquity.connect(mainnetProvider)
         sepolia: v2SepoliaStats
       }
     };
+
+    const borrowRates = defiAvgBorrowRates.map(({ collateral, def_avg_borrow_rate }) => ({
+      collateral,
+      def_avg_borrow_rate,
+      liquity_avg_borrow_rate: Number(v2RelaunchStats.branch[collateral].interest_rate_avg)
+    }));
 
     fs.mkdirSync(OUTPUT_DIR_V1, { recursive: true });
     fs.writeFileSync(lqtyCirculatingSupplyFile, `${lqtyCirculatingSupply}`);
@@ -239,6 +248,10 @@ EthersLiquity.connect(mainnetProvider)
     fs.writeFileSync(
       path.join(OUTPUT_DIR_V2, "website", "leaderboard.json"),
       JSON.stringify(leaderboard, null, 2)
+    );
+    fs.writeFileSync(
+      path.join(OUTPUT_DIR_V2, "website", "borrow-rates.json"),
+      JSON.stringify(borrowRates, null, 2)
     );
 
     console.log(`LQTY circulating supply: ${lqtyCirculatingSupply}`);
