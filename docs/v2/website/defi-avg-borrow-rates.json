@@ -1,14 +1,14 @@
 [
   {
     "collateral": "WETH",
-    "def_avg_borrow_rate": 0.1
+    "defi_avg_borrow_rate": 0.1
   },
   {
     "collateral": "wstETH",
-    "def_avg_borrow_rate": 0.1
+    "defi_avg_borrow_rate": 0.1
   },
   {
     "collateral": "rETH",
-    "def_avg_borrow_rate": 0.1
+    "defi_avg_borrow_rate": 0.1
   }
 ]

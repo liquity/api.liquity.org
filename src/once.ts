@@ -211,9 +211,9 @@ EthersLiquity.connect(mainnetProvider)
       }
     };
 
-    const borrowRates = defiAvgBorrowRates.map(({ collateral, def_avg_borrow_rate }) => ({
+    const borrowRates = defiAvgBorrowRates.map(({ collateral, defi_avg_borrow_rate }) => ({
       collateral,
-      def_avg_borrow_rate,
+      defi_avg_borrow_rate,
       liquity_avg_borrow_rate: Number(v2RelaunchStats.branch[collateral].interest_rate_avg)
     }));
 

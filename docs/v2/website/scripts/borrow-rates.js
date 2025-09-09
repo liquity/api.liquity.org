@@ -40,9 +40,9 @@
       if (!response.ok) throw new Error("Failed to fetch " + apiUrl);
 
       const data = await response.json();
-      const newChildren = [header.cloneNode(true)];
+      const newChildren = [];
 
-      for (const rowData of data.rows) {
+      for (const rowData of data) {
         const row = rowTemplate.cloneNode(true);
 
         for (const [i, columnName] of substitutions) {

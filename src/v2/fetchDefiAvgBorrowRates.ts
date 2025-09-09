@@ -8,7 +8,7 @@ const readFile = util.promisify(fs.readFile);
 const zDefiAvgBorrowRates = z.array(
   z.object({
     collateral: z.string(),
-    def_avg_borrow_rate: z.number()
+    defi_avg_borrow_rate: z.number()
   })
 );
 
