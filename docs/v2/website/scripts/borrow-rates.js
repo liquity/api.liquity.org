@@ -4,7 +4,7 @@
   const updateIntervalMs = 60_000;
 
   const columns = {
-    asset: d => [d.collateral],
+    asset: d => [d.collateral.replace(/^WETH$/, "ETH")],
     "liquity-avg": d => [percent(d.liquity_avg_borrow_rate)],
     "defi-avg": d => [percent(d.defi_avg_borrow_rate)]
   };
