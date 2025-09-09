@@ -8,6 +8,7 @@ const zDuneBoldYieldOpportunitiesResponse = zDuneResponse(
     asset: z.string(),
     link: z.string().nullable(),
     weekly_apr: z.number().nullable(),
+    total_apr: z.string().nullable(),
     tvl: z.number().nullable()
   })
 );
@@ -36,6 +37,7 @@ export const fetchBoldYieldOpportunitiesFromDune = async ({
     asset: row.asset,
     link: extractLink(row.link),
     weekly_apr: row.weekly_apr,
+    total_apr: row.total_apr,
     tvl: row.tvl
   }));
 };
