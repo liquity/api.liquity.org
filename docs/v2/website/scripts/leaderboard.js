@@ -1,5 +1,6 @@
 (function () {
   const tableId = "table-leaderboard";
+  const numParticipantsId = "leaderboard-value";
   const apiUrl = "https://api.liquity.org/v2/website/leaderboard.json";
   const updateIntervalMs = 60_000;
 
@@ -70,6 +71,9 @@
       }
 
       table.replaceChildren(...newChildren);
+
+      const numParticipants = document.getElementById(numParticipantsId);
+      numParticipants.replaceChildren(String(data.total_row_count));
     }
 
     populateTable();
