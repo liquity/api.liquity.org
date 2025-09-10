@@ -28,15 +28,11 @@ export const duneFetch = async <T extends DuneUnknownResponse>({
   url: string;
   validate: (data: unknown) => data is T;
 }): Promise<T> => {
-  const response = await fetch(url, {
-    headers: { "X-Dune-API-Key": apiKey }
-  });
+  const response = await fetch(url, { headers: { "X-Dune-API-Key": apiKey } });
   const data = await response.json();
 
-  console.log(`Dune response for ${url}:`, util.inspect(data, { colors: true, depth: null }));
-
   if (!validate(data)) {
-    throw new Error("Dune query returned unexpected response");
+    throw Object.assign(new Error("Dune query returned unexpected response"), { data });
   }
 
   return data;

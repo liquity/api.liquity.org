@@ -1,17 +1,48 @@
 import { z } from "zod";
-import fs from "fs";
-import util from "util";
-import { DEFI_AVG_BORROW_RATES_FILE } from "../constants";
+import { COLLATERAL_TOKENS, SPHERE_API_STABLECOIN_BORROW_RATES_URL } from "../constants";
 
-const readFile = util.promisify(fs.readFile);
+const zEntry = z.object({
+  key: z.string()
+});
 
-const zDefiAvgBorrowRates = z.array(
-  z.object({
-    collateral: z.string(),
-    defi_avg_borrow_rate: z.number()
-  })
-);
+const zDefiAvgBorrowRates = z.object({
+  results: z.array(
+    z.object({
+      rate: z.string().transform(x => Number(x)),
+      total_debt: z.string().transform(x => Number(x))
+    })
+  ),
+  stablecoins: z.array(zEntry),
+  collateral_tokens: z.array(zEntry),
+  protocols: z.array(zEntry)
+});
 
-// TODO fetch the data from an external API
-export const fetchDefiAvgBorrowRates = async () =>
-  zDefiAvgBorrowRates.parse(JSON.parse(await readFile(DEFI_AVG_BORROW_RATES_FILE, "utf-8")));
+const apiFetch = async (params?: string) => {
+  const response = await fetch(
+    `${SPHERE_API_STABLECOIN_BORROW_RATES_URL}?format=json` + (params ? `&${params}` : "")
+  );
+
+  return zDefiAvgBorrowRates.parse(await response.json());
+};
+
+export const fetchDefiAvgBorrowRates = async () => {
+  const { stablecoins, protocols } = await apiFetch();
+
+  const others = protocols
+    .map(x => x.key)
+    .filter(x => !x.match(/liquity/i))
+    .join(",");
+
+  const tokens = stablecoins.map(x => x.key).join(",");
+
+  return Promise.all(
+    COLLATERAL_TOKENS.map(collateral =>
+      apiFetch(`collateral_tokens=${collateral}&protocols=${others}&tokens=${tokens}`).then(x => ({
+        collateral,
+        defi_avg_borrow_rate:
+          x.results.map(x => x.rate * x.total_debt).reduce((a, b) => a + b) /
+          x.results.map(x => x.total_debt).reduce((a, b) => a + b)
+      }))
+    )
+  );
+};

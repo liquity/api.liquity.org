@@ -8,11 +8,10 @@ export const LQTY_CIRCULATING_SUPPLY_FILE = "lqty_circulating_supply.txt";
 export const LUSD_TOTAL_SUPPLY_FILE = "lusd_total_supply.txt";
 export const LUSD_CB_BAMM_STATS_FILE = "lusd_cb_bamm_stats.json";
 
-export const DEFI_AVG_BORROW_RATES_FILE = path.join(
-  OUTPUT_DIR_V2,
-  "website",
-  "defi-avg-borrow-rates.json"
-);
+export const SPHERE_API_STABLECOIN_BORROW_RATES_URL =
+  "https://sphere-api.blockanalitica.com/stablecoin-borrow/rates/";
+
+export const COLLATERAL_TOKENS = ["WETH", "wstETH", "rETH"] as const;
 
 export const DUNE_SPV2_AVERAGE_APY_URL_MAINNET = "https://api.dune.com/api/v1/query/5162039/results";
 export const DUNE_SPV2_UPFRONT_FEE_URL_MAINNET = "https://api.dune.com/api/v1/query/5190924/results";
