@@ -26,5 +26,9 @@
   "0xA7e5d44349E3342cd6F323dE3E6C33B249c9Df38": {
     "name": "Dynamic E-CLP: BOLD/USDC",
     "group": "Gyroscope"
+  },
+  "0xB42448852A1BFc99d66ed53C65e2B49cF954f615": {
+    "name": "Uniswap v4 BOLD/USDC",
+    "group": "Merkl"
   }
 }
