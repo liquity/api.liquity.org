@@ -24,8 +24,7 @@ import {
   // LUSD_CB_BAMM_STATS_FILE,
   LUSD_TOTAL_SUPPLY_FILE,
   OUTPUT_DIR_V1,
-  OUTPUT_DIR_V2,
-  SAFE_PRICES
+  OUTPUT_DIR_V2
 } from "./constants";
 import { fetchForkVenuesFromDune } from "./v2/dune/fetchForkVenuesFromDune";
 import { fetchLeaderboardFromDune } from "./v2/dune/fetchLeaderboardFromDune";
@@ -146,7 +145,7 @@ EthersLiquity.connect(mainnetProvider)
       v2LegacyStats,
       v2RelaunchStats,
       v2SepoliaStats,
-      allPrices,
+      prices,
       boldVenues,
       forkVenues,
       leaderboard,
@@ -195,17 +194,10 @@ EthersLiquity.connect(mainnetProvider)
       fetchDefiAvgBorrowRates()
     ]);
 
-    const allPriceEntries = Object.entries(allPrices);
-
-    const prices = {
-      prices: Object.fromEntries(allPriceEntries.filter(([k]) => SAFE_PRICES.has(k))),
-      otherPrices: Object.fromEntries(allPriceEntries.filter(([k]) => !SAFE_PRICES.has(k)))
-    };
-
     const v2Stats = {
       ...v2RelaunchStats,
       legacy: v2LegacyStats,
-      prices: allPrices,
+      prices,
       testnet: {
         sepolia: v2SepoliaStats
       }
@@ -225,15 +217,15 @@ EthersLiquity.connect(mainnetProvider)
     writeTree(OUTPUT_DIR_V2, v2Stats);
     fs.writeFileSync(
       path.join(OUTPUT_DIR_V2, "mainnet.json"),
-      JSON.stringify({ ...v2LegacyStats, ...prices }, null, 2)
+      JSON.stringify({ ...v2LegacyStats, prices }, null, 2)
     );
     fs.writeFileSync(
       path.join(OUTPUT_DIR_V2, "ethereum.json"),
-      JSON.stringify({ ...v2RelaunchStats, ...prices }, null, 2)
+      JSON.stringify({ ...v2RelaunchStats, prices }, null, 2)
     );
     fs.writeFileSync(
       path.join(OUTPUT_DIR_V2, "testnet", "sepolia.json"),
-      JSON.stringify({ ...v2SepoliaStats, ...prices }, null, 2)
+      JSON.stringify({ ...v2SepoliaStats, prices }, null, 2)
     );
 
     fs.mkdirSync(path.join(OUTPUT_DIR_V2, "website"), { recursive: true });

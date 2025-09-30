@@ -34,21 +34,6 @@ export const PRICES = {
   smardex: "SDEX"
 } as const;
 
-// DO NOT TOUCH THIS
-// No token outside of these should be exposed under the "prices" field,
-// otherwise we break legacy (pre-v1.7) versions of the frontend due to
-// an overly strict valibot schema
-export const SAFE_PRICES = new Set([
-  "ETH",
-  "RETH",
-  "WSTETH",
-  "BOLD",
-  "LEGACY_BOLD",
-  "LQTY",
-  "LUSD",
-  "SBOLD"
-]);
-
 export const GNOSIS_SAFE_RESERVE = "0xb8a9fada75c6d891fb77a7988ff9bad9e485ca1c";
 export const GNOSIS_SAFE_FUNDS = "0xf06016d822943c42e3cb7fc3a6a3b1889c1045f8";
 
