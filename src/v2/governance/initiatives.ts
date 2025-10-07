@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import type { Provider } from "@ethersproject/abstract-provider";
 import { Contract } from "@ethersproject/contracts";
+import { CallFailedError } from "../../BatchedProvider";
 import { OUTPUT_DIR_V2 } from "../../constants";
 import { SUBGRAPH_QUERY_LIMIT, graphql, query } from "./graphql";
 
@@ -65,8 +66,11 @@ const checkBribeInitiatives = async (
         const contract = new Contract(address, bribeInitiativeAbi, provider);
         const token = await contract.bribeToken();
         return { address, isBribe: true, token };
-      } catch {
-        return { address, isBribe: false, token: null };
+      } catch (error) {
+        if (error instanceof CallFailedError) {
+          return { address, isBribe: false, token: null };
+        }
+        throw error;
       }
     })
   );
@@ -77,6 +81,8 @@ const checkBribeInitiatives = async (
         isBribe: result.value.isBribe,
         token: result.value.token
       });
+    } else {
+      throw result.reason;
     }
   });
 

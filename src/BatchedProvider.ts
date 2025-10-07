@@ -7,6 +7,18 @@ import type { BigNumber } from "@ethersproject/bignumber";
 import type { BytesLike } from "@ethersproject/bytes";
 import type { Network } from "@ethersproject/networks";
 
+export class CallFailedError extends Error {
+  readonly call: unknown;
+  readonly returnData: string;
+
+  constructor(call: unknown, returnData: string) {
+    super("Call failed");
+    this.name = "CallFailedError";
+    this.call = call;
+    this.returnData = returnData;
+  }
+}
+
 const multicallAddress = {
   1: "0xcA11bde05977b3631167028862bE2a173976CA11",
   11155111: "0xcA11bde05977b3631167028862bE2a173976CA11"
@@ -168,12 +180,7 @@ export class BatchedProvider extends BaseProvider {
         if (results[i].success) {
           resolve(results[i].returnData);
         } else {
-          reject(
-            Object.assign(new Error("Call failed"), {
-              call: calls[i],
-              returnData: results[i].returnData
-            })
-          );
+          reject(new CallFailedError(calls[i], results[i].returnData));
         }
       });
     } catch (error) {
