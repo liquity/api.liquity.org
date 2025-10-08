@@ -28,9 +28,7 @@ export interface InitiativeData {
   bribeToken: string | null;
 }
 
-const bribeInitiativeAbi = [
-  "function bribeToken() view returns (address)"
-];
+const bribeInitiativeAbi = ["function bribeToken() view returns (address)"];
 
 const getAllInitiatives = async (subgraphUrl: string): Promise<Initiative[]> => {
   const initiatives: Initiative[] = [];
@@ -67,7 +65,13 @@ const checkBribeInitiatives = async (
         const token = await contract.bribeToken();
         return { address, isBribe: true, token };
       } catch (error) {
-        if (error instanceof CallFailedError) {
+        if (
+          error instanceof CallFailedError ||
+          // The initiative `0xA7e5d44349E3342cd6F323dE3E6C33B249c9Df38`
+          // (which is just an EOA) is returning success, but no `bribeToken`
+          // address, which results in a decoding failure in ethers.js
+          (error instanceof Error && "code" in error && error.code === "CALL_EXCEPTION")
+        ) {
           return { address, isBribe: false, token: null };
         }
         throw error;
@@ -76,7 +80,7 @@ const checkBribeInitiatives = async (
   );
 
   checks.forEach(result => {
-    if (result.status === 'fulfilled') {
+    if (result.status === "fulfilled") {
       results.set(result.value.address, {
         isBribe: result.value.isBribe,
         token: result.value.token
@@ -114,9 +118,7 @@ export const fetchInitiatives = async (
   return initiativeData;
 };
 
-export const saveInitiativesToGovernance = async (
-  initiatives: InitiativeData[]
-): Promise<void> => {
+export const saveInitiativesToGovernance = async (initiatives: InitiativeData[]): Promise<void> => {
   const governanceDir = path.join(OUTPUT_DIR_V2, "governance");
   fs.mkdirSync(governanceDir, { recursive: true });
 

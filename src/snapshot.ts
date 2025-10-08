@@ -21,11 +21,13 @@ const infuraApiKey = process.env.INFURA_API_KEY || undefined;
 const main = async () => {
   const argv = process.argv.slice(2);
   const epoch = argv.length > 0 ? parseInt(argv[0]) : latestCompletedEpoch;
-  
+
   await snapshotEpoch(subgraphUrl, epoch);
-  
+  console.log(`Snapshotted epoch #${epoch}.`);
+
   const mainnetProvider = getProvider("mainnet", { provider, alchemyApiKey, infuraApiKey });
   await snapshotInitiatives(subgraphUrl, mainnetProvider);
+  console.log("Snapshotted initiatives.");
 };
 
 main().catch(error => {
