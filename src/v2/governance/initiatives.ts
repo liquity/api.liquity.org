@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import type { Provider } from "@ethersproject/abstract-provider";
-import { Contract } from "@ethersproject/contracts";
+import { type BaseContract, type CallOverrides, Contract } from "@ethersproject/contracts";
 import { CallFailedError } from "../../BatchedProvider";
 import { OUTPUT_DIR_V2 } from "../../constants";
 import { SUBGRAPH_QUERY_LIMIT, graphql, query } from "./graphql";
@@ -30,6 +30,10 @@ export interface InitiativeData {
 
 const bribeInitiativeAbi = ["function bribeToken() view returns (address)"];
 
+interface BribeInitiative extends BaseContract {
+  bribeToken(overrides?: CallOverrides): Promise<string>;
+}
+
 const getAllInitiatives = async (subgraphUrl: string): Promise<Initiative[]> => {
   const initiatives: Initiative[] = [];
   let cursor = "";
@@ -52,18 +56,16 @@ const getAllInitiatives = async (subgraphUrl: string): Promise<Initiative[]> => 
   return initiatives;
 };
 
-const checkBribeInitiatives = async (
+const checkBribeInitiatives = (
   provider: Provider,
   initiatives: string[]
-): Promise<Map<string, { isBribe: boolean; token: string | null }>> => {
-  const results = new Map<string, { isBribe: boolean; token: string | null }>();
-
-  const checks = await Promise.allSettled(
+): Promise<InitiativeData[]> =>
+  Promise.all(
     initiatives.map(async address => {
       try {
-        const contract = new Contract(address, bribeInitiativeAbi, provider);
-        const token = await contract.bribeToken();
-        return { address, isBribe: true, token };
+        const contract = new Contract(address, bribeInitiativeAbi, provider) as BribeInitiative;
+        const bribeToken = await contract.bribeToken();
+        return { address, isBribeInitiative: true, bribeToken };
       } catch (error) {
         if (
           error instanceof CallFailedError ||
@@ -72,26 +74,12 @@ const checkBribeInitiatives = async (
           // address, which results in a decoding failure in ethers.js
           (error instanceof Error && "code" in error && error.code === "CALL_EXCEPTION")
         ) {
-          return { address, isBribe: false, token: null };
+          return { address, isBribeInitiative: false, bribeToken: null };
         }
         throw error;
       }
     })
   );
-
-  checks.forEach(result => {
-    if (result.status === "fulfilled") {
-      results.set(result.value.address, {
-        isBribe: result.value.isBribe,
-        token: result.value.token
-      });
-    } else {
-      throw result.reason;
-    }
-  });
-
-  return results;
-};
 
 export const fetchInitiatives = async (
   subgraphUrl: string,
@@ -104,18 +92,7 @@ export const fetchInitiatives = async (
   }
 
   const addresses = initiatives.map(i => i.id);
-  const bribeInfo = await checkBribeInitiatives(provider, addresses);
-
-  const initiativeData: InitiativeData[] = initiatives.map(initiative => {
-    const info = bribeInfo.get(initiative.id) || { isBribe: false, token: null };
-    return {
-      address: initiative.id,
-      isBribeInitiative: info.isBribe,
-      bribeToken: info.token
-    };
-  });
-
-  return initiativeData;
+  return checkBribeInitiatives(provider, addresses);
 };
 
 export const saveInitiativesToGovernance = async (initiatives: InitiativeData[]): Promise<void> => {
