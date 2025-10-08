@@ -40,6 +40,7 @@ jobs:
         run: yarn snapshot
         env:
           SUBGRAPH_URL: ${{ secrets.SUBGRAPH_URL }}
+          SUBGRAPH_ORIGIN: ${{ secrets.SUBGRAPH_ORIGIN }}
           PROVIDER: ${{ vars.PROVIDER }}
           ALCHEMY_API_KEY: ${{ secrets.ALCHEMY_API_KEY }}
           INFURA_API_KEY: ${{ secrets.INFURA_API_KEY }}

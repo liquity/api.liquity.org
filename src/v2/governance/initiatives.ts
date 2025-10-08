@@ -6,6 +6,12 @@ import { CallFailedError } from "../../BatchedProvider";
 import { OUTPUT_DIR_V2 } from "../../constants";
 import { SUBGRAPH_QUERY_LIMIT, graphql, query } from "./graphql";
 
+export interface SnapshotInitiativesParams {
+  subgraphUrl: string;
+  subgraphOrigin?: string;
+  provider: Provider;
+}
+
 const queryInitiatives = graphql`
   query Initiatives($cursor: ID!, $limit: Int) {
     governanceInitiatives(where: { id_gt: $cursor }, orderBy: id, first: $limit) {
@@ -34,12 +40,16 @@ interface BribeInitiative extends BaseContract {
   bribeToken(overrides?: CallOverrides): Promise<string>;
 }
 
-const getAllInitiatives = async (subgraphUrl: string): Promise<Initiative[]> => {
+const getAllInitiatives = async (
+  subgraphUrl: string,
+  subgraphOrigin?: string
+): Promise<Initiative[]> => {
   const initiatives: Initiative[] = [];
   let cursor = "";
 
   for (;;) {
     const result = await query<InitiativesResponse>(subgraphUrl, {
+      origin: subgraphOrigin,
       operationName: "Initiatives",
       query: queryInitiatives,
       variables: {
@@ -82,17 +92,16 @@ const checkBribeInitiatives = (
   );
 
 export const fetchInitiatives = async (
-  subgraphUrl: string,
-  provider: Provider
+  params: SnapshotInitiativesParams
 ): Promise<InitiativeData[]> => {
-  const initiatives = await getAllInitiatives(subgraphUrl);
+  const initiatives = await getAllInitiatives(params.subgraphUrl, params.subgraphOrigin);
 
   if (initiatives.length === 0) {
     return [];
   }
 
   const addresses = initiatives.map(i => i.id);
-  return checkBribeInitiatives(provider, addresses);
+  return checkBribeInitiatives(params.provider, addresses);
 };
 
 export const saveInitiativesToGovernance = async (initiatives: InitiativeData[]): Promise<void> => {
@@ -104,10 +113,7 @@ export const saveInitiativesToGovernance = async (initiatives: InitiativeData[])
   fs.writeFileSync(filePath, JSON.stringify(initiatives, null, 2));
 };
 
-export const snapshotInitiatives = async (
-  subgraphUrl: string,
-  provider: Provider
-): Promise<void> => {
-  const initiatives = await fetchInitiatives(subgraphUrl, provider);
+export const snapshotInitiatives = async (params: SnapshotInitiativesParams): Promise<void> => {
+  const initiatives = await fetchInitiatives(params);
   await saveInitiativesToGovernance(initiatives);
 };

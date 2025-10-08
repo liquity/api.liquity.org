@@ -3,6 +3,12 @@ import path from "path";
 import { OUTPUT_DIR_V2 } from "../../constants";
 import { SUBGRAPH_QUERY_LIMIT, graphql, query } from "./graphql";
 
+export interface SnapshotEpochParams {
+  subgraphUrl: string;
+  subgraphOrigin?: string;
+  epoch: number;
+}
+
 const queryAllocations = graphql`
   query Allocations($epoch: BigInt!, $cursor: ID!, $limit: Int) {
     governanceAllocations(where: { epoch: $epoch, id_gt: $cursor }, orderBy: id, first: $limit) {
@@ -44,16 +50,17 @@ interface AllocationJson {
   vetoOffset: string;
 }
 
-const getAllocationsInEpoch = async (subgraphUrl: string, epoch: number) => {
+const getAllocationsInEpoch = async (params: SnapshotEpochParams) => {
   const allocations: Allocation[] = [];
   let cursor = "";
 
   for (;;) {
-    const result = await query<Allocations>(subgraphUrl, {
+    const result = await query<Allocations>(params.subgraphUrl, {
+      origin: params.subgraphOrigin,
       operationName: "Allocations",
       query: queryAllocations,
       variables: {
-        epoch,
+        epoch: params.epoch,
         cursor,
         limit: SUBGRAPH_QUERY_LIMIT
       }
@@ -73,8 +80,9 @@ const userDir = path.join(allocationDir, "user");
 const totalDir = path.join(allocationDir, "total");
 const latestCompletedEpochFile = path.join(governanceDir, "latest_completed_epoch.json");
 
-export const snapshotEpoch = async (subgraphUrl: string, epoch: number) => {
-  const allocations = await getAllocationsInEpoch(subgraphUrl, epoch);
+export const snapshotEpoch = async (params: SnapshotEpochParams) => {
+  const { epoch } = params;
+  const allocations = await getAllocationsInEpoch(params);
   const updates = new Map<string, AllocationJson[]>();
 
   for (const { user, initiative, vetoLQTY, vetoOffset, voteLQTY, voteOffset } of allocations) {

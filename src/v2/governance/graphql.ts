@@ -3,6 +3,7 @@ export const SUBGRAPH_QUERY_LIMIT = 1000;
 export const graphql = String.raw;
 
 export type GraphQLQueryParams = {
+  origin?: string;
   operationName: string;
   query: string;
   variables: Record<string, unknown>;
@@ -18,7 +19,8 @@ export const query = async <T>(url: string, params: GraphQLQueryParams) => {
     method: "POST",
     headers: {
       Accept: "application/json",
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      ...(params.origin ? { Origin: params.origin } : {})
     },
     body: JSON.stringify(params)
   });
