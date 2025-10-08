@@ -1,46 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { OUTPUT_DIR_V2 } from "../../constants";
-
-const SUBGRAPH_QUERY_LIMIT = 1000;
-
-const graphql = String.raw;
-
-type GraphQLQueryParams = {
-  operationName: string;
-  query: string;
-  variables: Record<string, unknown>;
-};
-
-type GraphQLResponse<T> =
-  | { data: T | null }
-  | { data: T | null; errors: unknown[] }
-  | { errors: unknown[] };
-
-const query = async <T extends {}>(url: string, params: GraphQLQueryParams) => {
-  const res = await fetch(url, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(params)
-  });
-
-  const json: GraphQLResponse<T> = await res.json();
-
-  if (!("data" in json) || json.data === null || "errors" in json) {
-    const error = new Error("GraphQL error");
-
-    if ("errors" in json) {
-      throw Object.assign(error, { errors: json.errors });
-    } else {
-      throw error;
-    }
-  }
-
-  return json.data;
-};
+import { SUBGRAPH_QUERY_LIMIT, graphql, query } from "./graphql";
 
 const queryAllocations = graphql`
   query Allocations($epoch: BigInt!, $cursor: ID!, $limit: Int) {
