@@ -1,4 +1,4 @@
-name: Snapshot governance allocations
+name: Snapshot governance state
 
 env:
   CI: true
@@ -15,7 +15,7 @@ on:
 
 jobs:
   snapshot:
-    name: Snapshot governance allocations
+    name: Snapshot governance state
     runs-on: ubuntu-latest
 
     steps:
@@ -36,7 +36,7 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Snapshot governance allocations
+      - name: Snapshot governance state
         run: yarn snapshot
         env:
           SUBGRAPH_URL: ${{ secrets.SUBGRAPH_URL }}
