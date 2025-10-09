@@ -3,7 +3,7 @@ import path from "path";
 import type { Provider } from "@ethersproject/abstract-provider";
 import { type BaseContract, type CallOverrides, Contract } from "@ethersproject/contracts";
 import { CallFailedError } from "../../BatchedProvider";
-import { OUTPUT_DIR_V2 } from "../../constants";
+import { OUTPUT_DIR_V2_GOVERNANCE } from "../../constants";
 import { SUBGRAPH_QUERY_LIMIT, graphql, query } from "./graphql";
 
 export interface SnapshotInitiativesParams {
@@ -26,12 +26,6 @@ interface Initiative {
 
 interface InitiativesResponse {
   governanceInitiatives: Initiative[];
-}
-
-export interface InitiativeData {
-  address: string;
-  isBribeInitiative: boolean;
-  bribeToken: string | null;
 }
 
 const bribeInitiativeAbi = ["function bribeToken() view returns (address)"];
@@ -66,16 +60,13 @@ const getAllInitiatives = async (
   return initiatives;
 };
 
-const checkBribeInitiatives = (
-  provider: Provider,
-  initiatives: string[]
-): Promise<InitiativeData[]> =>
+const checkBribeInitiatives = (provider: Provider, initiatives: string[]) =>
   Promise.all(
     initiatives.map(async address => {
       try {
         const contract = new Contract(address, bribeInitiativeAbi, provider) as BribeInitiative;
         const bribeToken = await contract.bribeToken();
-        return { address, isBribeInitiative: true, bribeToken };
+        return { address, isBribeInitiative: true as const, bribeToken };
       } catch (error) {
         if (
           error instanceof CallFailedError ||
@@ -84,36 +75,30 @@ const checkBribeInitiatives = (
           // address, which results in a decoding failure in ethers.js
           (error instanceof Error && "code" in error && error.code === "CALL_EXCEPTION")
         ) {
-          return { address, isBribeInitiative: false, bribeToken: null };
+          return { address, isBribeInitiative: false as const, bribeToken: null };
         }
         throw error;
       }
     })
   );
 
-export const fetchInitiatives = async (
-  params: SnapshotInitiativesParams
-): Promise<InitiativeData[]> => {
+export const fetchInitiatives = async (params: SnapshotInitiativesParams) => {
   const initiatives = await getAllInitiatives(params.subgraphUrl, params.subgraphOrigin);
-
-  if (initiatives.length === 0) {
-    return [];
-  }
+  if (initiatives.length === 0) return [];
 
   const addresses = initiatives.map(i => i.id);
   return checkBribeInitiatives(params.provider, addresses);
 };
 
-export const saveInitiativesToGovernance = async (initiatives: InitiativeData[]): Promise<void> => {
-  const governanceDir = path.join(OUTPUT_DIR_V2, "governance");
-  fs.mkdirSync(governanceDir, { recursive: true });
-
-  const filePath = path.join(governanceDir, "initiatives.json");
-
-  fs.writeFileSync(filePath, JSON.stringify(initiatives, null, 2));
-};
+const initiativesFile = path.join(OUTPUT_DIR_V2_GOVERNANCE, "initiatives.json");
 
 export const snapshotInitiatives = async (params: SnapshotInitiativesParams): Promise<void> => {
   const initiatives = await fetchInitiatives(params);
-  await saveInitiativesToGovernance(initiatives);
+
+  const recordOfInitiatives = Object.fromEntries(
+    initiatives.map(({ address, ...rest }) => [address, rest])
+  );
+
+  fs.mkdirSync(path.dirname(initiativesFile), { recursive: true });
+  fs.writeFileSync(initiativesFile, JSON.stringify(recordOfInitiatives, null, 2));
 };

@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { OUTPUT_DIR_V2 } from "../../constants";
+import { OUTPUT_DIR_V2_GOVERNANCE } from "../../constants";
 import { SUBGRAPH_QUERY_LIMIT, graphql, query } from "./graphql";
 
 export interface SnapshotEpochParams {
@@ -74,11 +74,10 @@ const getAllocationsInEpoch = async (params: SnapshotEpochParams) => {
   return allocations;
 };
 
-const governanceDir = path.join(OUTPUT_DIR_V2, "governance");
-const allocationDir = path.join(governanceDir, "allocation");
+const allocationDir = path.join(OUTPUT_DIR_V2_GOVERNANCE, "allocation");
 const userDir = path.join(allocationDir, "user");
 const totalDir = path.join(allocationDir, "total");
-const latestCompletedEpochFile = path.join(governanceDir, "latest_completed_epoch.json");
+const latestCompletedEpochFile = path.join(OUTPUT_DIR_V2_GOVERNANCE, "latest_completed_epoch.json");
 
 export const snapshotEpoch = async (params: SnapshotEpochParams) => {
   const { epoch } = params;
