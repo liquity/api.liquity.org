@@ -22,5 +22,21 @@
     "vetoOffset": "0",
     "voteLQTY": "2153278755000000000000",
     "voteOffset": "3773685373876915725000000000000"
+  },
+  {
+    "epoch": 22,
+    "initiative": "0xa58fbe38aab33b9fadef1b5aaff4d7bc27c43ad4",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "2802180780000000000000",
+    "voteOffset": "4918376132004090516000000000000"
+  },
+  {
+    "epoch": 22,
+    "initiative": "0xaeaa52a51e90cfe5d862568fdc99bc7510f53e04",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "4203271170000000000000",
+    "voteOffset": "7377564198006135774000000000000"
   }
 ]

@@ -1,0 +1,26 @@
+[
+  {
+    "epoch": 22,
+    "initiative": "0xa58fbe38aab33b9fadef1b5aaff4d7bc27c43ad4",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "3696896289885268857505",
+    "voteOffset": "6505866950606549395252137169811"
+  },
+  {
+    "epoch": 22,
+    "initiative": "0xaeaa52a51e90cfe5d862568fdc99bc7510f53e04",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "3504657682811234876914",
+    "voteOffset": "6167561869175008826697723771197"
+  },
+  {
+    "epoch": 22,
+    "initiative": "0xba415afa8fcd65196764b5e08cb4dbf90bee33b4",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "192238607074033980591",
+    "voteOffset": "338305081431540568554413398614"
+  }
+]
