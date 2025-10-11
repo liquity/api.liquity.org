@@ -1,0 +1,112 @@
+{
+  "total_bold_supply": "45029482.702812323583156146",
+  "total_debt_pending": "428.931242404783705092",
+  "total_coll_value": "137654381.321752691715509781",
+  "total_sp_deposits": "33377374.221471385122597017",
+  "total_value_locked": "171031755.543224076838106798",
+  "max_sp_apy": "0.050007924781865526",
+  "branch": {
+    "WETH": {
+      "coll_active": "6393.583453323029616343",
+      "coll_default": "0",
+      "coll_price": "3738.87959899",
+      "debt_recorded": "11760406.33049287305640332",
+      "debt_default": "0",
+      "sp_deposits": "7834068.630453535800864305",
+      "interest_accrual_1y": "352481.442731959178904025",
+      "interest_pending": "5.767390425218510158",
+      "batch_management_fees_pending": "18.521565054397241331",
+      "coll": "6393.583453323029616343",
+      "coll_value": "23904838.738069508354884409",
+      "debt_pending": "24.288955479615751489",
+      "debt_active": "11760430.619448352672154809",
+      "debt": "11760430.619448352672154809",
+      "value_locked": "31738907.368523044155748714",
+      "interest_rate_avg": "0.029971814310018271",
+      "sp_apy": "0.033745055668942332",
+      "apy_avg": "0.033745055668942332",
+      "sp_apy_avg_1d": "0.04905842614763353",
+      "sp_apy_avg_7d": "0.041903607152395175"
+    },
+    "wstETH": {
+      "coll_active": "21403.592826870315143451",
+      "coll_default": "0",
+      "coll_price": "4543.167621309697217698",
+      "debt_recorded": "28591973.735806642252734603",
+      "debt_default": "0",
+      "sp_deposits": "21756267.745823681278514085",
+      "interest_accrual_1y": "1310274.686920491804753741",
+      "interest_pending": "18.946133220311525336",
+      "batch_management_fees_pending": "14.564466860262606447",
+      "coll": "21403.592826870315143451",
+      "coll_value": "97240109.91073370767301516",
+      "debt_pending": "33.510600080574131783",
+      "debt_active": "28592007.246406722826866386",
+      "debt": "28592007.246406722826866386",
+      "value_locked": "118996377.656557388951529245",
+      "interest_rate_avg": "0.045826607262250169",
+      "sp_apy": "0.045168869342445394",
+      "apy_avg": "0.045168869342445394",
+      "sp_apy_avg_1d": "0.05020436135753112",
+      "sp_apy_avg_7d": "0.051732210952778815"
+    },
+    "rETH": {
+      "coll_active": "3862.558370051362951749",
+      "coll_default": "0",
+      "coll_price": "4274.222184176323274514",
+      "debt_recorded": "4677102.636512808274018223",
+      "debt_default": "0",
+      "sp_deposits": "3787037.845194168043218627",
+      "interest_accrual_1y": "252509.204944730762843797",
+      "interest_pending": "1.729515102361169609",
+      "batch_management_fees_pending": "369.402171742232652211",
+      "coll": "3862.558370051362951749",
+      "coll_value": "16509432.672949475687610212",
+      "debt_pending": "371.13168684459382182",
+      "debt_active": "4677473.768199652867840043",
+      "debt": "4677473.768199652867840043",
+      "value_locked": "20296470.518143643730828839",
+      "interest_rate_avg": "0.053984098566504816",
+      "sp_apy": "0.050007924781865529",
+      "apy_avg": "0.050007924781865529",
+      "sp_apy_avg_1d": "0.05045739259818621",
+      "sp_apy_avg_7d": "0.046497601942659346"
+    }
+  },
+  "boldYield": [
+    {
+      "protocol": "Pendle",
+      "asset": "LP sBOLD 2025-11-27",
+      "link": "https://app.pendle.finance/trade/pools/0xe467c5c54748f0125d729280f90ded77c4e720a4/zap/in?chain=ethereum",
+      "weekly_apr": 0.79376,
+      "total_apr": "87.3% - 145.6%",
+      "tvl": 2686936.039948399
+    },
+    {
+      "protocol": "Pendle",
+      "asset": "PT sBOLD 2025-11-27",
+      "link": "https://app.pendle.finance/trade/markets/0xe467c5c54748f0125d729280f90ded77c4e720a4/swap?view=pt&chain=ethereum",
+      "weekly_apr": 0.09957,
+      "total_apr": "10.0%",
+      "tvl": 2686936.039948399
+    },
+    {
+      "protocol": "EKUBO",
+      "asset": "BOLD/USDC",
+      "link": "https://evm.ekubo.org/positions/new?baseCurrency=BOLD&quoteCurrency=USDC",
+      "weekly_apr": 0.09330541094084238,
+      "total_apr": "17.3% - 75.6%",
+      "tvl": 488145.95150177006
+    }
+  ],
+  "prices": {
+    "ETH": "3743.09",
+    "LQTY": "0.500395",
+    "LEGACY_BOLD": "0.998869",
+    "BOLD": "1.001",
+    "LUSD": "1.001",
+    "RETH": "4268.47",
+    "SDEX": "0.00352575",
+    "WSTETH": "4545.14"
+  }
+}
