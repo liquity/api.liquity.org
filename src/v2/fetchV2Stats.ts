@@ -13,6 +13,7 @@ const ONE_WEI = Decimal.fromBigNumberString("1");
 
 const decimalify = (bigNumber: BigNumber) => Decimal.fromBigNumberString(bigNumber.toHexString());
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const mapObj = <T extends Record<string, any>, U>(t: T, f: (v: T[keyof T]) => U) =>
   Object.fromEntries(Object.entries(t).map(([k, v]) => [k, f(v)])) as { [K in keyof T]: U };
 
@@ -178,6 +179,9 @@ export const fetchV2Stats = async ({
         ];
       })
     ),
-    boldYield: boldYield?.filter(x => !x.protocol.match(/liquity v2/i)).slice(0, 3) ?? null
+
+    boldYield: boldYield?.filter(x => !x.protocol.match(/liquity v2/i)).slice(0, 3) ?? null,
+    sBOLD: boldYield?.find(x => x.asset === "sBOLD") ?? null,
+    yBOLD: boldYield?.find(x => x.asset === "yBOLD") ?? null
   };
 };

@@ -53,6 +53,7 @@ const sepoliaProvider = getProvider("sepolia", { provider, alchemyApiKey, infura
 
 type Leaf = string | number | boolean | null | undefined | bigint;
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface Tree extends Record<string, Leaf | Tree | Array<Leaf | Tree>> {}
 
 /* files/folder sanitizer */
