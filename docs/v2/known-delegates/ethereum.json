@@ -6,7 +6,8 @@
       {
         "name": "",
         "address": "0xe507e4d0763851a6287238aadd243948d18ab60a",
-        "branches": ["ETH"]
+        "branches": ["ETH"],
+        "hide": true
       }
     ]
   },
