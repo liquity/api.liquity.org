@@ -1,9 +1,10 @@
 import type { Provider } from "@ethersproject/abstract-provider";
 import { Networkish, getNetwork } from "@ethersproject/networks";
-import { InfuraProvider } from "@ethersproject/providers";
 
-import { AlchemyProvider } from "./AlchemyProvider";
 import { BatchedProvider } from "./BatchedProvider";
+import { ethers } from "ethers";
+import dotenv from "dotenv-safe";
+dotenv.config();
 
 export interface LiquityConnectionOptions {
   provider?: "alchemy" | "infura"; // defaults to Alchemy
@@ -11,15 +12,15 @@ export interface LiquityConnectionOptions {
   infuraApiKey?: string;
 }
 
-export const getProvider = (
-  networkish: Networkish,
-  options?: LiquityConnectionOptions
-): Provider => {
+export const getProvider = (networkish: Networkish): Provider => {
   const network = getNetwork(networkish);
-  const underlyingProvider =
-    options?.provider === "infura"
-      ? new InfuraProvider(network, options?.infuraApiKey)
-      : new AlchemyProvider(network, options?.alchemyApiKey);
 
-  return new BatchedProvider(underlyingProvider, network);
+  const RPC_URL = process.env.RPC_URL;
+  if (!RPC_URL) {
+    throw new Error("RPC_URL must be set");
+  }
+
+  const rpc = new ethers.providers.JsonRpcProvider(RPC_URL);
+
+  return new BatchedProvider(rpc, network);
 };
