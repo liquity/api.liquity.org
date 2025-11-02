@@ -1,0 +1,122 @@
+[
+  {
+    "protocol": "Uniswap v4",
+    "asset": "BOLD/USDC",
+    "link": "https://app.merkl.xyz/opportunities/ethereum/UNISWAP_V4/0x5d0ed52610c76d7bf729130ce7ddc0488b2f4bd0a0db1f12adbe6a32deaff893",
+    "weekly_apr": 0.250321,
+    "total_apr": "32.4% - 86.3%",
+    "tvl": 70507
+  },
+  {
+    "protocol": "Spectra",
+    "asset": "PT sBOLD 2025-12-10",
+    "link": "https://app.spectra.finance/fixed-rate/eth:0x593a8a7c12d8111e12945ff167389662a02b5ece",
+    "weekly_apr": 0.125444,
+    "total_apr": "12.5%",
+    "tvl": 824653
+  },
+  {
+    "protocol": "EKUBO",
+    "asset": "BOLD/USDC",
+    "link": "https://evm.ekubo.org/positions/new?baseCurrency=BOLD&quoteCurrency=USDC",
+    "weekly_apr": 0.12459770171113332,
+    "total_apr": "19.8% - 73.7%",
+    "tvl": 561620.6888558818
+  },
+  {
+    "protocol": "Pendle",
+    "asset": "PT sBOLD 2025-11-27",
+    "link": "https://app.pendle.finance/trade/markets/0xe467c5c54748f0125d729280f90ded77c4e720a4/swap?view=pt&chain=ethereum",
+    "weekly_apr": 0.10724,
+    "total_apr": "10.7%",
+    "tvl": 2806888.099948531
+  },
+  {
+    "protocol": "Balancer",
+    "asset": "BOLD/USDC",
+    "link": "https://balancer.fi/pools/ethereum/v3/0x698a72bc8bc2eeb0f0f9a77cef0a2859399dc469",
+    "weekly_apr": 0.089779,
+    "total_apr": "16.3% - 70.3%",
+    "tvl": 663840
+  },
+  {
+    "protocol": "Spectra",
+    "asset": "LP sBOLD 2025-12-10",
+    "link": "https://app.spectra.finance/pools/eth:0x593a8a7c12d8111e12945ff167389662a02b5ece",
+    "weekly_apr": 0.08397,
+    "total_apr": "15.8% - 69.7%",
+    "tvl": 824653
+  },
+  {
+    "protocol": "Pendle",
+    "asset": "LP sBOLD 2025-11-27",
+    "link": "https://app.pendle.finance/trade/pools/0xe467c5c54748f0125d729280f90ded77c4e720a4/zap/in?chain=ethereum",
+    "weekly_apr": 0.06815,
+    "total_apr": "14.2% - 68.1%",
+    "tvl": 2806888.099948531
+  },
+  {
+    "protocol": "Curve",
+    "asset": "BOLD/LUSD",
+    "link": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-456/deposit/",
+    "weekly_apr": 0.065865,
+    "total_apr": "13.9% - 67.9%",
+    "tvl": 982025
+  },
+  {
+    "protocol": "Asymmetry",
+    "asset": "ysyBOLD",
+    "link": "https://usdaf.asymmetry.finance/borrow/ysybold",
+    "weekly_apr": 0.060582,
+    "total_apr": "13.4% - 67.3%",
+    "tvl": 4143618.1908808933
+  },
+  {
+    "protocol": "Yearn",
+    "asset": "yBOLD",
+    "link": "https://yearn.fi/v3/1/0x9F4330700a36B29952869fac9b33f45EEdd8A3d8",
+    "weekly_apr": 0.060582,
+    "total_apr": "13.4% - 67.3%",
+    "tvl": 9617477
+  },
+  {
+    "protocol": "Curve",
+    "asset": "BOLD/USDC",
+    "link": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-455/deposit/",
+    "weekly_apr": 0.056265,
+    "total_apr": "13.0% - 66.9%",
+    "tvl": 10165330
+  },
+  {
+    "protocol": "Liquity v2",
+    "asset": "SP wstETH",
+    "link": "https://liquity.app/earn/wsteth",
+    "weekly_apr": 0.04782220559102495,
+    "total_apr": "12.1% - 66.1%",
+    "tvl": 23717539.777221564
+  },
+  {
+    "protocol": "K3 Capital",
+    "asset": "sBOLD",
+    "link": "https://liquity.app/earn/sbold",
+    "weekly_apr": 0.04590180644293574,
+    "total_apr": "11.9% - 65.9%",
+    "tvl": 14994802.260854013
+  },
+  {
+    "protocol": "Liquity v2",
+    "asset": "SP WETH",
+    "link": "https://liquity.app/earn/eth",
+    "weekly_apr": 0.04353221459025315,
+    "total_apr": "11.7% - 65.6%",
+    "tvl": 10143354.370361924
+  },
+  {
+    "protocol": "Liquity v2",
+    "asset": "SP rETH",
+    "link": "https://liquity.app/earn/reth",
+    "weekly_apr": 0.04190532814239019,
+    "total_apr": "11.5% - 65.5%",
+    "tvl": 3006928.184360902
+  }
+]
