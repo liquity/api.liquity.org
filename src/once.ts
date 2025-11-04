@@ -8,7 +8,7 @@ import v2RelaunchDeployment from "../addresses/relaunch.json";
 import v2SepoliaDeployment from "../addresses/sepolia.json";
 import { getProvider } from "./connection";
 import { fetchLQTYCirculatingSupply } from "./fetchLQTYCirculatingSupply";
-// import { fetchLUSDCBBAMMStats } from "./fetchLUSDCBBAMMStats";
+
 import { fetchLUSDTotalSupply } from "./fetchLUSDTotalSupply";
 import { fetchPrices } from "./fetchPrices";
 import { fetchV2Stats } from "./v2/fetchV2Stats";
@@ -21,7 +21,6 @@ import {
   DUNE_SPV2_AVERAGE_APY_URL_MAINNET,
   DUNE_SPV2_UPFRONT_FEE_URL_MAINNET,
   LQTY_CIRCULATING_SUPPLY_FILE,
-  // LUSD_CB_BAMM_STATS_FILE,
   LUSD_TOTAL_SUPPLY_FILE,
   OUTPUT_DIR_V1,
   OUTPUT_DIR_V2
@@ -142,7 +141,7 @@ EthersLiquity.connect(mainnetProvider)
     const [
       lqtyCirculatingSupply,
       lusdTotalSupply,
-      // lusdCBBAMMStats,
+
       v2LegacyStats,
       v2RelaunchStats,
       v2SepoliaStats,
@@ -153,8 +152,8 @@ EthersLiquity.connect(mainnetProvider)
       defiAvgBorrowRates
     ] = await Promise.all([
       fetchLQTYCirculatingSupply(liquity),
-      fetchLUSDTotalSupply(liquity),
-      // fetchLUSDCBBAMMStats(transposeApiKey),
+      fetchLUSDTotalSupply(),
+
       fetchV2Stats({
         deployment: v2LegacyDeployment,
         provider: mainnetProvider,
@@ -179,7 +178,7 @@ EthersLiquity.connect(mainnetProvider)
         duneYieldUrl: null,
         duneApiKey
       }),
-      fetchPrices({ coinGeckoDemoApiKey }),
+      fetchPrices(),
       fetchBoldYieldOpportunitiesFromDune({
         apiKey: duneApiKey,
         url: DUNE_BOLD_YIELD_OPPORTUNITIES_URL_MAINNET
