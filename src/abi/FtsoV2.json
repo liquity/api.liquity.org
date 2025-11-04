@@ -1,0 +1,13 @@
+[
+  {
+    "inputs": [{ "internalType": "bytes21", "name": "_feedId", "type": "bytes21" }],
+    "name": "getFeedById",
+    "outputs": [
+      { "internalType": "uint256", "name": "value", "type": "uint256" },
+      { "internalType": "int8", "name": "decimals", "type": "int8" },
+      { "internalType": "uint64", "name": "timestamp", "type": "uint64" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]

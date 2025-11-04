@@ -6,23 +6,27 @@
   "scripts": {
     "once": "tsx src/once.ts",
     "snapshot": "tsx src/snapshot.ts",
-    "build": "tsc --project tsconfig.json"
+    "build": "tsc --project tsconfig.json",
+    "typechain": "typechain --target ethers-v5 --out-dir src/types ./src/abi/*.json"
   },
   "dependencies": {
     "@liquity/lib-base": "3.0.0",
     "@liquity/lib-ethers": "3.4.0",
     "@liquity/providers": "1.0.1",
+    "dnum": "^2.15.0",
     "dotenv-safe": "^9.1.0",
     "ethers": "5.8.0",
     "zod": "^4.1.12"
   },
   "devDependencies": {
+    "@typechain/ethers-v5": "^11.1.2",
     "@types/dotenv-safe": "^9.1.0",
     "@types/node": "24.7.0",
     "@typescript-eslint/eslint-plugin": "5.62.0",
     "@typescript-eslint/parser": "5.62.0",
     "eslint": "8.57.1",
     "tsx": "^4.20.6",
+    "typechain": "^8.3.2",
     "typescript": "5.9.3"
   },
   "packageManager": "yarn@1.22.21+sha1.1959a18351b811cdeedbd484a8f86c3cc3bbaf72"
