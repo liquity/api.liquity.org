@@ -13,12 +13,6 @@ const subgraphUrl: string = process.env.SUBGRAPH_URL || panic("missing SUBGRAPH_
 const subgraphOrigin = process.env.SUBGRAPH_ORIGIN || undefined;
 const latestCompletedEpoch = Math.floor((Date.now() / 1000 - EPOCH_START) / EPOCH_DURATION);
 
-const provider = process.env.PROVIDER || "alchemy";
-if (provider !== "alchemy" && provider !== "infura") throw new Error("bad PROVIDER");
-
-const alchemyApiKey = process.env.ALCHEMY_API_KEY || undefined;
-const infuraApiKey = process.env.INFURA_API_KEY || undefined;
-
 const main = async () => {
   const argv = process.argv.slice(2);
   const epoch = argv.length > 0 ? parseInt(argv[0]) : latestCompletedEpoch;
@@ -26,7 +20,7 @@ const main = async () => {
   await snapshotEpoch({ subgraphUrl, subgraphOrigin, epoch });
   console.log(`Snapshotted epoch #${epoch}.`);
 
-  const mainnetProvider = getProvider("mainnet", { provider, alchemyApiKey, infuraApiKey });
+  const mainnetProvider = getProvider();
   await snapshotInitiatives({ subgraphUrl, subgraphOrigin, provider: mainnetProvider });
   console.log("Snapshotted initiatives.");
 };

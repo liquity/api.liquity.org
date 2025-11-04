@@ -21,6 +21,7 @@ export class CallFailedError extends Error {
 
 const multicallAddress = {
   1: "0xcA11bde05977b3631167028862bE2a173976CA11",
+  14: "0xcA11bde05977b3631167028862bE2a173976CA11",
   11155111: "0xcA11bde05977b3631167028862bE2a173976CA11"
 };
 

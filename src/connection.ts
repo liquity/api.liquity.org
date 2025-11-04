@@ -1,19 +1,15 @@
 import type { Provider } from "@ethersproject/abstract-provider";
-import { Networkish, getNetwork } from "@ethersproject/networks";
+import { getNetwork } from "@ethersproject/networks";
 
 import { BatchedProvider } from "./BatchedProvider";
 import { ethers } from "ethers";
 import dotenv from "dotenv-safe";
 dotenv.config();
 
-export interface LiquityConnectionOptions {
-  provider?: "alchemy" | "infura"; // defaults to Alchemy
-  alchemyApiKey?: string;
-  infuraApiKey?: string;
-}
+const FLARE_CHAIN_ID = 14;
 
-export const getProvider = (networkish: Networkish): Provider => {
-  const network = getNetwork(networkish);
+export const getProvider = (): Provider => {
+  const network = getNetwork(FLARE_CHAIN_ID);
 
   const RPC_URL = process.env.RPC_URL;
   if (!RPC_URL) {
