@@ -18,10 +18,9 @@ const subtractAllFrom = (initialValue: BigNumber) => (xs: BigNumber[]) =>
   xs.reduce(subtract, initialValue);
 
 export const fetchLQTYCirculatingSupply = async (
-  liquity: EthersLiquity,
   blockTag: BlockTag = "latest"
 ): Promise<BigNumber> => {
-  const excludedAddresses = await getExcludedLQTYHolders(liquity, blockTag);
+  const excludedAddresses = await getExcludedLQTYHolders();
 
   return Promise.all(excludedAddresses.map(getLQTYBalance(blockTag))).then(
     subtractAllFrom(TOTAL_LQTY_SUPPLY)

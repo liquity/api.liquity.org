@@ -2,11 +2,12 @@ import { Decimal } from "@liquity/lib-base";
 import { EthersLiquity } from "@liquity/lib-ethers";
 
 import { fetchLQTYCirculatingSupply } from "./fetchLQTYCirculatingSupply";
+import { BigNumber } from "ethers";
 
 export class LQTYCirculatingSupplyPoller {
   private readonly _liquity;
 
-  private _latestCirculatingSupply?: Decimal;
+  private _latestCirculatingSupply?: BigNumber;
   private _latestBlockTag?: number;
 
   constructor(liquity: EthersLiquity | Promise<EthersLiquity>) {
@@ -17,10 +18,10 @@ export class LQTYCirculatingSupplyPoller {
     const liquity = await this._liquity;
     const provider = liquity.connection.provider;
 
-    this._latestCirculatingSupply = await fetchLQTYCirculatingSupply(liquity);
+    this._latestCirculatingSupply = await fetchLQTYCirculatingSupply();
 
     provider.on("block", async (blockTag: number) => {
-      const supply = await fetchLQTYCirculatingSupply(liquity, blockTag);
+      const supply = await fetchLQTYCirculatingSupply(blockTag);
 
       if (this._latestBlockTag === undefined || blockTag > this._latestBlockTag) {
         this._latestCirculatingSupply = supply;
@@ -29,7 +30,7 @@ export class LQTYCirculatingSupplyPoller {
     });
   }
 
-  get latestCirculatingSupply(): Decimal {
+  get latestCirculatingSupply(): BigNumber {
     if (this._latestCirculatingSupply === undefined) {
       throw new Error("Premature call (wait for start() to resolve first)");
     }
