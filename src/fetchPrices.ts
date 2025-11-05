@@ -213,4 +213,5 @@ export async function fetchPrices() {
       results[PRICES[id]] = price.toString();
     }
   }
+  return results;
 }

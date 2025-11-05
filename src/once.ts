@@ -3,10 +3,7 @@ import fs from "fs";
 import path from "path";
 import util from "util";
 
-import v2LegacyDeployment from "../addresses/legacy.json";
-import v2RelaunchDeployment from "../addresses/relaunch.json";
-import v2SepoliaDeployment from "../addresses/sepolia.json";
-import { getProvider } from "./connection";
+import flareDeployment from "../addresses/flareDeployment.json";
 import { fetchLQTYCirculatingSupply } from "./fetchLQTYCirculatingSupply";
 
 import { fetchLUSDTotalSupply } from "./fetchLUSDTotalSupply";
@@ -36,19 +33,11 @@ const panic = <T>(message: string): T => {
 const provider = process.env.PROVIDER || "alchemy";
 if (provider !== "alchemy" && provider !== "infura") throw new Error("bad PROVIDER");
 
-const alchemyApiKey = process.env.ALCHEMY_API_KEY || undefined; // filter out empty string
-const infuraApiKey = process.env.INFURA_API_KEY || undefined; // filter out empty string
 const duneApiKey: string = process.env.DUNE_API_KEY || panic("missing DUNE_API_KEY");
-// const transposeApiKey: string = process.env.TRANSPOSE_API_KEY || panic("missing TRANSPOSE_API_KEY");
-const coinGeckoDemoApiKey: string =
-  process.env.COINGECKO_DEMO_KEY || panic("missing COINGECKO_DEMO_KEY");
 
 const lqtyCirculatingSupplyFile = path.join(OUTPUT_DIR_V1, LQTY_CIRCULATING_SUPPLY_FILE);
 const lusdTotalSupplyFile = path.join(OUTPUT_DIR_V1, LUSD_TOTAL_SUPPLY_FILE);
 // const lusdCBBAMMStatsFile = path.join(OUTPUT_DIR_V1, LUSD_CB_BAMM_STATS_FILE);
-
-const mainnetProvider = getProvider("mainnet", { provider, alchemyApiKey, infuraApiKey });
-const sepoliaProvider = getProvider("sepolia", { provider, alchemyApiKey, infuraApiKey });
 
 type Leaf = string | number | boolean | null | undefined | bigint;
 
@@ -136,123 +125,100 @@ export const writeTree = (parentDir: string, tree: Tree): void => {
   }
 };
 
-EthersLiquity.connect(mainnetProvider)
-  .then(async liquity => {
-    const [
-      lqtyCirculatingSupply,
-      lusdTotalSupply,
+const getData = async () => {
+  const [
+    lqtyCirculatingSupply,
+    lusdTotalSupply,
 
-      v2LegacyStats,
-      v2RelaunchStats,
-      v2SepoliaStats,
-      prices,
-      boldVenues,
-      forkVenues,
-      leaderboard,
-      defiAvgBorrowRates
-    ] = await Promise.all([
-      fetchLQTYCirculatingSupply(liquity),
-      fetchLUSDTotalSupply(),
+    flareStats,
+    prices,
+    boldVenues,
+    forkVenues,
+    leaderboard,
+    defiAvgBorrowRates
+  ] = await Promise.all([
+    fetchLQTYCirculatingSupply(),
+    fetchLUSDTotalSupply(),
 
-      fetchV2Stats({
-        deployment: v2LegacyDeployment,
-        provider: mainnetProvider,
-        duneSpApyUrl: null,
-        duneSpUpfrontFeeUrl: null,
-        duneYieldUrl: null,
-        duneApiKey
-      }),
-      fetchV2Stats({
-        deployment: v2RelaunchDeployment,
-        provider: mainnetProvider,
-        duneSpApyUrl: DUNE_SPV2_AVERAGE_APY_URL_MAINNET,
-        duneSpUpfrontFeeUrl: DUNE_SPV2_UPFRONT_FEE_URL_MAINNET,
-        duneYieldUrl: DUNE_BOLD_YIELD_OPPORTUNITIES_URL_MAINNET,
-        duneApiKey
-      }),
-      fetchV2Stats({
-        deployment: v2SepoliaDeployment,
-        provider: sepoliaProvider,
-        duneSpApyUrl: null,
-        duneSpUpfrontFeeUrl: null,
-        duneYieldUrl: null,
-        duneApiKey
-      }),
-      fetchPrices(),
-      fetchBoldYieldOpportunitiesFromDune({
-        apiKey: duneApiKey,
-        url: DUNE_BOLD_YIELD_OPPORTUNITIES_URL_MAINNET
-      }),
-      fetchForkVenuesFromDune({
-        apiKey: duneApiKey,
-        url: DUNE_FORK_VENUES_URL_MAINNET
-      }),
-      fetchLeaderboardFromDune({
-        apiKey: duneApiKey,
-        url: DUNE_LEADERBOARD_URL_MAINNET
-      }),
-      fetchDefiAvgBorrowRates()
-    ]);
+    fetchV2Stats({
+      deployment: flareDeployment,
+      duneSpApyUrl: DUNE_SPV2_AVERAGE_APY_URL_MAINNET,
+      duneSpUpfrontFeeUrl: DUNE_SPV2_UPFRONT_FEE_URL_MAINNET,
+      duneYieldUrl: DUNE_BOLD_YIELD_OPPORTUNITIES_URL_MAINNET,
+      duneApiKey
+    }),
 
-    const v2Stats = {
-      ...v2RelaunchStats,
-      legacy: v2LegacyStats,
-      prices,
-      testnet: {
-        sepolia: v2SepoliaStats
-      }
-    };
+    fetchPrices(),
+    fetchBoldYieldOpportunitiesFromDune({
+      apiKey: duneApiKey,
+      url: DUNE_BOLD_YIELD_OPPORTUNITIES_URL_MAINNET
+    }),
+    fetchForkVenuesFromDune({
+      apiKey: duneApiKey,
+      url: DUNE_FORK_VENUES_URL_MAINNET
+    }),
+    fetchLeaderboardFromDune({
+      apiKey: duneApiKey,
+      url: DUNE_LEADERBOARD_URL_MAINNET
+    }),
+    fetchDefiAvgBorrowRates()
+  ]);
 
-    const borrowRates = defiAvgBorrowRates.map(({ collateral, defi_avg_borrow_rate }) => ({
-      collateral,
-      defi_avg_borrow_rate,
-      liquity_avg_borrow_rate: Number(v2RelaunchStats.branch[collateral].interest_rate_avg)
-    }));
+  const v2Stats = {
+    ...flareStats,
 
-    fs.mkdirSync(OUTPUT_DIR_V1, { recursive: true });
-    fs.writeFileSync(lqtyCirculatingSupplyFile, `${lqtyCirculatingSupply}`);
-    fs.writeFileSync(lusdTotalSupplyFile, `${lusdTotalSupply}`);
-    // fs.writeFileSync(lusdCBBAMMStatsFile, JSON.stringify(lusdCBBAMMStats));
+    prices
+  };
 
-    writeTree(OUTPUT_DIR_V2, v2Stats);
-    fs.writeFileSync(
-      path.join(OUTPUT_DIR_V2, "mainnet.json"),
-      JSON.stringify({ ...v2LegacyStats, prices }, null, 2)
-    );
-    fs.writeFileSync(
-      path.join(OUTPUT_DIR_V2, "ethereum.json"),
-      JSON.stringify({ ...v2RelaunchStats, prices }, null, 2)
-    );
-    fs.writeFileSync(
-      path.join(OUTPUT_DIR_V2, "testnet", "sepolia.json"),
-      JSON.stringify({ ...v2SepoliaStats, prices }, null, 2)
-    );
+  const borrowRates = defiAvgBorrowRates.map(({ collateral, defi_avg_borrow_rate }) => ({
+    collateral,
+    defi_avg_borrow_rate,
+    liquity_avg_borrow_rate: Number(flareStats.branch[collateral].interest_rate_avg)
+  }));
 
-    fs.mkdirSync(path.join(OUTPUT_DIR_V2, "website"), { recursive: true });
-    fs.writeFileSync(
-      path.join(OUTPUT_DIR_V2, "website", "bold-venues.json"),
-      JSON.stringify(boldVenues, null, 2)
-    );
-    fs.writeFileSync(
-      path.join(OUTPUT_DIR_V2, "website", "fork-venues.json"),
-      JSON.stringify(forkVenues, null, 2)
-    );
-    fs.writeFileSync(
-      path.join(OUTPUT_DIR_V2, "website", "leaderboard.json"),
-      JSON.stringify(leaderboard, null, 2)
-    );
-    fs.writeFileSync(
-      path.join(OUTPUT_DIR_V2, "website", "borrow-rates.json"),
-      JSON.stringify(borrowRates, null, 2)
-    );
+  fs.mkdirSync(OUTPUT_DIR_V1, { recursive: true });
+  fs.writeFileSync(lqtyCirculatingSupplyFile, `${lqtyCirculatingSupply}`);
+  fs.writeFileSync(lusdTotalSupplyFile, `${lusdTotalSupply}`);
+  // fs.writeFileSync(lusdCBBAMMStatsFile, JSON.stringify(lusdCBBAMMStats));
 
-    console.log(`LQTY circulating supply: ${lqtyCirculatingSupply}`);
-    console.log(`LUSD total supply: ${lusdTotalSupply}`);
-    // console.log("LUSD CB BAMM stats:", lusdCBBAMMStats);
-    console.log();
-    console.log("v2 stats:", util.inspect(v2Stats, { colors: true, depth: null }));
-  })
-  .catch(error => {
+  writeTree(OUTPUT_DIR_V2, v2Stats);
+
+  fs.writeFileSync(
+    path.join(OUTPUT_DIR_V2, "flare.json"),
+    JSON.stringify({ ...flareStats, prices }, null, 2)
+  );
+
+  fs.mkdirSync(path.join(OUTPUT_DIR_V2, "website"), { recursive: true });
+  fs.writeFileSync(
+    path.join(OUTPUT_DIR_V2, "website", "bold-venues.json"),
+    JSON.stringify(boldVenues, null, 2)
+  );
+  fs.writeFileSync(
+    path.join(OUTPUT_DIR_V2, "website", "fork-venues.json"),
+    JSON.stringify(forkVenues, null, 2)
+  );
+  fs.writeFileSync(
+    path.join(OUTPUT_DIR_V2, "website", "leaderboard.json"),
+    JSON.stringify(leaderboard, null, 2)
+  );
+  fs.writeFileSync(
+    path.join(OUTPUT_DIR_V2, "website", "borrow-rates.json"),
+    JSON.stringify(borrowRates, null, 2)
+  );
+
+  console.log(`LQTY circulating supply: ${lqtyCirculatingSupply}`);
+  console.log(`LUSD total supply: ${lusdTotalSupply}`);
+
+  console.log();
+  console.log("v2 stats:", util.inspect(v2Stats, { colors: true, depth: null }));
+};
+
+const main = async () => {
+  try {
+    await getData();
+  } catch (error) {
     console.error(error);
     process.exit(1);
-  });
+  }
+};
+main();

@@ -8,6 +8,7 @@ import { getContracts, type LiquityV2BranchContracts, type LiquityV2Deployment }
 import { fetchSpAverageApysFromDune } from "./dune/fetchSpAverageApysFromDune";
 import { fetchSpUpfrontFeeFromDune } from "./dune/fetchSpUpfrontFeeFromDune";
 import { fetchBoldYieldOpportunitiesFromDune } from "./dune/fetchBoldYieldOpportunitiesFromDune";
+import { getProvider } from "../connection";
 
 const ONE_WEI = Decimal.fromBigNumberString("1");
 
@@ -64,7 +65,6 @@ const emptyBranchData = (branches: LiquityV2BranchContracts[]): ReturnType<typeo
   );
 
 export const fetchV2Stats = async ({
-  provider,
   duneSpApyUrl,
   duneSpUpfrontFeeUrl,
   duneApiKey,
@@ -72,7 +72,6 @@ export const fetchV2Stats = async ({
   duneYieldUrl,
   blockTag = "latest"
 }: {
-  provider: Provider;
   duneSpApyUrl: string | null;
   duneSpUpfrontFeeUrl: string | null;
   duneApiKey: string;
@@ -81,21 +80,15 @@ export const fetchV2Stats = async ({
   blockTag?: BlockTag;
 }) => {
   const SP_YIELD_SPLIT = Decimal.fromBigNumberString(deployment.constants.SP_YIELD_SPLIT);
-  const contracts = getContracts(provider, deployment);
-
-  // Last step of deployment renounces Governance ownership
-  const deployed = await contracts.governance
-    .owner()
-    .then(owner => owner == AddressZero)
-    .catch(() => false);
+  const contracts = getContracts(getProvider(), deployment);
 
   const [total_bold_supply, branches, spV2AverageApys, spUpfrontFee24h, boldYield] =
     await Promise.all([
       // total_bold_supply
-      deployed ? contracts.boldToken.totalSupply({ blockTag }).then(decimalify) : Decimal.ZERO,
+      contracts.boldToken.totalSupply({ blockTag }).then(decimalify),
 
       // branches
-      (deployed ? fetchBranchData : emptyBranchData)(contracts.branches).then(branches =>
+      fetchBranchData(contracts.branches).then(branches =>
         branches.map(branch => {
           const coll = branch.coll_active.add(branch.coll_default);
           const coll_value = coll.mul(branch.coll_price);
@@ -118,30 +111,21 @@ export const fetchV2Stats = async ({
           };
         })
       ),
-
       // spV2AverageApys
-      deployed
-        ? fetchSpAverageApysFromDune({
-            branches: contracts.branches,
-            apiKey: duneApiKey,
-            url: duneSpApyUrl
-          })
-        : null,
-
+      fetchSpAverageApysFromDune({
+        branches: contracts.branches,
+        apiKey: duneApiKey,
+        url: duneSpApyUrl
+      }),
       // spUpfrontFee24h
-      deployed
-        ? fetchSpUpfrontFeeFromDune({
-            apiKey: duneApiKey,
-            url: duneSpUpfrontFeeUrl
-          })
-        : null,
-
-      deployed
-        ? fetchBoldYieldOpportunitiesFromDune({
-            apiKey: duneApiKey,
-            url: duneYieldUrl
-          })
-        : null
+      fetchSpUpfrontFeeFromDune({
+        apiKey: duneApiKey,
+        url: duneSpUpfrontFeeUrl
+      }),
+      fetchBoldYieldOpportunitiesFromDune({
+        apiKey: duneApiKey,
+        url: duneYieldUrl
+      })
     ]);
 
   const sp_apys = branches.map(b => Number(b.sp_apy));
