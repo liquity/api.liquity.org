@@ -3,6 +3,7 @@ import { getProvider } from "./connection";
 import { FLARE_CONTRACT_REGISTRY } from "./constants";
 
 import {
+  ERC20__factory,
   FlareContractRegistry__factory,
   FtsoV2__factory,
   PriceFeed__factory,
@@ -23,4 +24,8 @@ export const getUniswapV3PoolContract = (poolAddress: string) => {
 
 export const getPriceFeedContract = (priceFeedAddress: string) => {
   return PriceFeed__factory.connect(priceFeedAddress, getProvider());
+};
+
+export const getERC20Contract = (erc20Address: string) => {
+  return ERC20__factory.connect(erc20Address, getProvider());
 };

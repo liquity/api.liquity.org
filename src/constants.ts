@@ -1,4 +1,5 @@
 import { Decimal } from "@liquity/lib-base";
+import { BigNumber } from "ethers";
 import path from "path";
 
 export const OUTPUT_DIR = "docs";
@@ -21,7 +22,8 @@ export const DUNE_BOLD_YIELD_OPPORTUNITIES_URL_MAINNET =
 export const DUNE_FORK_VENUES_URL_MAINNET = "https://api.dune.com/api/v1/query/5682625/results";
 export const DUNE_LEADERBOARD_URL_MAINNET = "https://api.dune.com/api/v1/query/5245634/results";
 
-export const TOTAL_LQTY_SUPPLY = Decimal.from(100e6); // 100 million
+// export const TOTAL_LQTY_SUPPLY = Decimal.from(100e6); // 100 million
+export const TOTAL_LQTY_SUPPLY = BigNumber.from(100e6); // 100 million probably made up
 
 // { [coinGeckoId]: symbol }
 export const PRICES = {
@@ -35,8 +37,8 @@ export const PRICES = {
   smardex: "SDEX"
 } as const;
 
-export const GNOSIS_SAFE_RESERVE = "0xb8a9fada75c6d891fb77a7988ff9bad9e485ca1c";
-export const GNOSIS_SAFE_FUNDS = "0xf06016d822943c42e3cb7fc3a6a3b1889c1045f8";
+export const GNOSIS_SAFE_RESERVE = "";
+export const GNOSIS_SAFE_FUNDS = "";
 
 export const REWARD_CONTRACTS = Object.freeze([
   "", // Stability Pool rewards
@@ -50,3 +52,4 @@ export const FLARE_CONTRACT_REGISTRY = "0xaD67FE66660Fb8dFE9d6b1b4240d8650e30F60
 export const PRICE_FEED_ADDRESS = "";
 
 export const LUSD_ADDRESS = "";
+export const LQTY_ADDRESS = "";
