@@ -46,5 +46,21 @@
     "vetoOffset": "0",
     "voteLQTY": "11707640366344256147773",
     "voteOffset": "20468401292429383531456501445327"
+  },
+  {
+    "epoch": 26,
+    "initiative": "0xa58fbe38aab33b9fadef1b5aaff4d7bc27c43ad4",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "0",
+    "voteOffset": "0"
+  },
+  {
+    "epoch": 26,
+    "initiative": "0xaeaa52a51e90cfe5d862568fdc99bc7510f53e04",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "11707640366344256147773",
+    "voteOffset": "20468401292429383531456501445327"
   }
 ]
