@@ -61,7 +61,7 @@
       {
         "name": "",
         "address": "0xe707784292289be3aa0fb6f9d33d420291f98695",
-        "branches": ["wstETH"]
+        "branches": ["ETH", "wstETH", "rETH"]
       }
     ]
   },
