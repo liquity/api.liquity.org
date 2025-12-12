@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Upshift Airdrop Farming Vault",
+    "link": "https://app.upshift.finance/pools/1/0xb2FdA773822E5a04c8A70348d66257DD5Cf442DB",
+    "icon": "/v2/airdrop-vaults/icons/upshift.svg"
+  },
+  {
+    "name": "Lagoon Airdrop Farming Vault",
+    "link": "https://app.lagoon.finance/vault/1/0x68c2243619760abe0982378197c8fef2f651bd31",
+    "icon": "/v2/airdrop-vaults/icons/lagoon.svg"
+  }
+]
