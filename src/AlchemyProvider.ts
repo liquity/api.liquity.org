@@ -57,7 +57,7 @@ export class AlchemyProvider extends UrlJsonRpcProvider {
     let host = null;
     switch (network.name) {
       case "homestead":
-        host = "eth-mainnet.alchemyapi.io/v2/";
+        host = "eth-mainnet.g.alchemy.com/v2/";
         break;
       case "goerli":
         host = "eth-goerli.g.alchemy.com/v2/";
