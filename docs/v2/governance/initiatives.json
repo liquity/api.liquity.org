@@ -7,6 +7,10 @@
     "isBribeInitiative": true,
     "bribeToken": "0xD533a949740bb3306d119CC777fa900bA034cd52"
   },
+  "0x16897a8a7713d0f709a914d9d05edf6b598d24b6": {
+    "isBribeInitiative": false,
+    "bribeToken": null
+  },
   "0xa58fbe38aab33b9fadef1b5aaff4d7bc27c43ad4": {
     "isBribeInitiative": true,
     "bribeToken": "0x5DE8ab7E27f6E7A1fFf3E5B337584Aa43961BEeF"
