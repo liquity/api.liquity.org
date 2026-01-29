@@ -1,0 +1,138 @@
+[
+  {
+    "protocol": "EKUBO",
+    "asset": "BOLD/USDC",
+    "link": "https://ekubo.org/evm/positions/new?baseCurrency=0x6440f144b7e50d6a8439336510312d2f54beb01d&quoteCurrency=0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48&chainId=1&",
+    "weekly_apr": 0.4268707161739962,
+    "total_apr": "52.6% - 125.1%",
+    "tvl": 115931.89747300644
+  },
+  {
+    "protocol": "Pendle",
+    "asset": "LP sBOLD 2026-06-25",
+    "link": "https://app.pendle.finance/trade/pools/0xe467c5c54748f0125d729280f90ded77c4e720a4/zap/in?chain=ethereum",
+    "weekly_apr": 0.12046,
+    "total_apr": "17.0% - 53.2%",
+    "tvl": 307542.7999586393
+  },
+  {
+    "protocol": "Uniswap v4",
+    "asset": "BOLD/USDC",
+    "link": "https://app.merkl.xyz/opportunities/ethereum/UNISWAP_V4/0x5d0ed52610c76d7bf729130ce7ddc0488b2f4bd0a0db1f12adbe6a32deaff893",
+    "weekly_apr": 0.087644,
+    "total_apr": "18.6% - 91.1%",
+    "tvl": 2187125
+  },
+  {
+    "protocol": "Curve",
+    "asset": "BOLD/USDC",
+    "link": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-455/deposit/",
+    "weekly_apr": 0.084198,
+    "total_apr": "18.3% - 90.8%",
+    "tvl": 4572603
+  },
+  {
+    "protocol": "Pendle",
+    "asset": "LP ysyBOLD 2026-05-28",
+    "link": "https://app.pendle.finance/trade/pools/0x83b2c0b470ff5f2a60d2bf2ae109766e8bb3e862/zap/in?chain=ethereum",
+    "weekly_apr": 0.0676,
+    "total_apr": "11.7% - 47.9%",
+    "tvl": 509188.04860554455
+  },
+  {
+    "protocol": "Yearn",
+    "asset": "yBOLD",
+    "link": "https://yearn.fi/v3/1/0x9F4330700a36B29952869fac9b33f45EEdd8A3d8",
+    "weekly_apr": 0.066856,
+    "total_apr": "16.6% - 89.1%",
+    "tvl": 5677878
+  },
+  {
+    "protocol": "Asymmetry",
+    "asset": "ysyBOLD",
+    "link": "https://usdaf.asymmetry.finance/borrow/ysybold",
+    "weekly_apr": 0.066856,
+    "total_apr": "16.6% - 89.1%",
+    "tvl": 2350216.078465874
+  },
+  {
+    "protocol": "Spectra",
+    "asset": "LP sBOLD 2026-06-05",
+    "link": "https://app.spectra.finance/pools/eth:0x1d1ff54bbdb850aa638d810854e47749ca93d5ee",
+    "weekly_apr": 0.053765,
+    "total_apr": "10.3% - 46.6%",
+    "tvl": 231326
+  },
+  {
+    "protocol": "Liquity v2",
+    "asset": "SP wstETH",
+    "link": "https://liquity.app/earn/wsteth",
+    "weekly_apr": 0.045302900319874106,
+    "total_apr": "14.4% - 86.9%",
+    "tvl": 20512092.210777055
+  },
+  {
+    "protocol": "Curve",
+    "asset": "BOLD/LUSD",
+    "link": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-456/deposit/",
+    "weekly_apr": 0.042251,
+    "total_apr": "14.1% - 86.6%",
+    "tvl": 998991
+  },
+  {
+    "protocol": "K3 Capital",
+    "asset": "sBOLD",
+    "link": "https://liquity.app/earn/sbold",
+    "weekly_apr": 0.03929628595864174,
+    "total_apr": "13.8% - 86.3%",
+    "tvl": 11145674.385147694
+  },
+  {
+    "protocol": "Liquity v2",
+    "asset": "SP WETH",
+    "link": "https://liquity.app/earn/eth",
+    "weekly_apr": 0.03445460959020001,
+    "total_apr": "13.3% - 85.8%",
+    "tvl": 7481858.699293799
+  },
+  {
+    "protocol": "Balancer v3",
+    "asset": "BOLD/USDC",
+    "link": "https://balancer.fi/pools/ethereum/v3/0x698a72bc8bc2eeb0f0f9a77cef0a2859399dc469",
+    "weekly_apr": 0.027304,
+    "total_apr": "12.6% - 85.1%",
+    "tvl": 6020
+  },
+  {
+    "protocol": "Liquity v2",
+    "asset": "SP rETH",
+    "link": "https://liquity.app/earn/reth",
+    "weekly_apr": 0.01754722172477059,
+    "total_apr": "11.6% - 84.1%",
+    "tvl": 2127775.435972744
+  },
+  {
+    "protocol": "Euler",
+    "asset": "BOLD Vault",
+    "link": "https://app.euler.finance/vault/0xC1C51C5c9EfaF0c485Aa1097AE9690B5e102975A?network=ethereum",
+    "weekly_apr": 0.013743823966083901,
+    "total_apr": "11.3% - 83.7%",
+    "tvl": 209820.5120718311
+  },
+  {
+    "protocol": "Upshift",
+    "asset": "LiquityV2 Airdrop Farming Vault",
+    "link": "https://app.upshift.finance/pools/1/0xb2FdA773822E5a04c8A70348d66257DD5Cf442DB",
+    "weekly_apr": -0.005138,
+    "total_apr": "9.4% - 81.9%",
+    "tvl": 546170.4598010881
+  },
+  {
+    "protocol": "Lagoon",
+    "asset": "BOLD friendly forks Earn",
+    "link": "https://app.lagoon.finance/vault/1/0x68c2243619760abe0982378197c8fef2f651bd31",
+    "weekly_apr": null,
+    "total_apr": "n% - n%",
+    "tvl": 112260
+  }
+]
