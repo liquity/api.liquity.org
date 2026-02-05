@@ -86,5 +86,13 @@
     "vetoOffset": "0",
     "voteLQTY": "57543803243423332747530",
     "voteOffset": "100567730012179989389664213851430"
+  },
+  {
+    "epoch": 39,
+    "initiative": "0xaeaa52a51e90cfe5d862568fdc99bc7510f53e04",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "54243803243423332747530",
+    "voteOffset": "94800410329879989389664213851430"
   }
 ]
