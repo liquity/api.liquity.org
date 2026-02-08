@@ -1,0 +1,92 @@
+[
+  {
+    "fork": "Asymmetry",
+    "asset": "fxUSD/USDC/USDaf/BOLD",
+    "link": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-546/deposit",
+    "protocol": "Curve",
+    "chain": "Ethereum",
+    "total_apr": "38.9% - 318.0%",
+    "tvl": 210221
+  },
+  {
+    "fork": "Felix",
+    "asset": "USD₮0/feUSD/BOLD",
+    "link": "https://www.curve.finance/dex/hyperliquid/pools/factory-stable-ng-28/deposit",
+    "protocol": "Curve",
+    "chain": "Hyperliquid",
+    "total_apr": "66.5% - 546.0%",
+    "tvl": 152939
+  },
+  {
+    "fork": "Soneta",
+    "asset": "waUSDC/ONE/BOLD",
+    "link": "https://beets.fi/pools/sonic/v3/0x60ad427d0864866e70b3e63a89bce689ce06db94",
+    "protocol": "Curve",
+    "chain": "Sonic",
+    "total_apr": "65.7% - 546.5%",
+    "tvl": 152537.34338057452
+  },
+  {
+    "fork": "Nerite",
+    "asset": "yUSND/eeUSDC/BOLD",
+    "link": "https://balancer.fi/pools/arbitrum/v3/0xf87acdaff1b21db4b4906aa74816b0aaa8fdfdc0",
+    "protocol": "Balancer",
+    "chain": "Arbitrum",
+    "total_apr": "352.1% - 2761.9%",
+    "tvl": 30434
+  },
+  {
+    "fork": "DeFi Dollar",
+    "asset": "BOLD/USDFI",
+    "link": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-524/deposit",
+    "protocol": "Curve",
+    "chain": "Ethereum",
+    "total_apr": "584.2% - 4836.9%",
+    "tvl": 17244
+  },
+  {
+    "fork": "Orki",
+    "asset": "USDK/BOLD",
+    "link": "https://velodrome.finance/deposit?token0=0x1a17b22d762c8cf2ca0f07e2b3c32e7481bb0d8c&token1=0x0000baa0b1678229863c0a941c1056b83a1955f5&type=50&chain0=1923&chain1=1923&factory=0x04625B046C69577EfC40e6c0Bb83CDBAfab5a55F",
+    "protocol": "Velodrome",
+    "chain": "Swellchain",
+    "total_apr": "889.5% - 7412.2%",
+    "tvl": 11242.70255424858
+  },
+  {
+    "fork": "Aesyx",
+    "asset": "BOLD/AXD",
+    "link": "https://pharaoh.exchange/manage/v1/0x3fc764ae09eec2f54b1956febfeaa75d17a596bc",
+    "protocol": "Pharaoh",
+    "chain": "Avalanche",
+    "total_apr": "4931.3% - 38328.4%",
+    "tvl": 2195.7944165112126
+  },
+  {
+    "fork": "Beraborrow",
+    "asset": "NECT/BOLD/HONEY",
+    "link": "https://app.beraborrow.com/vault/deposit/bex-NECT-BOLD-HONEY",
+    "protocol": "BeraHub",
+    "chain": "Berachain",
+    "total_apr": "0.0% - 0.0%",
+    "tvl": 128.38
+  },
+  {
+    "fork": "Quill",
+    "asset": "BOLD/USDQ",
+    "link": "https://honeypop.app/pools/45",
+    "protocol": "Honeypop",
+    "chain": "Scroll",
+    "total_apr": "1428571428571428500000000.0% - 11904761904761903000000000.0%",
+    "tvl": 7e-18
+  },
+  {
+    "fork": "Ebisu",
+    "asset": "BOLD/ebUSD",
+    "link": "https://app.ekubo.org/evm/positions/new?quoteCurrency=BOLD&baseCurrency=ebUSD&poolType=concentrated",
+    "protocol": "Ekubo",
+    "chain": "Ethereum",
+    "total_apr": "0.0% - 0.0%",
+    "tvl": null
+  }
+]
