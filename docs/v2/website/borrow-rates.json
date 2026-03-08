@@ -1,0 +1,17 @@
+[
+  {
+    "collateral": "WETH",
+    "defi_avg_borrow_rate": 0.03228124521799326,
+    "liquity_avg_borrow_rate": 0.03861416249478724
+  },
+  {
+    "collateral": "wstETH",
+    "defi_avg_borrow_rate": 0.02993068464997696,
+    "liquity_avg_borrow_rate": 0.020849125446856305
+  },
+  {
+    "collateral": "rETH",
+    "defi_avg_borrow_rate": 0.028755836842040316,
+    "liquity_avg_borrow_rate": 0.029153000344390133
+  }
+]
