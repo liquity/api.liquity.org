@@ -82,7 +82,8 @@
       {
         "name": "",
         "address": "0x7700b2d305f47ae82e9598bab6d7ccb57299a82b",
-        "branches": ["rETH"]
+        "branches": ["rETH"],
+        "hide": true
       }
     ]
   }
