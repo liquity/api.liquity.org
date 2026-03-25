@@ -17,6 +17,21 @@
         "name": "Balanced",
         "address": "0x0000000000704f94ce2fe636dab92677a9745dc3",
         "branches": ["rETH"]
+      },
+      {
+        "name": "Aggressive",
+        "address": "0x00000000003b24f6895911d5e7ba18d6caa1da2b",
+        "branches": ["ETH"]
+      },
+      {
+        "name": "Aggressive",
+        "address": "0x000000000036abd8fe2238a541ec72f91ceebefa",
+        "branches": ["wstETH"]
+      },
+      {
+        "name": "Aggressive",
+        "address": "0x0000000000cbed6433d0777552ee00f9c8e40f76",
+        "branches": ["rETH"]
       }
     ]
   },
