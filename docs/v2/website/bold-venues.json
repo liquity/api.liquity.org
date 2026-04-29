@@ -1,0 +1,138 @@
+[
+  {
+    "protocol": "Liquity v2",
+    "asset": "SP rETH",
+    "link": "https://liquity.app/earn/reth",
+    "weekly_apr": 0.15613596852413306,
+    "total_apr": "27.5% - 114.7%",
+    "tvl": 3670525.726951189
+  },
+  {
+    "protocol": "Asymmetry",
+    "asset": "ysyBOLD",
+    "link": "https://usdaf.asymmetry.finance/borrow/ysybold",
+    "weekly_apr": 0.090441,
+    "total_apr": "20.9% - 108.1%",
+    "tvl": 956808.6561042666
+  },
+  {
+    "protocol": "Yearn",
+    "asset": "yBOLD",
+    "link": "https://yearn.fi/v3/1/0x9F4330700a36B29952869fac9b33f45EEdd8A3d8",
+    "weekly_apr": 0.090441,
+    "total_apr": "20.9% - 108.1%",
+    "tvl": 4194160
+  },
+  {
+    "protocol": "Pendle",
+    "asset": "LP ysyBOLD 2026-05-28",
+    "link": "https://app.pendle.finance/trade/pools/0x83b2c0b470ff5f2a60d2bf2ae109766e8bb3e862/zap/in?chain=ethereum",
+    "weekly_apr": 0.08662,
+    "total_apr": "14.6% - 58.2%",
+    "tvl": 379987.6418416608
+  },
+  {
+    "protocol": "Uniswap v4",
+    "asset": "BOLD/USDC",
+    "link": "https://app.merkl.xyz/opportunities/ethereum/UNISWAP_V4/0x5d0ed52610c76d7bf729130ce7ddc0488b2f4bd0a0db1f12adbe6a32deaff893",
+    "weekly_apr": 0.07549188318552211,
+    "total_apr": "19.4% - 106.6%",
+    "tvl": 3273039.2021577125
+  },
+  {
+    "protocol": "Curve",
+    "asset": "BOLD/USDC",
+    "link": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-455/deposit/",
+    "weekly_apr": 0.051521015,
+    "total_apr": "17.0% - 104.2%",
+    "tvl": 6633272
+  },
+  {
+    "protocol": "Spectra",
+    "asset": "LP sBOLD 2026-06-05",
+    "link": "https://app.spectra.finance/pools/eth:0x1d1ff54bbdb850aa638d810854e47749ca93d5ee",
+    "weekly_apr": 0.05055891,
+    "total_apr": "11.0% - 54.6%",
+    "tvl": 182965
+  },
+  {
+    "protocol": "Curve",
+    "asset": "BOLD/LUSD",
+    "link": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-456/deposit/",
+    "weekly_apr": 0.04964861,
+    "total_apr": "16.9% - 104.1%",
+    "tvl": 918420
+  },
+  {
+    "protocol": "Pendle",
+    "asset": "LP sBOLD 2026-06-25",
+    "link": "https://app.pendle.finance/trade/pools/0x926fac5b12544c2e7bfa8ce3dd83a4c8ed988da8/zap/in?chain=ethereum",
+    "weekly_apr": 0.04388,
+    "total_apr": "10.3% - 53.9%",
+    "tvl": 396811.7141531214
+  },
+  {
+    "protocol": "K3 Capital",
+    "asset": "sBOLD",
+    "link": "https://liquity.app/earn/sbold",
+    "weekly_apr": 0.03161734545894104,
+    "total_apr": "15.1% - 102.3%",
+    "tvl": 8360167.41185673
+  },
+  {
+    "protocol": "Liquity v2",
+    "asset": "SP WETH",
+    "link": "https://liquity.app/earn/eth",
+    "weekly_apr": 0.030601858060651833,
+    "total_apr": "15.0% - 102.2%",
+    "tvl": 8132210.506101016
+  },
+  {
+    "protocol": "Liquity v2",
+    "asset": "SP wstETH",
+    "link": "https://liquity.app/earn/wsteth",
+    "weekly_apr": 0.015679179038492454,
+    "total_apr": "13.5% - 100.7%",
+    "tvl": 8920808.530312756
+  },
+  {
+    "protocol": "Balancer v3",
+    "asset": "BOLD/USDC",
+    "link": "https://balancer.fi/pools/ethereum/v3/0x698a72bc8bc2eeb0f0f9a77cef0a2859399dc469",
+    "weekly_apr": 0.014775,
+    "total_apr": "13.4% - 100.6%",
+    "tvl": 6045
+  },
+  {
+    "protocol": "Euler",
+    "asset": "BOLD Vault",
+    "link": "https://app.euler.finance/vault/0xC1C51C5c9EfaF0c485Aa1097AE9690B5e102975A?network=ethereum",
+    "weekly_apr": 0.01043636619387478,
+    "total_apr": "12.9% - 100.1%",
+    "tvl": 126833.9480858577
+  },
+  {
+    "protocol": "Upshift",
+    "asset": "LiquityV2 Airdrop Farming Vault",
+    "link": "https://app.upshift.finance/pools/1/0xb2FdA773822E5a04c8A70348d66257DD5Cf442DB",
+    "weekly_apr": -0.005118,
+    "total_apr": "11.4% - 98.6%",
+    "tvl": 544222.8922380881
+  },
+  {
+    "protocol": "Lagoon",
+    "asset": "BOLD friendly forks Earn",
+    "link": "https://app.lagoon.finance/vault/1/0x68c2243619760abe0982378197c8fef2f651bd31",
+    "weekly_apr": null,
+    "total_apr": "n% - n%",
+    "tvl": 100475
+  },
+  {
+    "protocol": "EKUBO v3",
+    "asset": "BOLD/USDC",
+    "link": "https://ekubo.org/evm/positions/new?baseCurrency=0x6440f144b7e50d6a8439336510312d2f54beb01d&quoteCurrency=0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48&chainId=1&extension=boosted-fees&poolType=stableswap",
+    "weekly_apr": null,
+    "total_apr": "n% - n%",
+    "tvl": 391421.20847854414
+  }
+]

@@ -1,0 +1,128 @@
+{
+  "total_bold_supply": "34461300.152052002690173259",
+  "total_debt_pending": "222.54764010541793851",
+  "total_coll_value": "105512632.280256537846027624",
+  "total_sp_deposits": "21185384.206208393913018107",
+  "total_value_locked": "126698016.486464931759045731",
+  "max_sp_apy": "0.045504537182130975",
+  "branch": {
+    "WETH": {
+      "coll_active": "6590.793261831274092556",
+      "coll_default": "0",
+      "coll_price": "2266.5",
+      "debt_recorded": "7852289.022223262671450615",
+      "debt_default": "0",
+      "sp_deposits": "8071231.937166618916291088",
+      "interest_accrual_1y": "223984.762323794901536512",
+      "interest_pending": "73.127445233567741826",
+      "batch_management_fees_pending": "10.718169040420047958",
+      "coll": "6590.793261831274092556",
+      "coll_value": "14938032.927940582730778174",
+      "debt_pending": "83.845614273987789784",
+      "debt_active": "7852372.867837536659240399",
+      "debt": "7852372.867837536659240399",
+      "value_locked": "23009264.865107201647069262",
+      "interest_rate_avg": "0.028524468475155079",
+      "sp_apy": "0.020813250449325836",
+      "apy_avg": "0.020813250449325836",
+      "sp_apy_avg_1d": "0.02087355628333144",
+      "sp_apy_avg_7d": "0.02236036628199478"
+    },
+    "wstETH": {
+      "coll_active": "27298.934331618542888707",
+      "coll_default": "0",
+      "coll_price": "2786.489388096911147624",
+      "debt_recorded": "22029125.361488807671465318",
+      "debt_default": "0",
+      "sp_deposits": "8982753.267882865978967929",
+      "interest_accrual_1y": "194888.495712785983819289",
+      "interest_pending": "51.391829348919591624",
+      "batch_management_fees_pending": "27.2019312435558604",
+      "coll": "27298.934331618542888707",
+      "coll_value": "76068190.821409513678394286",
+      "debt_pending": "78.593760592475452024",
+      "debt_active": "22029203.955249400146917342",
+      "debt": "22029203.955249400146917342",
+      "value_locked": "85050944.089292379657362215",
+      "interest_rate_avg": "0.008846824247879618",
+      "sp_apy": "0.016271889856665211",
+      "apy_avg": "0.016271889856665211",
+      "sp_apy_avg_1d": "0.01641666261749134",
+      "sp_apy_avg_7d": "0.016666753246337533"
+    },
+    "rETH": {
+      "coll_active": "5506.120545500994608123",
+      "coll_default": "0",
+      "coll_price": "2634.596974590305225148",
+      "debt_recorded": "4579885.768339932347257326",
+      "debt_default": "0",
+      "sp_deposits": "4131399.00115890901775909",
+      "interest_accrual_1y": "250663.199283272453534629",
+      "interest_pending": "39.201893038593979606",
+      "batch_management_fees_pending": "20.906372200360717096",
+      "coll": "5506.120545500994608123",
+      "coll_value": "14506408.530906441436855164",
+      "debt_pending": "60.108265238954696702",
+      "debt_active": "4579945.876605171301954028",
+      "debt": "4579945.876605171301954028",
+      "value_locked": "18637807.532065350454614254",
+      "interest_rate_avg": "0.054730602945263072",
+      "sp_apy": "0.045504537182130973",
+      "apy_avg": "0.045504537182130973",
+      "sp_apy_avg_1d": "0.045504537182130975",
+      "sp_apy_avg_7d": "0.39608113369504727"
+    }
+  },
+  "boldYield": [
+    {
+      "protocol": "Asymmetry",
+      "asset": "ysyBOLD",
+      "link": "https://usdaf.asymmetry.finance/borrow/ysybold",
+      "weekly_apr": 0.090441,
+      "total_apr": "20.9% - 108.1%",
+      "tvl": 956808.6561042666
+    },
+    {
+      "protocol": "Yearn",
+      "asset": "yBOLD",
+      "link": "https://yearn.fi/v3/1/0x9F4330700a36B29952869fac9b33f45EEdd8A3d8",
+      "weekly_apr": 0.090441,
+      "total_apr": "20.9% - 108.1%",
+      "tvl": 4194160
+    },
+    {
+      "protocol": "Pendle",
+      "asset": "LP ysyBOLD 2026-05-28",
+      "link": "https://app.pendle.finance/trade/pools/0x83b2c0b470ff5f2a60d2bf2ae109766e8bb3e862/zap/in?chain=ethereum",
+      "weekly_apr": 0.08662,
+      "total_apr": "14.6% - 58.2%",
+      "tvl": 379987.6418416608
+    }
+  ],
+  "sBOLD": {
+    "protocol": "K3 Capital",
+    "asset": "sBOLD",
+    "link": "https://liquity.app/earn/sbold",
+    "weekly_apr": 0.03161734545894104,
+    "total_apr": "15.1% - 102.3%",
+    "tvl": 8360167.41185673
+  },
+  "yBOLD": {
+    "protocol": "Yearn",
+    "asset": "yBOLD",
+    "link": "https://yearn.fi/v3/1/0x9F4330700a36B29952869fac9b33f45EEdd8A3d8",
+    "weekly_apr": 0.090441,
+    "total_apr": "20.9% - 108.1%",
+    "tvl": 4194160
+  },
+  "prices": {
+    "ETH": "2271.44",
+    "LQTY": "0.305157",
+    "LEGACY_BOLD": "0.999003",
+    "BOLD": "0.999311",
+    "LUSD": "1.001",
+    "RETH": "2639.97",
+    "SDEX": "0.0017617",
+    "WSTETH": "2799.2"
+  }
+}
