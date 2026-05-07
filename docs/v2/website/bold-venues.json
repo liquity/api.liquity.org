@@ -1,0 +1,138 @@
+[
+  {
+    "protocol": "Euler",
+    "asset": "BOLD Vault",
+    "link": "https://app.euler.finance/vault/0xC1C51C5c9EfaF0c485Aa1097AE9690B5e102975A?network=ethereum",
+    "weekly_apr": 0.10333863505351129,
+    "total_apr": "21.5% - 103.1%",
+    "tvl": 148921.61027224179
+  },
+  {
+    "protocol": "Yearn",
+    "asset": "yBOLD",
+    "link": "https://yearn.fi/v3/1/0x9F4330700a36B29952869fac9b33f45EEdd8A3d8",
+    "weekly_apr": 0.097363,
+    "total_apr": "20.9% - 102.5%",
+    "tvl": 4429141
+  },
+  {
+    "protocol": "Asymmetry",
+    "asset": "ysyBOLD",
+    "link": "https://usdaf.asymmetry.finance/borrow/ysybold",
+    "weekly_apr": 0.097363,
+    "total_apr": "20.9% - 102.5%",
+    "tvl": 632285.8178782914
+  },
+  {
+    "protocol": "Pendle",
+    "asset": "LP ysyBOLD 2026-05-28",
+    "link": "https://app.pendle.finance/trade/pools/0x83b2c0b470ff5f2a60d2bf2ae109766e8bb3e862/zap/in?chain=ethereum",
+    "weekly_apr": 0.09124,
+    "total_apr": "14.7% - 55.5%",
+    "tvl": 393324.87386755913
+  },
+  {
+    "protocol": "Uniswap v4",
+    "asset": "BOLD/USDC",
+    "link": "https://app.merkl.xyz/opportunities/ethereum/UNISWAP_V4/0x5d0ed52610c76d7bf729130ce7ddc0488b2f4bd0a0db1f12adbe6a32deaff893",
+    "weekly_apr": 0.06179485848731142,
+    "total_apr": "17.3% - 98.9%",
+    "tvl": 3830279.7089865757
+  },
+  {
+    "protocol": "Curve",
+    "asset": "BOLD/LUSD",
+    "link": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-456/deposit/",
+    "weekly_apr": 0.05729411,
+    "total_apr": "16.9% - 98.5%",
+    "tvl": 700967
+  },
+  {
+    "protocol": "EKUBO v3",
+    "asset": "BOLD/USDC",
+    "link": "https://ekubo.org/evm/positions/new?baseCurrency=0x6440f144b7e50d6a8439336510312d2f54beb01d&quoteCurrency=0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48&chainId=1&extension=boosted-fees&poolType=stableswap",
+    "weekly_apr": 0.051591696655873064,
+    "total_apr": "16.3% - 97.9%",
+    "tvl": 426745.29633912694
+  },
+  {
+    "protocol": "Liquity v2",
+    "asset": "SP rETH",
+    "link": "https://liquity.app/earn/reth",
+    "weekly_apr": 0.043737301308788154,
+    "total_apr": "15.5% - 97.1%",
+    "tvl": 4759061.699926145
+  },
+  {
+    "protocol": "Curve",
+    "asset": "BOLD/USDC",
+    "link": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-455/deposit/",
+    "weekly_apr": 0.04204196,
+    "total_apr": "15.3% - 96.9%",
+    "tvl": 7367056
+  },
+  {
+    "protocol": "Spectra",
+    "asset": "LP sBOLD 2026-06-05",
+    "link": "https://app.spectra.finance/pools/eth:0x1d1ff54bbdb850aa638d810854e47749ca93d5ee",
+    "weekly_apr": 0.03857574,
+    "total_apr": "9.4% - 50.2%",
+    "tvl": 166412
+  },
+  {
+    "protocol": "Pendle",
+    "asset": "LP sBOLD 2026-06-25",
+    "link": "https://app.pendle.finance/trade/pools/0x926fac5b12544c2e7bfa8ce3dd83a4c8ed988da8/zap/in?chain=ethereum",
+    "weekly_apr": 0.0268,
+    "total_apr": "8.2% - 49.0%",
+    "tvl": 326281.8876896723
+  },
+  {
+    "protocol": "Liquity v2",
+    "asset": "SP WETH",
+    "link": "https://liquity.app/earn/eth",
+    "weekly_apr": 0.021627857170650105,
+    "total_apr": "13.3% - 94.9%",
+    "tvl": 7557703.653991476
+  },
+  {
+    "protocol": "K3 Capital",
+    "asset": "sBOLD",
+    "link": "https://liquity.app/earn/sbold",
+    "weekly_apr": 0.020618941335457504,
+    "total_apr": "13.2% - 94.8%",
+    "tvl": 8341463.822488778
+  },
+  {
+    "protocol": "Balancer v3",
+    "asset": "BOLD/USDC",
+    "link": "https://balancer.fi/pools/ethereum/v3/0x698a72bc8bc2eeb0f0f9a77cef0a2859399dc469",
+    "weekly_apr": 0.019021,
+    "total_apr": "13.0% - 94.6%",
+    "tvl": 6051
+  },
+  {
+    "protocol": "Liquity v2",
+    "asset": "SP wstETH",
+    "link": "https://liquity.app/earn/wsteth",
+    "weekly_apr": 0.0162614234223061,
+    "total_apr": "12.8% - 94.3%",
+    "tvl": 8864122.615799077
+  },
+  {
+    "protocol": "Lagoon",
+    "asset": "BOLD friendly forks Earn",
+    "link": "https://app.lagoon.finance/vault/1/0x68c2243619760abe0982378197c8fef2f651bd31",
+    "weekly_apr": 0.00028397,
+    "total_apr": "11.2% - 92.8%",
+    "tvl": 100472
+  },
+  {
+    "protocol": "Upshift",
+    "asset": "LiquityV2 Airdrop Farming Vault",
+    "link": "https://app.upshift.finance/pools/1/0xb2FdA773822E5a04c8A70348d66257DD5Cf442DB",
+    "weekly_apr": -0.005119,
+    "total_apr": "10.6% - 92.2%",
+    "tvl": 544222.8922380882
+  }
+]

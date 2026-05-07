@@ -1,0 +1,65 @@
+{
+  "total_row_count": 829,
+  "rows": [
+    {
+      "rank": 1,
+      "address": "0xceb63486c7ec2896b399e2d967c567d8c05f673a",
+      "points": 8433.349508777477,
+      "percent": 0.04337831383320771
+    },
+    {
+      "rank": 2,
+      "address": "0xc5e7d3f76a03006540f17668a0267c668ffb5b75",
+      "points": 8340.834889262276,
+      "percent": 0.04290244974204046
+    },
+    {
+      "rank": 3,
+      "address": "0x6ed566b76838a08d04cbd6323231b08a2ec69005",
+      "points": 8264.493095702546,
+      "percent": 0.04250977322884992
+    },
+    {
+      "rank": 4,
+      "address": "0xba5d9cc840745aeeeeedac5712e32f13ab8ea352",
+      "points": 8079.096874685719,
+      "percent": 0.04155615741458913
+    },
+    {
+      "rank": 5,
+      "address": "0xc83aa8e0da4ffc388fdbfc1cb111d8d625b5b8e7",
+      "points": 7702.21680812991,
+      "percent": 0.039617613092724775
+    },
+    {
+      "rank": 6,
+      "address": "0x989aeb4d175e16225e39e87d0d97a3360524ad80",
+      "points": 7496.499627303589,
+      "percent": 0.03855947309491262
+    },
+    {
+      "rank": 7,
+      "address": "0x4352cc849b33a936ad93bb109afdec1c89653b4f",
+      "points": 5003.674157530777,
+      "percent": 0.02573721718737892
+    },
+    {
+      "rank": 8,
+      "address": "0x300afbe08ee4619ec93524f9255ce59a013a5b63",
+      "points": 4244.910994258944,
+      "percent": 0.02183439463896846
+    },
+    {
+      "rank": 9,
+      "address": "0x7cad02c1e53decf5d1102a4b9bee5de79c6d2e18",
+      "points": 4127.349689679251,
+      "percent": 0.021229698822746033
+    },
+    {
+      "rank": 10,
+      "address": "0xd733e6e0ffa461902ff3c63556b31fd41233d525",
+      "points": 4066.290717781963,
+      "percent": 0.02091563200474722
+    }
+  ]
+}
