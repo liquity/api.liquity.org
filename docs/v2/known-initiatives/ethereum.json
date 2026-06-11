@@ -38,5 +38,9 @@
   "0x6A1d08B715A79BBb0a2d2E1927e96C18A345586A": {
     "name": "BOLD/kpkUSDC (yield-bearing LP)",
     "group": "Balancer Boosted"
+  },
+  "0x865c61e03b35975d25442f60ce4621db1e349a2f": {
+    "name": "IPOR Carry Vault",
+    "group": "IPOR"
   }
 }
