@@ -86,5 +86,29 @@
     "vetoOffset": "0",
     "voteLQTY": "0",
     "voteOffset": "0"
+  },
+  {
+    "epoch": 58,
+    "initiative": "0x865c61e03b35975d25442f60ce4621db1e349a2f",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "803989165417732664772",
+    "voteOffset": "1405107901503496102699950870540"
+  },
+  {
+    "epoch": 58,
+    "initiative": "0xb42448852a1bfc99d66ed53c65e2b49cf954f615",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "401994582708866332385",
+    "voteOffset": "702553950751748051348227765075"
+  },
+  {
+    "epoch": 58,
+    "initiative": "0xba415afa8fcd65196764b5e08cb4dbf90bee33b4",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "401994582708866332385",
+    "voteOffset": "702553950751748051348227765075"
   }
 ]
