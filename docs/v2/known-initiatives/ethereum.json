@@ -42,5 +42,9 @@
   "0x865c61e03b35975d25442f60ce4621db1e349a2f": {
     "name": "IPOR Carry Vault",
     "group": "IPOR"
+  },
+  "0x69eFEc83296c711db4A403B1Ee281E87f99590d6": {
+    "name": "Bribes BOLD/USDC",
+    "group": "Convex"
   }
 }
