@@ -3,9 +3,12 @@ import path from "path";
 import { OUTPUT_DIR_V2_GOVERNANCE } from "../../constants";
 import { SUBGRAPH_QUERY_LIMIT, graphql, query } from "./graphql";
 
-export interface SnapshotEpochParams {
+export interface SubgraphParams {
   subgraphUrl: string;
   subgraphOrigin?: string;
+}
+
+export interface SnapshotEpochParams extends SubgraphParams {
   epoch: number;
 }
 
@@ -41,6 +44,22 @@ interface Allocations {
   governanceAllocations: Allocation[];
 }
 
+const queryInitiatives = graphql`
+  query Initiatives {
+    governanceInitiatives(first: ${SUBGRAPH_QUERY_LIMIT}) {
+      id
+    }
+  }
+`;
+
+interface Initiative {
+  id: string;
+}
+
+interface Initiatives {
+  governanceInitiatives: Initiative[];
+}
+
 interface AllocationJson {
   initiative?: string;
   epoch: number;
@@ -74,6 +93,17 @@ const getAllocationsInEpoch = async (params: SnapshotEpochParams) => {
   return allocations;
 };
 
+const getInitiatives = async (params: SubgraphParams) => {
+  const result = await query<Initiatives>(params.subgraphUrl, {
+    origin: params.subgraphOrigin,
+    operationName: "Initiatives",
+    query: queryInitiatives,
+    variables: {}
+  });
+
+  return result.governanceInitiatives;
+};
+
 const allocationDir = path.join(OUTPUT_DIR_V2_GOVERNANCE, "allocation");
 const userDir = path.join(allocationDir, "user");
 const totalDir = path.join(allocationDir, "total");
@@ -81,8 +111,17 @@ const latestCompletedEpochFile = path.join(OUTPUT_DIR_V2_GOVERNANCE, "latest_com
 
 export const snapshotEpoch = async (params: SnapshotEpochParams) => {
   const { epoch } = params;
-  const allocations = await getAllocationsInEpoch(params);
-  const updates = new Map<string, AllocationJson[]>();
+
+  const [allocations, initiatives] = await Promise.all([
+    getAllocationsInEpoch(params),
+    getInitiatives(params)
+  ]);
+
+  const updates = new Map<string, AllocationJson[]>(
+    // It's possible that no one's voted on an initiative yet.
+    // We still want to create at least an empty JSON in that case.
+    initiatives.map(initiative => [path.join(totalDir, `${initiative.id}.json`), []])
+  );
 
   for (const { user, initiative, vetoLQTY, vetoOffset, voteLQTY, voteOffset } of allocations) {
     const fileName =
