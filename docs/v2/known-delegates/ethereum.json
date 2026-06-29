@@ -4,6 +4,21 @@
     "url": "https://summerstone.xyz/docs/for-users/managed-interest-rates/supported-protocols/bold-from-liquity-v2/index.html#active-strategies",
     "strategies": [
       {
+        "name": "Conservative",
+        "address": "0x0000000000b1b2ea2ecdaed0c7a3c402218e3cb0",
+        "branches": ["ETH"]
+      },
+      {
+        "name": "Conservative",
+        "address": "0x00000000006c021d70549b7ee216f7ca8d7b6263",
+        "branches": ["wstETH"]
+      },
+      {
+        "name": "Conservative",
+        "address": "0x0000000000c9b5c50439608f2b8df9fad5362a08",
+        "branches": ["rETH"]
+      },
+      {
         "name": "Balanced",
         "address": "0x00000000001991cee928c561e37725816cbf73ba",
         "branches": ["ETH"]
