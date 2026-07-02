@@ -1,0 +1,83 @@
+[
+  {
+    "fork": "Asymmetry",
+    "asset": "fxUSD/USDC/USDaf/BOLD",
+    "link": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-546/deposit",
+    "protocol": "Curve",
+    "chain": "Ethereum",
+    "total_apr": "46.7% - 385.7%",
+    "tvl": 173052
+  },
+  {
+    "fork": "Felix",
+    "asset": "USD₮0/feUSD/BOLD",
+    "link": "https://www.curve.finance/dex/hyperliquid/pools/factory-stable-ng-28/deposit",
+    "protocol": "Curve",
+    "chain": "Hyperliquid",
+    "total_apr": "187.6% - 1559.1%",
+    "tvl": 53469
+  },
+  {
+    "fork": "Soneta",
+    "asset": "waUSDC/ONE/BOLD",
+    "link": "https://beets.fi/pools/sonic/v3/0x60ad427d0864866e70b3e63a89bce689ce06db94",
+    "protocol": "Curve",
+    "chain": "Sonic",
+    "total_apr": "188.6% - 1571.8%",
+    "tvl": 53018.0155764529
+  },
+  {
+    "fork": "DeFi Dollar",
+    "asset": "BOLD/USDFI",
+    "link": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-524/deposit",
+    "protocol": "Curve",
+    "chain": "Ethereum",
+    "total_apr": "492.3% - 4102.5%",
+    "tvl": 20313
+  },
+  {
+    "fork": "Nerite",
+    "asset": "yUSND/eeUSDC/BOLD",
+    "link": "https://balancer.fi/pools/arbitrum/v3/0xf87acdaff1b21db4b4906aa74816b0aaa8fdfdc0",
+    "protocol": "Balancer",
+    "chain": "Arbitrum",
+    "total_apr": "949.9% - 7867.5%",
+    "tvl": 10601
+  },
+  {
+    "fork": "Aesyx",
+    "asset": "BOLD/AXD",
+    "link": "https://pharaoh.exchange/manage/v1/0x3fc764ae09eec2f54b1956febfeaa75d17a596bc",
+    "protocol": "Pharaoh",
+    "chain": "Avalanche",
+    "total_apr": "5068.7% - 38048.2%",
+    "tvl": 2223.605027753103
+  },
+  {
+    "fork": "Beraborrow",
+    "asset": "NECT/BOLD/HONEY",
+    "link": "https://app.beraborrow.com/vault/deposit/bex-NECT-BOLD-HONEY",
+    "protocol": "BeraHub",
+    "chain": "Berachain",
+    "total_apr": "0.0% - 0.0%",
+    "tvl": 0.17
+  },
+  {
+    "fork": "Ebisu",
+    "asset": "BOLD/ebUSD",
+    "link": "https://app.ekubo.org/evm/positions/new?quoteCurrency=BOLD&baseCurrency=ebUSD&poolType=concentrated",
+    "protocol": "Ekubo",
+    "chain": "Ethereum",
+    "total_apr": "0.0% - 0.0%",
+    "tvl": null
+  },
+  {
+    "fork": "Orki",
+    "asset": "USDK/BOLD",
+    "link": "https://velodrome.finance/deposit?token0=0x1a17b22d762c8cf2ca0f07e2b3c32e7481bb0d8c&token1=0x0000baa0b1678229863c0a941c1056b83a1955f5&type=50&chain0=1923&chain1=1923&factory=0x04625B046C69577EfC40e6c0Bb83CDBAfab5a55F",
+    "protocol": "Velodrome",
+    "chain": "Swellchain",
+    "total_apr": "0.0% - 0.0%",
+    "tvl": null
+  }
+]
