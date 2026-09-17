@@ -222,5 +222,53 @@
     "vetoOffset": "4603793609980754047666007985755",
     "voteLQTY": "0",
     "voteOffset": "0"
+  },
+  {
+    "epoch": 71,
+    "initiative": "0x0c76eae597afa2aa163a8c845f7e7e870256ac7e",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "2623094316487147422247",
+    "voteOffset": "4603793609980754047666007985755"
+  },
+  {
+    "epoch": 71,
+    "initiative": "0x69efec83296c711db4a403b1ee281e87f99590d6",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "1573856589892288453349",
+    "voteOffset": "2762276165988452428601008871690"
+  },
+  {
+    "epoch": 71,
+    "initiative": "0x6a1d08b715a79bbb0a2d2e1927e96c18a345586a",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "0",
+    "voteOffset": "0"
+  },
+  {
+    "epoch": 71,
+    "initiative": "0x865c61e03b35975d25442f60ce4621db1e349a2f",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "1049237726594858968898",
+    "voteOffset": "1841517443992301619064999114065"
+  },
+  {
+    "epoch": 71,
+    "initiative": "0xb42448852a1bfc99d66ed53c65e2b49cf954f615",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "2623094316487147422247",
+    "voteOffset": "4603793609980754047666007985755"
+  },
+  {
+    "epoch": 71,
+    "initiative": "0xba415afa8fcd65196764b5e08cb4dbf90bee33b4",
+    "vetoLQTY": "0",
+    "vetoOffset": "0",
+    "voteLQTY": "2623094316487147422247",
+    "voteOffset": "4603793609980754047666007985755"
   }
 ]
