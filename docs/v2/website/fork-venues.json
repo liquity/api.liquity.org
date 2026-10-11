@@ -1,0 +1,38 @@
+[
+  {
+    "fork": "Asymmetry",
+    "asset": "fxUSD/USDC/USDaf/BOLD",
+    "link": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-546/deposit",
+    "protocol": "Curve",
+    "chain": "Ethereum",
+    "total_apr": "244.4% - 2025.6%",
+    "tvl": 32937
+  },
+  {
+    "fork": "Nerite",
+    "asset": "yUSND/eeUSDC/BOLD",
+    "link": "https://balancer.fi/pools/arbitrum/v3/0xf87acdaff1b21db4b4906aa74816b0aaa8fdfdc0",
+    "protocol": "Balancer",
+    "chain": "Arbitrum",
+    "total_apr": "1893.8% - 15764.3%",
+    "tvl": 5287
+  },
+  {
+    "fork": "Aesyx",
+    "asset": "BOLD/AXD",
+    "link": "https://pharaoh.exchange/manage/v1/0x3fc764ae09eec2f54b1956febfeaa75d17a596bc",
+    "protocol": "Pharaoh",
+    "chain": "Avalanche",
+    "total_apr": "4745.5% - 37725.0%",
+    "tvl": 2223.605027752816
+  },
+  {
+    "fork": "Felix",
+    "asset": "USD₮0/feUSD/BOLD",
+    "link": "https://www.curve.finance/dex/hyperliquid/pools/factory-stable-ng-28/deposit",
+    "protocol": "Curve",
+    "chain": "Hyperliquid",
+    "total_apr": "11534.5% - 96117.4%",
+    "tvl": 867
+  }
+]
